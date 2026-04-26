@@ -1,0 +1,2566 @@
+﻿{
+  "Version": 1,
+  "GeneratedAt": "2026-04-25T16:07:22.9716535\u002B08:00",
+  "Entries": [
+    {
+      "PackageId": "rbw1tv9t",
+      "PackageName": "Bag",
+      "ClipItemId": "thi7j",
+      "ClipName": "quan",
+      "FrameIndex": 0,
+      "SpriteItemId": "thi7j_0",
+      "LogicalPath": "image/fgui/scatter/Bag/quan/frame_0000.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/3ec4b8fd36f4723c1cac061f948dd7cac5e3e38704c131752f12f327e243aed2.png"
+    },
+    {
+      "PackageId": "rbw1tv9t",
+      "PackageName": "Bag",
+      "ClipItemId": "thi7j",
+      "ClipName": "quan",
+      "FrameIndex": 1,
+      "SpriteItemId": "thi7j_1",
+      "LogicalPath": "image/fgui/scatter/Bag/quan/frame_0001.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/56e8da425674e932729bf40b689b4ddfb07257f861ed22753faabc871b07d14d.png"
+    },
+    {
+      "PackageId": "rbw1tv9t",
+      "PackageName": "Bag",
+      "ClipItemId": "thi7j",
+      "ClipName": "quan",
+      "FrameIndex": 2,
+      "SpriteItemId": "thi7j_2",
+      "LogicalPath": "image/fgui/scatter/Bag/quan/frame_0002.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/4bda2d7dc0d9778bd388189341032c5bf0aa5832a243b268bcf4a63fedeacf29.png"
+    },
+    {
+      "PackageId": "rbw1tv9t",
+      "PackageName": "Bag",
+      "ClipItemId": "thi7j",
+      "ClipName": "quan",
+      "FrameIndex": 3,
+      "SpriteItemId": "thi7j_3",
+      "LogicalPath": "image/fgui/scatter/Bag/quan/frame_0003.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/821029e9c9d91c5a4e9ea11dbd06acacc4cfcbb8ba5e3f50e7441912e11be6ba.png"
+    },
+    {
+      "PackageId": "rbw1tv9t",
+      "PackageName": "Bag",
+      "ClipItemId": "thi7j",
+      "ClipName": "quan",
+      "FrameIndex": 4,
+      "SpriteItemId": "thi7j_4",
+      "LogicalPath": "image/fgui/scatter/Bag/quan/frame_0004.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/041135d9027ff7387e5c40943b50abcc594949e9be5b0f63ab30793b061ff9ee.png"
+    },
+    {
+      "PackageId": "rbw1tv9t",
+      "PackageName": "Bag",
+      "ClipItemId": "thi7j",
+      "ClipName": "quan",
+      "FrameIndex": 5,
+      "SpriteItemId": "thi7j_5",
+      "LogicalPath": "image/fgui/scatter/Bag/quan/frame_0005.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/7b30eaa1129b949033355f7f7228419b1cbc132d4514574cd7395625c7de4be8.png"
+    },
+    {
+      "PackageId": "rbw1tv9t",
+      "PackageName": "Bag",
+      "ClipItemId": "thi7j",
+      "ClipName": "quan",
+      "FrameIndex": 6,
+      "SpriteItemId": "thi7j_6",
+      "LogicalPath": "image/fgui/scatter/Bag/quan/frame_0006.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/ad08781dfab025cb476a076b42a3295d844190cecb5c948f8b4a12d3f665fe48.png"
+    },
+    {
+      "PackageId": "rbw1tv9t",
+      "PackageName": "Bag",
+      "ClipItemId": "thi7j",
+      "ClipName": "quan",
+      "FrameIndex": 7,
+      "SpriteItemId": "thi7j_7",
+      "LogicalPath": "image/fgui/scatter/Bag/quan/frame_0007.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/63427eeccef29a46fb34b13b5bf02808241fcd6508ea6346d2d63409bfcd6fe1.png"
+    },
+    {
+      "PackageId": "rbw1tv9t",
+      "PackageName": "Bag",
+      "ClipItemId": "thi7j",
+      "ClipName": "quan",
+      "FrameIndex": 8,
+      "SpriteItemId": "thi7j_8",
+      "LogicalPath": "image/fgui/scatter/Bag/quan/frame_0008.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/0cf5bc85ebf6db0d8e50e179c4e27d09b762e1abbe30d315ee2f0769298fa51e.png"
+    },
+    {
+      "PackageId": "rbw1tv9t",
+      "PackageName": "Bag",
+      "ClipItemId": "thi7j",
+      "ClipName": "quan",
+      "FrameIndex": 9,
+      "SpriteItemId": "thi7j_9",
+      "LogicalPath": "image/fgui/scatter/Bag/quan/frame_0009.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/2303077da235eaafdd1f968052ff5a7255b04dfea61fa36314f228e1de79f9f4.png"
+    },
+    {
+      "PackageId": "rbw1tv9t",
+      "PackageName": "Bag",
+      "ClipItemId": "thi7j",
+      "ClipName": "quan",
+      "FrameIndex": 10,
+      "SpriteItemId": "thi7j_10",
+      "LogicalPath": "image/fgui/scatter/Bag/quan/frame_0010.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/8ee954ca2df727f2ff77637f8dcb634b46db931e64775555484613300dd45d12.png"
+    },
+    {
+      "PackageId": "rbw1tv9t",
+      "PackageName": "Bag",
+      "ClipItemId": "thi7j",
+      "ClipName": "quan",
+      "FrameIndex": 11,
+      "SpriteItemId": "thi7j_11",
+      "LogicalPath": "image/fgui/scatter/Bag/quan/frame_0011.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/b6f3027ce87e128f7765c3bbca3b8e92144a4c27075e058ef4e8f661d7ce4db5.png"
+    },
+    {
+      "PackageId": "9leh0eyf",
+      "PackageName": "Basics",
+      "ClipItemId": "hixt1v",
+      "ClipName": "nlge1k",
+      "FrameIndex": 0,
+      "SpriteItemId": "hixt1v_0",
+      "LogicalPath": "image/fgui/scatter/Basics/nlge1k/frame_0000.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/52bdf350c3eb5c65a30f73ffe957d31c3853076f7439b34f3439e117bccb3b09.png"
+    },
+    {
+      "PackageId": "9leh0eyf",
+      "PackageName": "Basics",
+      "ClipItemId": "hixt1v",
+      "ClipName": "nlge1k",
+      "FrameIndex": 1,
+      "SpriteItemId": "hixt1v_1",
+      "LogicalPath": "image/fgui/scatter/Basics/nlge1k/frame_0001.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/f81853a3605e224818c8fbd0f6121d9d373b524ac353484c0dc0129bf361cc9f.png"
+    },
+    {
+      "PackageId": "9leh0eyf",
+      "PackageName": "Basics",
+      "ClipItemId": "hixt1v",
+      "ClipName": "nlge1k",
+      "FrameIndex": 2,
+      "SpriteItemId": "hixt1v_2",
+      "LogicalPath": "image/fgui/scatter/Basics/nlge1k/frame_0002.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/eb37e7903971bb3f3921042e5cfffa69bec3e40e4cdd1850cc3cf4c1aa93c668.png"
+    },
+    {
+      "PackageId": "9leh0eyf",
+      "PackageName": "Basics",
+      "ClipItemId": "hixt1v",
+      "ClipName": "nlge1k",
+      "FrameIndex": 3,
+      "SpriteItemId": "hixt1v_3",
+      "LogicalPath": "image/fgui/scatter/Basics/nlge1k/frame_0003.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/8f3f64e2a0ca3e007f685ddeda7eab731710c8bc3b58340f9d96e2202dc14ba0.png"
+    },
+    {
+      "PackageId": "9leh0eyf",
+      "PackageName": "Basics",
+      "ClipItemId": "hixt1v",
+      "ClipName": "nlge1k",
+      "FrameIndex": 4,
+      "SpriteItemId": "hixt1v_4",
+      "LogicalPath": "image/fgui/scatter/Basics/nlge1k/frame_0004.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/263b15838f8ac321bf81e16cbad6d049a562d923ff5d96bdc630e2d993304672.png"
+    },
+    {
+      "PackageId": "9leh0eyf",
+      "PackageName": "Basics",
+      "ClipItemId": "hixt1v",
+      "ClipName": "nlge1k",
+      "FrameIndex": 5,
+      "SpriteItemId": "hixt1v_5",
+      "LogicalPath": "image/fgui/scatter/Basics/nlge1k/frame_0005.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/039e8891e340fef2e5977acb7320a5ee4c91b9840d2ce9f34f6fc05ecfaa2a11.png"
+    },
+    {
+      "PackageId": "9leh0eyf",
+      "PackageName": "Basics",
+      "ClipItemId": "hixt1v",
+      "ClipName": "nlge1k",
+      "FrameIndex": 6,
+      "SpriteItemId": "hixt1v_6",
+      "LogicalPath": "image/fgui/scatter/Basics/nlge1k/frame_0006.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/e8dd4a5e699229c893eba4b1165cb8a7b4bbfa4c02ddc76ed2423eb19a7f93b3.png"
+    },
+    {
+      "PackageId": "9leh0eyf",
+      "PackageName": "Basics",
+      "ClipItemId": "hixt1v",
+      "ClipName": "nlge1k",
+      "FrameIndex": 7,
+      "SpriteItemId": "hixt1v_7",
+      "LogicalPath": "image/fgui/scatter/Basics/nlge1k/frame_0007.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/d4b6dd8c93faf8959ca07be9f6dd03a5d4dbb7418ae8bbf8787d9c65706ff656.png"
+    },
+    {
+      "PackageId": "9leh0eyf",
+      "PackageName": "Basics",
+      "ClipItemId": "hixt1v",
+      "ClipName": "nlge1k",
+      "FrameIndex": 8,
+      "SpriteItemId": "hixt1v_8",
+      "LogicalPath": "image/fgui/scatter/Basics/nlge1k/frame_0008.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/fc3db7eeb389e3de3bbe3d0fd0833e133c73034f991480a54e8979101b29cabc.png"
+    },
+    {
+      "PackageId": "9leh0eyf",
+      "PackageName": "Basics",
+      "ClipItemId": "hixt1v",
+      "ClipName": "nlge1k",
+      "FrameIndex": 9,
+      "SpriteItemId": "hixt1v_9",
+      "LogicalPath": "image/fgui/scatter/Basics/nlge1k/frame_0009.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/c9b04417252ae9694601655818743e86027819c37f88ecb7c1ac43ab52edb789.png"
+    },
+    {
+      "PackageId": "9leh0eyf",
+      "PackageName": "Basics",
+      "ClipItemId": "hixt1v",
+      "ClipName": "nlge1k",
+      "FrameIndex": 10,
+      "SpriteItemId": "hixt1v_10",
+      "LogicalPath": "image/fgui/scatter/Basics/nlge1k/frame_0010.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/08377d038a20a4d5b20097e6f1c1c5910b62db21160d96cc76ec8b30eb0f4c3b.png"
+    },
+    {
+      "PackageId": "9leh0eyf",
+      "PackageName": "Basics",
+      "ClipItemId": "hixt1v",
+      "ClipName": "nlge1k",
+      "FrameIndex": 11,
+      "SpriteItemId": "hixt1v_11",
+      "LogicalPath": "image/fgui/scatter/Basics/nlge1k/frame_0011.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/f181aa930a4b81649c50865a5a92f89674c14e9009641bb29550af58f8a9ed37.png"
+    },
+    {
+      "PackageId": "9leh0eyf",
+      "PackageName": "Basics",
+      "ClipItemId": "hixt1v",
+      "ClipName": "nlge1k",
+      "FrameIndex": 12,
+      "SpriteItemId": "hixt1v_12",
+      "LogicalPath": "image/fgui/scatter/Basics/nlge1k/frame_0012.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/daf95b7b2cc97a0f0ee3fdc0257dabc4ae1a297fd00849219eb21010e8c48d4e.png"
+    },
+    {
+      "PackageId": "9leh0eyf",
+      "PackageName": "Basics",
+      "ClipItemId": "hixt1v",
+      "ClipName": "nlge1k",
+      "FrameIndex": 13,
+      "SpriteItemId": "hixt1v_13",
+      "LogicalPath": "image/fgui/scatter/Basics/nlge1k/frame_0013.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/3b6a0ee9328493cfb34569705572d45f3691dd44d5a79a380d1575f5be72098c.png"
+    },
+    {
+      "PackageId": "9leh0eyf",
+      "PackageName": "Basics",
+      "ClipItemId": "hixt1v",
+      "ClipName": "nlge1k",
+      "FrameIndex": 14,
+      "SpriteItemId": "hixt1v_14",
+      "LogicalPath": "image/fgui/scatter/Basics/nlge1k/frame_0014.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/2b4ee10c3e2a5100d53013224cb9241681f1fc8a7ef84f49083c9a34cabda9cb.png"
+    },
+    {
+      "PackageId": "9leh0eyf",
+      "PackageName": "Basics",
+      "ClipItemId": "iwqq89",
+      "ClipName": "gz",
+      "FrameIndex": 0,
+      "SpriteItemId": "iwqq89_0",
+      "LogicalPath": "image/fgui/scatter/Basics/gz/frame_0000.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/8ebebb1f7127590aceabc0117d282d96041870e001dc51c000ad946389da101a.png"
+    },
+    {
+      "PackageId": "9leh0eyf",
+      "PackageName": "Basics",
+      "ClipItemId": "iwqq89",
+      "ClipName": "gz",
+      "FrameIndex": 1,
+      "SpriteItemId": "iwqq89_1",
+      "LogicalPath": "image/fgui/scatter/Basics/gz/frame_0001.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/dc5ae82cdad2ec736d55aa19091d104a5b5c727059e2d3b06744f9fed3cba93d.png"
+    },
+    {
+      "PackageId": "9leh0eyf",
+      "PackageName": "Basics",
+      "ClipItemId": "iwqq89",
+      "ClipName": "gz",
+      "FrameIndex": 2,
+      "SpriteItemId": "iwqq89_2",
+      "LogicalPath": "image/fgui/scatter/Basics/gz/frame_0002.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/cf7f0fa66de1cccde439a9bc642d10594ca8bf8bf8122d5be4e5fb60b7f6f5bb.png"
+    },
+    {
+      "PackageId": "9leh0eyf",
+      "PackageName": "Basics",
+      "ClipItemId": "iwqq89",
+      "ClipName": "gz",
+      "FrameIndex": 3,
+      "SpriteItemId": "iwqq89_3",
+      "LogicalPath": "image/fgui/scatter/Basics/gz/frame_0003.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/42215fe33795b4aac5fecd53b2887e4fcb8076b740318739616d6500766d5e21.png"
+    },
+    {
+      "PackageId": "9leh0eyf",
+      "PackageName": "Basics",
+      "ClipItemId": "iwqq89",
+      "ClipName": "gz",
+      "FrameIndex": 4,
+      "SpriteItemId": "iwqq89_4",
+      "LogicalPath": "image/fgui/scatter/Basics/gz/frame_0004.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/f213dd6df77c1ee2c3e458e69c0ceb91c51bd195f6be6e5fa3787eeb727b7f69.png"
+    },
+    {
+      "PackageId": "9leh0eyf",
+      "PackageName": "Basics",
+      "ClipItemId": "iwqq89",
+      "ClipName": "gz",
+      "FrameIndex": 5,
+      "SpriteItemId": "iwqq89_5",
+      "LogicalPath": "image/fgui/scatter/Basics/gz/frame_0005.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/84bbfed7b5e030d587457ea137a135647a1c99def20b86b13a7d4cf1dcac610a.png"
+    },
+    {
+      "PackageId": "9leh0eyf",
+      "PackageName": "Basics",
+      "ClipItemId": "iwqq89",
+      "ClipName": "gz",
+      "FrameIndex": 6,
+      "SpriteItemId": "iwqq89_6",
+      "LogicalPath": "image/fgui/scatter/Basics/gz/frame_0006.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/134ef58aa7bfde28faad8eb500a5227a1a5423834636e57f18acc3a1f7b79fc0.png"
+    },
+    {
+      "PackageId": "9leh0eyf",
+      "PackageName": "Basics",
+      "ClipItemId": "iwqq89",
+      "ClipName": "gz",
+      "FrameIndex": 7,
+      "SpriteItemId": "iwqq89_7",
+      "LogicalPath": "image/fgui/scatter/Basics/gz/frame_0007.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/faef76aae1af09c97749b4229f2bd537bd58326920548fb36b8a05e9b3deb2d9.png"
+    },
+    {
+      "PackageId": "9leh0eyf",
+      "PackageName": "Basics",
+      "ClipItemId": "iwqq89",
+      "ClipName": "gz",
+      "FrameIndex": 8,
+      "SpriteItemId": "iwqq89_8",
+      "LogicalPath": "image/fgui/scatter/Basics/gz/frame_0008.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/cfbc0447d971df737e8fe54a07a9603081c63744ed6d6d7689f46f633522de6c.png"
+    },
+    {
+      "PackageId": "9leh0eyf",
+      "PackageName": "Basics",
+      "ClipItemId": "iwqq89",
+      "ClipName": "gz",
+      "FrameIndex": 9,
+      "SpriteItemId": "iwqq89_9",
+      "LogicalPath": "image/fgui/scatter/Basics/gz/frame_0009.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/c45a0cf77eabc60051e3dfe9d3bbd12ef497f2e27095ce46f14b408f889a0cb0.png"
+    },
+    {
+      "PackageId": "9leh0eyf",
+      "PackageName": "Basics",
+      "ClipItemId": "iwqq89",
+      "ClipName": "gz",
+      "FrameIndex": 10,
+      "SpriteItemId": "iwqq89_10",
+      "LogicalPath": "image/fgui/scatter/Basics/gz/frame_0010.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/84a61d6a18841f8b2507315430ea2307782cb17537572d9a4f84137011aed79e.png"
+    },
+    {
+      "PackageId": "9leh0eyf",
+      "PackageName": "Basics",
+      "ClipItemId": "iwqq89",
+      "ClipName": "gz",
+      "FrameIndex": 11,
+      "SpriteItemId": "iwqq89_11",
+      "LogicalPath": "image/fgui/scatter/Basics/gz/frame_0011.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/3bab3e308a6806e44d272a983c666385b9afa0092b600de3185fec663ea34681.png"
+    },
+    {
+      "PackageId": "9leh0eyf",
+      "PackageName": "Basics",
+      "ClipItemId": "iwqq89",
+      "ClipName": "gz",
+      "FrameIndex": 12,
+      "SpriteItemId": "iwqq89_12",
+      "LogicalPath": "image/fgui/scatter/Basics/gz/frame_0012.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/e1cc212ab6d6568eeb94fd7af62e12fccfc0d4ccce7d93546e6d8e5c9ebad3d9.png"
+    },
+    {
+      "PackageId": "9leh0eyf",
+      "PackageName": "Basics",
+      "ClipItemId": "t9fj5f",
+      "ClipName": "pet",
+      "FrameIndex": 0,
+      "SpriteItemId": "t9fj5f_0",
+      "LogicalPath": "image/fgui/scatter/Basics/pet/frame_0000.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/3f41f857957fd962da67e796b0070696cd38e634aa862a2b211e764bfe7dc6db.png"
+    },
+    {
+      "PackageId": "9leh0eyf",
+      "PackageName": "Basics",
+      "ClipItemId": "t9fj5f",
+      "ClipName": "pet",
+      "FrameIndex": 1,
+      "SpriteItemId": "t9fj5f_1",
+      "LogicalPath": "image/fgui/scatter/Basics/pet/frame_0001.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/b8fde7acbb0df9323159ffef09e7410f0df56bf40d5e66434670fbeb830d2597.png"
+    },
+    {
+      "PackageId": "9leh0eyf",
+      "PackageName": "Basics",
+      "ClipItemId": "t9fj5f",
+      "ClipName": "pet",
+      "FrameIndex": 2,
+      "SpriteItemId": "t9fj5f_2",
+      "LogicalPath": "image/fgui/scatter/Basics/pet/frame_0002.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/5a24f5937dc15117eb587a45b4f2156f7ebdb48a4111ce4e9638e8276fa61108.png"
+    },
+    {
+      "PackageId": "9leh0eyf",
+      "PackageName": "Basics",
+      "ClipItemId": "t9fj5f",
+      "ClipName": "pet",
+      "FrameIndex": 3,
+      "SpriteItemId": "t9fj5f_3",
+      "LogicalPath": "image/fgui/scatter/Basics/pet/frame_0003.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/6a8a56957da31b19a6b6a3c7d14430091b04815d4ad1f5f0f8737569cbb4a7fb.png"
+    },
+    {
+      "PackageId": "9leh0eyf",
+      "PackageName": "Basics",
+      "ClipItemId": "t9fj5f",
+      "ClipName": "pet",
+      "FrameIndex": 4,
+      "SpriteItemId": "t9fj5f_4",
+      "LogicalPath": "image/fgui/scatter/Basics/pet/frame_0004.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/d8f689d13f0c05684e9ca56ba5733758ea5e56ab99f9baea0fa19646ea73f456.png"
+    },
+    {
+      "PackageId": "9leh0eyf",
+      "PackageName": "Basics",
+      "ClipItemId": "t9fj5f",
+      "ClipName": "pet",
+      "FrameIndex": 5,
+      "SpriteItemId": "t9fj5f_5",
+      "LogicalPath": "image/fgui/scatter/Basics/pet/frame_0005.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/3f03530b094da296d019864afb81c4a06973b5e59521a03d452c657d6a77529c.png"
+    },
+    {
+      "PackageId": "9leh0eyf",
+      "PackageName": "Basics",
+      "ClipItemId": "t9fj5f",
+      "ClipName": "pet",
+      "FrameIndex": 6,
+      "SpriteItemId": "t9fj5f_6",
+      "LogicalPath": "image/fgui/scatter/Basics/pet/frame_0006.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/43d70a83c7871f2b71e91c690a52ac0afe1aa1bacd0a200d8339679c6cca48ed.png"
+    },
+    {
+      "PackageId": "9leh0eyf",
+      "PackageName": "Basics",
+      "ClipItemId": "t9fj5f",
+      "ClipName": "pet",
+      "FrameIndex": 7,
+      "SpriteItemId": "t9fj5f_7",
+      "LogicalPath": "image/fgui/scatter/Basics/pet/frame_0007.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/5644df1b9bcdf52fe15b2880333275836f0091e4111c28d5db880daf46e2b0e0.png"
+    },
+    {
+      "PackageId": "ddm193o7",
+      "PackageName": "CutScene",
+      "ClipItemId": "fou95",
+      "ClipName": "pet",
+      "FrameIndex": 0,
+      "SpriteItemId": "fou95_0",
+      "LogicalPath": "image/fgui/scatter/CutScene/pet/frame_0000.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/2653effbffee044a957132a95bf93bf0f00c6ea649e64014353025f999c17d85.png"
+    },
+    {
+      "PackageId": "ddm193o7",
+      "PackageName": "CutScene",
+      "ClipItemId": "fou95",
+      "ClipName": "pet",
+      "FrameIndex": 1,
+      "SpriteItemId": "fou95_1",
+      "LogicalPath": "image/fgui/scatter/CutScene/pet/frame_0001.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/3a048ff732905dcdd046d7671475147e70108330a29f08c3b2ac07516bac31bf.png"
+    },
+    {
+      "PackageId": "ddm193o7",
+      "PackageName": "CutScene",
+      "ClipItemId": "fou95",
+      "ClipName": "pet",
+      "FrameIndex": 2,
+      "SpriteItemId": "fou95_2",
+      "LogicalPath": "image/fgui/scatter/CutScene/pet/frame_0002.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/90edc4b091b7b275181e431b10c69a4992277b9a521d23807e43740bb22afb79.png"
+    },
+    {
+      "PackageId": "ddm193o7",
+      "PackageName": "CutScene",
+      "ClipItemId": "fou95",
+      "ClipName": "pet",
+      "FrameIndex": 3,
+      "SpriteItemId": "fou95_3",
+      "LogicalPath": "image/fgui/scatter/CutScene/pet/frame_0003.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/05842677d56a3def003a73a84806f91ebe84be3788acaf13e71301e2a8d902c8.png"
+    },
+    {
+      "PackageId": "ddm193o7",
+      "PackageName": "CutScene",
+      "ClipItemId": "fou95",
+      "ClipName": "pet",
+      "FrameIndex": 4,
+      "SpriteItemId": "fou95_4",
+      "LogicalPath": "image/fgui/scatter/CutScene/pet/frame_0004.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/164a407d1786f797b81aaf001ad19aa8f90dc43e7e9dcaef1b4dc744b6f8c0e7.png"
+    },
+    {
+      "PackageId": "ddm193o7",
+      "PackageName": "CutScene",
+      "ClipItemId": "fou95",
+      "ClipName": "pet",
+      "FrameIndex": 5,
+      "SpriteItemId": "fou95_5",
+      "LogicalPath": "image/fgui/scatter/CutScene/pet/frame_0005.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/34f8973c183da348c061ef85fa378773cc16af94d0f201bbee56f0017030ec87.png"
+    },
+    {
+      "PackageId": "ddm193o7",
+      "PackageName": "CutScene",
+      "ClipItemId": "fou95",
+      "ClipName": "pet",
+      "FrameIndex": 6,
+      "SpriteItemId": "fou95_6",
+      "LogicalPath": "image/fgui/scatter/CutScene/pet/frame_0006.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/efbe863bfb3f6d053a601e821ff56e0b5fb900f198af963cb2d225a8db030d81.png"
+    },
+    {
+      "PackageId": "ddm193o7",
+      "PackageName": "CutScene",
+      "ClipItemId": "fou95",
+      "ClipName": "pet",
+      "FrameIndex": 7,
+      "SpriteItemId": "fou95_7",
+      "LogicalPath": "image/fgui/scatter/CutScene/pet/frame_0007.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/09992bcad5bd08048d9287277c1af6534d7e1487486409a9962941a268bd7545.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1q",
+      "ClipName": "88",
+      "FrameIndex": 0,
+      "SpriteItemId": "iy2u1q_0",
+      "LogicalPath": "image/fgui/scatter/Emoji/88/frame_0000.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/fefc8d2c5d0f7e2de66b31b41e3cd09ae7542759c6fd905f7b3ca945ca012171.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1q",
+      "ClipName": "88",
+      "FrameIndex": 1,
+      "SpriteItemId": "iy2u1q_1",
+      "LogicalPath": "image/fgui/scatter/Emoji/88/frame_0001.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/da471df27d0aa6a86da3a6b5ec4ed9741a875d8be5ecf902f579c29c58c3eae8.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1r",
+      "ClipName": "am",
+      "FrameIndex": 0,
+      "SpriteItemId": "iy2u1r_0",
+      "LogicalPath": "image/fgui/scatter/Emoji/am/frame_0000.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/94cf8bb1bb4a3dd63a28c4435f8a39efe189cd429125922997028eabcbac4dcd.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1r",
+      "ClipName": "am",
+      "FrameIndex": 1,
+      "SpriteItemId": "iy2u1r_1",
+      "LogicalPath": "image/fgui/scatter/Emoji/am/frame_0001.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/a8f06c7c77412a379679d8fabc28b53eba67012841a2b3dafc5c63fbb8cd08d3.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1r",
+      "ClipName": "am",
+      "FrameIndex": 2,
+      "SpriteItemId": "iy2u1r_2",
+      "LogicalPath": "image/fgui/scatter/Emoji/am/frame_0002.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/951317c187a1c9a2acf2ac6ee1d2cfaefc2c0ae955e10e795dd5849b81d193df.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1r",
+      "ClipName": "am",
+      "FrameIndex": 3,
+      "SpriteItemId": "iy2u1r_3",
+      "LogicalPath": "image/fgui/scatter/Emoji/am/frame_0003.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/7f80f9350dc99252c1b42e6673b49e01f7eee4728d174c08584cc31b9d5b1f1c.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1r",
+      "ClipName": "am",
+      "FrameIndex": 4,
+      "SpriteItemId": "iy2u1r_4",
+      "LogicalPath": "image/fgui/scatter/Emoji/am/frame_0004.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/f28adf4664ad4dd2b23165737271da020651b5f0e33f795478cd81a2e2d1cd1a.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1s",
+      "ClipName": "bs",
+      "FrameIndex": 0,
+      "SpriteItemId": "iy2u1s_0",
+      "LogicalPath": "image/fgui/scatter/Emoji/bs/frame_0000.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/356dd559a1f2403f54e5348e33e52bea02e78d0afff7fb4ca3675ca0c49ff73a.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1s",
+      "ClipName": "bs",
+      "FrameIndex": 1,
+      "SpriteItemId": "iy2u1s_1",
+      "LogicalPath": "image/fgui/scatter/Emoji/bs/frame_0001.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/52aa255c44bab0b93564b83a655f39ed22edac71f8c660c3cb0ec1850ee40f69.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1t",
+      "ClipName": "bz",
+      "FrameIndex": 0,
+      "SpriteItemId": "iy2u1t_0",
+      "LogicalPath": "image/fgui/scatter/Emoji/bz/frame_0000.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/560c25837583033c2877f81fbf7671eeb504bf716b069f3efd1d9856b240e6c2.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1t",
+      "ClipName": "bz",
+      "FrameIndex": 1,
+      "SpriteItemId": "iy2u1t_1",
+      "LogicalPath": "image/fgui/scatter/Emoji/bz/frame_0001.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/7d10296ada475335263d817871bdc44ab23d9ae75072b0846db0fec99d00a06d.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1t",
+      "ClipName": "bz",
+      "FrameIndex": 2,
+      "SpriteItemId": "iy2u1t_2",
+      "LogicalPath": "image/fgui/scatter/Emoji/bz/frame_0002.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/669904f816343d1f880d8edf2d503bc719d0846f8daf0e630189bc96b0ad5007.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1t",
+      "ClipName": "bz",
+      "FrameIndex": 3,
+      "SpriteItemId": "iy2u1t_3",
+      "LogicalPath": "image/fgui/scatter/Emoji/bz/frame_0003.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/9580601849a2874ecfb382e60f90a9f458f455dbe581de6c2b7fa610ccc7ff60.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1t",
+      "ClipName": "bz",
+      "FrameIndex": 4,
+      "SpriteItemId": "iy2u1t_4",
+      "LogicalPath": "image/fgui/scatter/Emoji/bz/frame_0004.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/31962fe05f07741ddfa80bfd114ab8162ad10988f7e03c8772afae51e70faa1c.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1t",
+      "ClipName": "bz",
+      "FrameIndex": 5,
+      "SpriteItemId": "iy2u1t_5",
+      "LogicalPath": "image/fgui/scatter/Emoji/bz/frame_0005.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/786448f91755fcd067f5bf6e69fbaad4de8be1946fc92fa3372b9c49191bbc23.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1t",
+      "ClipName": "bz",
+      "FrameIndex": 6,
+      "SpriteItemId": "iy2u1t_6",
+      "LogicalPath": "image/fgui/scatter/Emoji/bz/frame_0006.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/ddd29a259f9bdef7ee3d614d575aca34e9e47f8ccfe143af37b0fb326b000cfa.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1t",
+      "ClipName": "bz",
+      "FrameIndex": 7,
+      "SpriteItemId": "iy2u1t_7",
+      "LogicalPath": "image/fgui/scatter/Emoji/bz/frame_0007.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/bf2debe9d5e250722ed1a2437900d5f984092031b6b203556dfe74ad26fd2dac.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1t",
+      "ClipName": "bz",
+      "FrameIndex": 8,
+      "SpriteItemId": "iy2u1t_8",
+      "LogicalPath": "image/fgui/scatter/Emoji/bz/frame_0008.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/dbc942fd85752a40e5280a4abea7199691079952c291778df054391d4a22af61.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1t",
+      "ClipName": "bz",
+      "FrameIndex": 9,
+      "SpriteItemId": "iy2u1t_9",
+      "LogicalPath": "image/fgui/scatter/Emoji/bz/frame_0009.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/a956fd94f88c42ae14f7fed31dcf806dace8b18cc3ce5bb96fad7fa5cbbe702a.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1t",
+      "ClipName": "bz",
+      "FrameIndex": 10,
+      "SpriteItemId": "iy2u1t_10",
+      "LogicalPath": "image/fgui/scatter/Emoji/bz/frame_0010.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/073f40bc2c3ca165681b458625e73a9a2a7250907999c859107b7d98c35e037f.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1u",
+      "ClipName": "ch",
+      "FrameIndex": 0,
+      "SpriteItemId": "iy2u1u_0",
+      "LogicalPath": "image/fgui/scatter/Emoji/ch/frame_0000.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/b00e82f804824a206669bf5ae8f1bcf6d28374152ded92a3fede1750b6353d2e.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1u",
+      "ClipName": "ch",
+      "FrameIndex": 1,
+      "SpriteItemId": "iy2u1u_1",
+      "LogicalPath": "image/fgui/scatter/Emoji/ch/frame_0001.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/77bbdad6306d26d65d5e9b249f65eca8eada4ad072ef84fbc9598d4a371416c0.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1u",
+      "ClipName": "ch",
+      "FrameIndex": 2,
+      "SpriteItemId": "iy2u1u_2",
+      "LogicalPath": "image/fgui/scatter/Emoji/ch/frame_0002.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/aa2d29c216d458ffb52437f2742b12b35bbde1c9229946da056419a4cf66f294.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1u",
+      "ClipName": "ch",
+      "FrameIndex": 3,
+      "SpriteItemId": "iy2u1u_3",
+      "LogicalPath": "image/fgui/scatter/Emoji/ch/frame_0003.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/60df8bdaebff2152865a9f8c403c99a452d90546ebb79723ff0112aea9b3e2e4.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1u",
+      "ClipName": "ch",
+      "FrameIndex": 4,
+      "SpriteItemId": "iy2u1u_4",
+      "LogicalPath": "image/fgui/scatter/Emoji/ch/frame_0004.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/eef6a8b12e31b5a84c306be6b11b5cf7951fd2a5f68c17f8a764955575982636.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1u",
+      "ClipName": "ch",
+      "FrameIndex": 5,
+      "SpriteItemId": "iy2u1u_5",
+      "LogicalPath": "image/fgui/scatter/Emoji/ch/frame_0005.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/b42beda9cfae97381965c718df41ef87abc0479af7c01478b27c0faa95f8fa56.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1u",
+      "ClipName": "ch",
+      "FrameIndex": 6,
+      "SpriteItemId": "iy2u1u_6",
+      "LogicalPath": "image/fgui/scatter/Emoji/ch/frame_0006.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/4ec430b3363ade31f5dcfec2a9983048bb5b5c895fbbedaa39b851dd70809a74.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1u",
+      "ClipName": "ch",
+      "FrameIndex": 7,
+      "SpriteItemId": "iy2u1u_7",
+      "LogicalPath": "image/fgui/scatter/Emoji/ch/frame_0007.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/f95b2223cea3a1a580784776b1b36c24418a2a55279eb42e90f44a4009e97656.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1u",
+      "ClipName": "ch",
+      "FrameIndex": 8,
+      "SpriteItemId": "iy2u1u_8",
+      "LogicalPath": "image/fgui/scatter/Emoji/ch/frame_0008.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/e5f076764379291d27e9d1893322f2e7782a0b4f0c04f16b958b19fb1517ba38.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1v",
+      "ClipName": "cool",
+      "FrameIndex": 0,
+      "SpriteItemId": "iy2u1v_0",
+      "LogicalPath": "image/fgui/scatter/Emoji/cool/frame_0000.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/e14b15074ae23f4f6f5576e996678f0b1d1be96b1ee54c49f48cf0425244818c.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1v",
+      "ClipName": "cool",
+      "FrameIndex": 1,
+      "SpriteItemId": "iy2u1v_1",
+      "LogicalPath": "image/fgui/scatter/Emoji/cool/frame_0001.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/c507d3d65bafc36758675ac70cbbc4fef839f3fd406dc6c51fc081ffa0a68bba.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1w",
+      "ClipName": "dhq",
+      "FrameIndex": 0,
+      "SpriteItemId": "iy2u1w_0",
+      "LogicalPath": "image/fgui/scatter/Emoji/dhq/frame_0000.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/c1a3c64894f7e15da1b1e3304f7c789265625913902b2dda3c851e9d5d2f82f5.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1w",
+      "ClipName": "dhq",
+      "FrameIndex": 1,
+      "SpriteItemId": "iy2u1w_1",
+      "LogicalPath": "image/fgui/scatter/Emoji/dhq/frame_0001.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/dad7cd253ed4877c4b2c3730a1b1f4252a2cc6eb5869184c0a756c4bb072d192.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1w",
+      "ClipName": "dhq",
+      "FrameIndex": 2,
+      "SpriteItemId": "iy2u1w_2",
+      "LogicalPath": "image/fgui/scatter/Emoji/dhq/frame_0002.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/d00bf60171df234650256b588758d68be36d6776713d1fe234e1bb90da43d3de.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1w",
+      "ClipName": "dhq",
+      "FrameIndex": 3,
+      "SpriteItemId": "iy2u1w_3",
+      "LogicalPath": "image/fgui/scatter/Emoji/dhq/frame_0003.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/c284a1881810354f2ef49c0e9d1dc412f019a68d255fbbcca85abf0505ee73fb.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1w",
+      "ClipName": "dhq",
+      "FrameIndex": 4,
+      "SpriteItemId": "iy2u1w_4",
+      "LogicalPath": "image/fgui/scatter/Emoji/dhq/frame_0004.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/06ddd0f152c7d2b1987f0860168b4421403038b54937db911fffdbd41d7cdb7b.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1w",
+      "ClipName": "dhq",
+      "FrameIndex": 5,
+      "SpriteItemId": "iy2u1w_5",
+      "LogicalPath": "image/fgui/scatter/Emoji/dhq/frame_0005.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/96b61b646502d355766838740d876efcd9e3766a30866c992fe10b3da6f5bcf8.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1w",
+      "ClipName": "dhq",
+      "FrameIndex": 6,
+      "SpriteItemId": "iy2u1w_6",
+      "LogicalPath": "image/fgui/scatter/Emoji/dhq/frame_0006.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/3662868759e8e11484f1a9ad5966ecca1520c569e61b7714e071400aa477e32a.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1x",
+      "ClipName": "dn",
+      "FrameIndex": 0,
+      "SpriteItemId": "iy2u1x_0",
+      "LogicalPath": "image/fgui/scatter/Emoji/dn/frame_0000.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/b3bda9cc35a48b141faf1d1156370f2f64356d4cacb172806e791dbe80a6367d.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1x",
+      "ClipName": "dn",
+      "FrameIndex": 1,
+      "SpriteItemId": "iy2u1x_1",
+      "LogicalPath": "image/fgui/scatter/Emoji/dn/frame_0001.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/f06bc827ede6abff0c5e0eca6e3f0f167c9d1fb32070b9b89e9c0db080f1f007.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1x",
+      "ClipName": "dn",
+      "FrameIndex": 2,
+      "SpriteItemId": "iy2u1x_2",
+      "LogicalPath": "image/fgui/scatter/Emoji/dn/frame_0002.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/e1577a2c116b35e79e45699f7712d7d40b0dac9f4a50b4b1e31a3e4ec33805a9.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1y",
+      "ClipName": "fd",
+      "FrameIndex": 0,
+      "SpriteItemId": "iy2u1y_0",
+      "LogicalPath": "image/fgui/scatter/Emoji/fd/frame_0000.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/969fda182bc6d14bd61d3271e12694b5274c79394cd388062996def5b3b6d088.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1y",
+      "ClipName": "fd",
+      "FrameIndex": 1,
+      "SpriteItemId": "iy2u1y_1",
+      "LogicalPath": "image/fgui/scatter/Emoji/fd/frame_0001.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/fc0db53dc681d40d0f11b531476831e43e47904483fa38e312ea39c8765183b1.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1z",
+      "ClipName": "gz",
+      "FrameIndex": 0,
+      "SpriteItemId": "iy2u1z_0",
+      "LogicalPath": "image/fgui/scatter/Emoji/gz/frame_0000.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/fce9aced45f68cd4187c8fcd5a6a6182d2ddf710ee17431b897aa4c50eec1afc.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1z",
+      "ClipName": "gz",
+      "FrameIndex": 1,
+      "SpriteItemId": "iy2u1z_1",
+      "LogicalPath": "image/fgui/scatter/Emoji/gz/frame_0001.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/9e904e069da92f73da5b8684e8d4b79ae05dcaf235069039cd49def4a7aaa571.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1z",
+      "ClipName": "gz",
+      "FrameIndex": 2,
+      "SpriteItemId": "iy2u1z_2",
+      "LogicalPath": "image/fgui/scatter/Emoji/gz/frame_0002.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/1f0ea8fb43c8b595c904acff1e7e955f7360f1ccfe4f3ac7db539319647ca628.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1z",
+      "ClipName": "gz",
+      "FrameIndex": 3,
+      "SpriteItemId": "iy2u1z_3",
+      "LogicalPath": "image/fgui/scatter/Emoji/gz/frame_0003.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/905ee4411adb3a35f166d47ef4a927db3be04176d9045d92c5338a9e4a442762.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1z",
+      "ClipName": "gz",
+      "FrameIndex": 4,
+      "SpriteItemId": "iy2u1z_4",
+      "LogicalPath": "image/fgui/scatter/Emoji/gz/frame_0004.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/a8681d23db7a65e49c89a4cbda23dcd2317547e5afda9100138ee852761ebb94.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1z",
+      "ClipName": "gz",
+      "FrameIndex": 5,
+      "SpriteItemId": "iy2u1z_5",
+      "LogicalPath": "image/fgui/scatter/Emoji/gz/frame_0005.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/97e0ba2c6a0c161674edcff051dfdc5b9f02b1eb7fa9d8155f29be47a5b4b332.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1z",
+      "ClipName": "gz",
+      "FrameIndex": 6,
+      "SpriteItemId": "iy2u1z_6",
+      "LogicalPath": "image/fgui/scatter/Emoji/gz/frame_0006.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/91b83f767e0348bdaf27c94e6c8ea93ac64c9e0622ed59f3df8380d1f3eb585b.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1z",
+      "ClipName": "gz",
+      "FrameIndex": 7,
+      "SpriteItemId": "iy2u1z_7",
+      "LogicalPath": "image/fgui/scatter/Emoji/gz/frame_0007.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/9956e886b59ef7b7aaf8f7288811f36c851120ec169e68b4e876687d32518be7.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1z",
+      "ClipName": "gz",
+      "FrameIndex": 8,
+      "SpriteItemId": "iy2u1z_8",
+      "LogicalPath": "image/fgui/scatter/Emoji/gz/frame_0008.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/7af15353e12ef610bd8d93942a91eeb78eaefa01a16ae9e0b018a92ff4d0ea01.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1z",
+      "ClipName": "gz",
+      "FrameIndex": 9,
+      "SpriteItemId": "iy2u1z_9",
+      "LogicalPath": "image/fgui/scatter/Emoji/gz/frame_0009.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/8078cca2873ec1a346384de2b0340b9f89c0d78ec5c4154174213109b6617075.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1z",
+      "ClipName": "gz",
+      "FrameIndex": 10,
+      "SpriteItemId": "iy2u1z_10",
+      "LogicalPath": "image/fgui/scatter/Emoji/gz/frame_0010.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/792c4da75935131c7bc392e8dbbb658ff62c459ce45f19e87da135c8527d7041.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1z",
+      "ClipName": "gz",
+      "FrameIndex": 11,
+      "SpriteItemId": "iy2u1z_11",
+      "LogicalPath": "image/fgui/scatter/Emoji/gz/frame_0011.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/03b62d688d2dedf43ac4b738c1039ec19706465555b6a625a590cb5bea777cc9.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u1z",
+      "ClipName": "gz",
+      "FrameIndex": 12,
+      "SpriteItemId": "iy2u1z_12",
+      "LogicalPath": "image/fgui/scatter/Emoji/gz/frame_0012.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/4b18100a97a19864d29c8674e85292e41696cd2b124feef8a61ff827104b6e78.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u20",
+      "ClipName": "han",
+      "FrameIndex": 0,
+      "SpriteItemId": "iy2u20_0",
+      "LogicalPath": "image/fgui/scatter/Emoji/han/frame_0000.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/f96cfb6e8d0739c2cabc2bd59769491ba025262f0cb620446755b8b09eb47bdd.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u20",
+      "ClipName": "han",
+      "FrameIndex": 1,
+      "SpriteItemId": "iy2u20_1",
+      "LogicalPath": "image/fgui/scatter/Emoji/han/frame_0001.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/f70535a906d6ff190fc65595c940939672ad758c8215da9c640f77cff8132033.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u20",
+      "ClipName": "han",
+      "FrameIndex": 2,
+      "SpriteItemId": "iy2u20_2",
+      "LogicalPath": "image/fgui/scatter/Emoji/han/frame_0002.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/6c62f5c64f273449377b06d8f9b041d8354a72555cd7dde52bfe1e2758c3c1be.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u20",
+      "ClipName": "han",
+      "FrameIndex": 3,
+      "SpriteItemId": "iy2u20_3",
+      "LogicalPath": "image/fgui/scatter/Emoji/han/frame_0003.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/200054901657e483cfde86e03311e41e898a12aca3684e0052088a6b9e3b5a2d.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u20",
+      "ClipName": "han",
+      "FrameIndex": 4,
+      "SpriteItemId": "iy2u20_4",
+      "LogicalPath": "image/fgui/scatter/Emoji/han/frame_0004.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/6b60c91ed09accd94fdab1ad33006caacffdf03f75aa2423b5cdeb1d5f10fee1.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u20",
+      "ClipName": "han",
+      "FrameIndex": 5,
+      "SpriteItemId": "iy2u20_5",
+      "LogicalPath": "image/fgui/scatter/Emoji/han/frame_0005.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/e10cc2fa6c92dde1d90b8611a62acd67d2908282d60e046ebe577f5b9907e0bc.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u20",
+      "ClipName": "han",
+      "FrameIndex": 6,
+      "SpriteItemId": "iy2u20_6",
+      "LogicalPath": "image/fgui/scatter/Emoji/han/frame_0006.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/62314da3395ae0371dd1e20c1f318b55c66b3a1af9a111f2a331350b2725c1bb.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u20",
+      "ClipName": "han",
+      "FrameIndex": 7,
+      "SpriteItemId": "iy2u20_7",
+      "LogicalPath": "image/fgui/scatter/Emoji/han/frame_0007.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/d33ecc050b0989d1e649b57a81f4e66482e98c2c2bb42388c2c93dbe7e3af131.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u20",
+      "ClipName": "han",
+      "FrameIndex": 8,
+      "SpriteItemId": "iy2u20_8",
+      "LogicalPath": "image/fgui/scatter/Emoji/han/frame_0008.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/b150150cca8b3c2e62b5d95429a6e323d05c3bda9bfde5af3aa1c9d8c2eefcc6.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u20",
+      "ClipName": "han",
+      "FrameIndex": 9,
+      "SpriteItemId": "iy2u20_9",
+      "LogicalPath": "image/fgui/scatter/Emoji/han/frame_0009.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/8cae0a8c14f4070ca1577c8b66965715555126f3c65f5014c48f2162441877b6.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u20",
+      "ClipName": "han",
+      "FrameIndex": 10,
+      "SpriteItemId": "iy2u20_10",
+      "LogicalPath": "image/fgui/scatter/Emoji/han/frame_0010.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/469e96854df02f27c8bdfd8d50364dfb93cec41300c9b1c178729ae320edca97.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u21",
+      "ClipName": "hx",
+      "FrameIndex": 0,
+      "SpriteItemId": "iy2u21_0",
+      "LogicalPath": "image/fgui/scatter/Emoji/hx/frame_0000.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/c6ba208b3af5e539b93e61f39738b47bfc2b8133fad248a9eed958d14a800c24.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u21",
+      "ClipName": "hx",
+      "FrameIndex": 1,
+      "SpriteItemId": "iy2u21_1",
+      "LogicalPath": "image/fgui/scatter/Emoji/hx/frame_0001.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/3aed354b251acb551f6619e4df03d4f1db61261e874867c42309917c8408c1f5.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u21",
+      "ClipName": "hx",
+      "FrameIndex": 2,
+      "SpriteItemId": "iy2u21_2",
+      "LogicalPath": "image/fgui/scatter/Emoji/hx/frame_0002.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/eda13d0fe26bb00a6bf8e8f08447ee6b37f0fe66e83007ae0bd36dd07860754f.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u21",
+      "ClipName": "hx",
+      "FrameIndex": 3,
+      "SpriteItemId": "iy2u21_3",
+      "LogicalPath": "image/fgui/scatter/Emoji/hx/frame_0003.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/e90867bdd88d2c13261cf5baa26122c134a4f68ebd696d5ce5509348f8c27936.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u22",
+      "ClipName": "hxiao",
+      "FrameIndex": 0,
+      "SpriteItemId": "iy2u22_0",
+      "LogicalPath": "image/fgui/scatter/Emoji/hxiao/frame_0000.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/ccc90c5fefe1a09ff3569cd07645b18af7a8cdde1329c858b7f0b3140ee65af9.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u22",
+      "ClipName": "hxiao",
+      "FrameIndex": 1,
+      "SpriteItemId": "iy2u22_1",
+      "LogicalPath": "image/fgui/scatter/Emoji/hxiao/frame_0001.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/19a89b635c044d70fc6914f6f1984a28a0b2eb206caff86b67418c044f2714be.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u22",
+      "ClipName": "hxiao",
+      "FrameIndex": 2,
+      "SpriteItemId": "iy2u22_2",
+      "LogicalPath": "image/fgui/scatter/Emoji/hxiao/frame_0002.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/88f431ca541ce55869cbd94a9b0246702b075ecc2311c7270657bc5643a4120a.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u22",
+      "ClipName": "hxiao",
+      "FrameIndex": 3,
+      "SpriteItemId": "iy2u22_3",
+      "LogicalPath": "image/fgui/scatter/Emoji/hxiao/frame_0003.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/b7c6dc45e9372149ce0a401adbba9e46a16562291fa283d0159cc1d9211873f3.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u22",
+      "ClipName": "hxiao",
+      "FrameIndex": 4,
+      "SpriteItemId": "iy2u22_4",
+      "LogicalPath": "image/fgui/scatter/Emoji/hxiao/frame_0004.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/b3150645a36668201020dc58fb20c7dc4d6b1ea46e41d5cc840e92283e23b498.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u22",
+      "ClipName": "hxiao",
+      "FrameIndex": 5,
+      "SpriteItemId": "iy2u22_5",
+      "LogicalPath": "image/fgui/scatter/Emoji/hxiao/frame_0005.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/a7c427afc1d357cd9d1f986103a21ea87fb487a75adf288af19790b1192dadaf.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u22",
+      "ClipName": "hxiao",
+      "FrameIndex": 6,
+      "SpriteItemId": "iy2u22_6",
+      "LogicalPath": "image/fgui/scatter/Emoji/hxiao/frame_0006.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/2f419be9c65c1bc27ff38bd44233cb0be9f3c2157239370f69336790a49769ce.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u23",
+      "ClipName": "hxiu",
+      "FrameIndex": 0,
+      "SpriteItemId": "iy2u23_0",
+      "LogicalPath": "image/fgui/scatter/Emoji/hxiu/frame_0000.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/ed9fbdec8fafb69549d11c0e5102834bd0c6388e32eb494fa65f7a746772a2b2.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u23",
+      "ClipName": "hxiu",
+      "FrameIndex": 1,
+      "SpriteItemId": "iy2u23_1",
+      "LogicalPath": "image/fgui/scatter/Emoji/hxiu/frame_0001.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/0c21cdc6f41832e57ab959c5c678341f6f44a2089afe3d5766d33d4f559b6619.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u23",
+      "ClipName": "hxiu",
+      "FrameIndex": 2,
+      "SpriteItemId": "iy2u23_2",
+      "LogicalPath": "image/fgui/scatter/Emoji/hxiu/frame_0002.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/0dccf34d3797efcf07df1e346a46fd41866a03cdc59cd2956c55db05a98ce4e2.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u23",
+      "ClipName": "hxiu",
+      "FrameIndex": 3,
+      "SpriteItemId": "iy2u23_3",
+      "LogicalPath": "image/fgui/scatter/Emoji/hxiu/frame_0003.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/371e037974e71fbddd371cab66fcdadb2c19c6263b38e2eeeecf775e73567829.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u23",
+      "ClipName": "hxiu",
+      "FrameIndex": 4,
+      "SpriteItemId": "iy2u23_4",
+      "LogicalPath": "image/fgui/scatter/Emoji/hxiu/frame_0004.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/5b580c270c3d6e2ca27b583642b029bdc739bfc87c90d0c2bf4e88729012fe61.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u23",
+      "ClipName": "hxiu",
+      "FrameIndex": 5,
+      "SpriteItemId": "iy2u23_5",
+      "LogicalPath": "image/fgui/scatter/Emoji/hxiu/frame_0005.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/7373ee4272fd798c3f4df064c5e7fc828d61fe663fbc881699b1e5dd494d0850.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u23",
+      "ClipName": "hxiu",
+      "FrameIndex": 6,
+      "SpriteItemId": "iy2u23_6",
+      "LogicalPath": "image/fgui/scatter/Emoji/hxiu/frame_0006.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/caa2ba73699829f1caf48bcf81753aca24d106c08828c8a322269eb589711606.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u23",
+      "ClipName": "hxiu",
+      "FrameIndex": 7,
+      "SpriteItemId": "iy2u23_7",
+      "LogicalPath": "image/fgui/scatter/Emoji/hxiu/frame_0007.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/2d55f2c5150c48e6a056c847882f7d543dcb2903cbda0d43beafb8e47b9e5b83.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u23",
+      "ClipName": "hxiu",
+      "FrameIndex": 8,
+      "SpriteItemId": "iy2u23_8",
+      "LogicalPath": "image/fgui/scatter/Emoji/hxiu/frame_0008.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/bbef40ab5dade46da07e91479d32d4356291bfe50d3be28a9b325e31d5a41b04.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u23",
+      "ClipName": "hxiu",
+      "FrameIndex": 9,
+      "SpriteItemId": "iy2u23_9",
+      "LogicalPath": "image/fgui/scatter/Emoji/hxiu/frame_0009.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/b3dd028183c12bf662a451326220e20a7060079cb28573b686772f245b2fd26e.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u23",
+      "ClipName": "hxiu",
+      "FrameIndex": 10,
+      "SpriteItemId": "iy2u23_10",
+      "LogicalPath": "image/fgui/scatter/Emoji/hxiu/frame_0010.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/8ab874d6847d8729fef1aa851016ebe93aa9b710f5a6bebe5ab583b92cd47607.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u23",
+      "ClipName": "hxiu",
+      "FrameIndex": 11,
+      "SpriteItemId": "iy2u23_11",
+      "LogicalPath": "image/fgui/scatter/Emoji/hxiu/frame_0011.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/1997e5597582bc99dfd3dedb8c8171a24f4f72d82bf19013e0ff3ff12efa35ea.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u23",
+      "ClipName": "hxiu",
+      "FrameIndex": 12,
+      "SpriteItemId": "iy2u23_12",
+      "LogicalPath": "image/fgui/scatter/Emoji/hxiu/frame_0012.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/f9031ea014527e75e9225858f96917e9dcbddf2d099c69acfeb6061278e8d612.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u23",
+      "ClipName": "hxiu",
+      "FrameIndex": 13,
+      "SpriteItemId": "iy2u23_13",
+      "LogicalPath": "image/fgui/scatter/Emoji/hxiu/frame_0013.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/156cf42e0b9803149b19af1a11d4c5365ee5c2548e98f57a7a2f6b9c03d2cf69.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u23",
+      "ClipName": "hxiu",
+      "FrameIndex": 14,
+      "SpriteItemId": "iy2u23_14",
+      "LogicalPath": "image/fgui/scatter/Emoji/hxiu/frame_0014.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/b2cf1d9cb6e9d799fa5b3b3e0aecc9d9528a8e8461855b7b1c821af08817a317.png"
+    },
+    {
+      "PackageId": "y768eypa",
+      "PackageName": "Emoji",
+      "ClipItemId": "iy2u23",
+      "ClipName": "hxiu",
+      "FrameIndex": 15,
+      "SpriteItemId": "iy2u23_15",
+      "LogicalPath": "image/fgui/scatter/Emoji/hxiu/frame_0015.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/01afa8afadcf15b40d1e76efd4a9522c59102f153cd7869a14b77b77ad5ae694.png"
+    },
+    {
+      "PackageId": "9fb2r88o",
+      "PackageName": "Filter",
+      "ClipItemId": "srctk",
+      "ClipName": "pet",
+      "FrameIndex": 0,
+      "SpriteItemId": "srctk_0",
+      "LogicalPath": "image/fgui/scatter/Filter/pet/frame_0000.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/8d8ffb577268a732444e8fef2daa2ff0b2b586859f0708b1f777771ae12dcfdf.png"
+    },
+    {
+      "PackageId": "9fb2r88o",
+      "PackageName": "Filter",
+      "ClipItemId": "srctk",
+      "ClipName": "pet",
+      "FrameIndex": 1,
+      "SpriteItemId": "srctk_1",
+      "LogicalPath": "image/fgui/scatter/Filter/pet/frame_0001.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/b36399206f6d29ac5c47bed7fc5e856e0d8a23afc4b68af2af3d7e9066ccb124.png"
+    },
+    {
+      "PackageId": "9fb2r88o",
+      "PackageName": "Filter",
+      "ClipItemId": "srctk",
+      "ClipName": "pet",
+      "FrameIndex": 2,
+      "SpriteItemId": "srctk_2",
+      "LogicalPath": "image/fgui/scatter/Filter/pet/frame_0002.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/e5eca55c15118a61bd9e710dc6f79c680c9a53691b82386a708c568b7629e369.png"
+    },
+    {
+      "PackageId": "9fb2r88o",
+      "PackageName": "Filter",
+      "ClipItemId": "srctk",
+      "ClipName": "pet",
+      "FrameIndex": 3,
+      "SpriteItemId": "srctk_3",
+      "LogicalPath": "image/fgui/scatter/Filter/pet/frame_0003.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/206c177fded91ea6e9bd497c730393682ef5dc79b3dc6d4281859e5b1280dfd9.png"
+    },
+    {
+      "PackageId": "9fb2r88o",
+      "PackageName": "Filter",
+      "ClipItemId": "srctk",
+      "ClipName": "pet",
+      "FrameIndex": 4,
+      "SpriteItemId": "srctk_4",
+      "LogicalPath": "image/fgui/scatter/Filter/pet/frame_0004.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/b0a5c3e07bc15ae2d4bf013d69ae2ba00c7732c96f5cb4517fe6a28095fb9457.png"
+    },
+    {
+      "PackageId": "9fb2r88o",
+      "PackageName": "Filter",
+      "ClipItemId": "srctk",
+      "ClipName": "pet",
+      "FrameIndex": 5,
+      "SpriteItemId": "srctk_5",
+      "LogicalPath": "image/fgui/scatter/Filter/pet/frame_0005.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/eaad5c697ba6bef461e8407e3e6a513cf4d961c3a83f557b6976863b219ee7f1.png"
+    },
+    {
+      "PackageId": "9fb2r88o",
+      "PackageName": "Filter",
+      "ClipItemId": "srctk",
+      "ClipName": "pet",
+      "FrameIndex": 6,
+      "SpriteItemId": "srctk_6",
+      "LogicalPath": "image/fgui/scatter/Filter/pet/frame_0006.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/e50bddbf5d3bb5dceccb8a3bbdd9ac234924712983d7b61279dded399a4c22bc.png"
+    },
+    {
+      "PackageId": "9fb2r88o",
+      "PackageName": "Filter",
+      "ClipItemId": "srctk",
+      "ClipName": "pet",
+      "FrameIndex": 7,
+      "SpriteItemId": "srctk_7",
+      "LogicalPath": "image/fgui/scatter/Filter/pet/frame_0007.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/0b7160d4891a970ba57c70864fd84a7d2cdc7bfc33262a253a1b7319168bb10c.png"
+    },
+    {
+      "PackageId": "q3l7vvj0",
+      "PackageName": "Guide",
+      "ClipItemId": "rpol3",
+      "ClipName": "quan",
+      "FrameIndex": 0,
+      "SpriteItemId": "rpol3_0",
+      "LogicalPath": "image/fgui/scatter/Guide/quan/frame_0000.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/a4dc9fc68ccb0327abf60cbfc14c2730ad46b7eba67bf4df67b1a31fa89d7289.png"
+    },
+    {
+      "PackageId": "q3l7vvj0",
+      "PackageName": "Guide",
+      "ClipItemId": "rpol3",
+      "ClipName": "quan",
+      "FrameIndex": 1,
+      "SpriteItemId": "rpol3_1",
+      "LogicalPath": "image/fgui/scatter/Guide/quan/frame_0001.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/0045678d16c7d80eee47b46910198d8056e22fbf83e52700f717dc4f5da21e25.png"
+    },
+    {
+      "PackageId": "q3l7vvj0",
+      "PackageName": "Guide",
+      "ClipItemId": "rpol3",
+      "ClipName": "quan",
+      "FrameIndex": 2,
+      "SpriteItemId": "rpol3_2",
+      "LogicalPath": "image/fgui/scatter/Guide/quan/frame_0002.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/c0010fb29e21c24f162e60412fbae6e325a8bcc7eace8806dbfdf2a44e67ff4d.png"
+    },
+    {
+      "PackageId": "q3l7vvj0",
+      "PackageName": "Guide",
+      "ClipItemId": "rpol3",
+      "ClipName": "quan",
+      "FrameIndex": 3,
+      "SpriteItemId": "rpol3_3",
+      "LogicalPath": "image/fgui/scatter/Guide/quan/frame_0003.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/bb67e80e6e7a1d452a0188e7fe6af4e77fa192355c26f5629e3bedf0625b63ea.png"
+    },
+    {
+      "PackageId": "q3l7vvj0",
+      "PackageName": "Guide",
+      "ClipItemId": "rpol3",
+      "ClipName": "quan",
+      "FrameIndex": 4,
+      "SpriteItemId": "rpol3_4",
+      "LogicalPath": "image/fgui/scatter/Guide/quan/frame_0004.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/c2cb9ed71185b4dd5a6fc9e8ee975993eb79e2eba1b2eca7e33e3ecc0e6097e9.png"
+    },
+    {
+      "PackageId": "q3l7vvj0",
+      "PackageName": "Guide",
+      "ClipItemId": "rpol3",
+      "ClipName": "quan",
+      "FrameIndex": 5,
+      "SpriteItemId": "rpol3_5",
+      "LogicalPath": "image/fgui/scatter/Guide/quan/frame_0005.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/078277f4abc7f7ce28b7f7ccaa53610d7db45e789ae3bac0e6fd9b809d29d0d3.png"
+    },
+    {
+      "PackageId": "q3l7vvj0",
+      "PackageName": "Guide",
+      "ClipItemId": "rpol3",
+      "ClipName": "quan",
+      "FrameIndex": 6,
+      "SpriteItemId": "rpol3_6",
+      "LogicalPath": "image/fgui/scatter/Guide/quan/frame_0006.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/4cc2fac75dbe4cb237cd492e1df163a5dfa0d4d0f89c3d371bab9ca2365c51c6.png"
+    },
+    {
+      "PackageId": "q3l7vvj0",
+      "PackageName": "Guide",
+      "ClipItemId": "rpol3",
+      "ClipName": "quan",
+      "FrameIndex": 7,
+      "SpriteItemId": "rpol3_7",
+      "LogicalPath": "image/fgui/scatter/Guide/quan/frame_0007.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/2164ead4eb60dc17e5d3ef3c108e9344ecdd0542882d3ba816f5ea062d93b816.png"
+    },
+    {
+      "PackageId": "q3l7vvj0",
+      "PackageName": "Guide",
+      "ClipItemId": "rpol3",
+      "ClipName": "quan",
+      "FrameIndex": 8,
+      "SpriteItemId": "rpol3_8",
+      "LogicalPath": "image/fgui/scatter/Guide/quan/frame_0008.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/0ebac793d40d4848233fa27323ab152b6da7b47849fa7a7575b9287a089274af.png"
+    },
+    {
+      "PackageId": "q3l7vvj0",
+      "PackageName": "Guide",
+      "ClipItemId": "rpol3",
+      "ClipName": "quan",
+      "FrameIndex": 9,
+      "SpriteItemId": "rpol3_9",
+      "LogicalPath": "image/fgui/scatter/Guide/quan/frame_0009.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/8206c636dd55f07dc6cc764bfe8267b56311b629390cb2bd3c2b71852be66a79.png"
+    },
+    {
+      "PackageId": "q3l7vvj0",
+      "PackageName": "Guide",
+      "ClipItemId": "rpol3",
+      "ClipName": "quan",
+      "FrameIndex": 10,
+      "SpriteItemId": "rpol3_10",
+      "LogicalPath": "image/fgui/scatter/Guide/quan/frame_0010.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/79d5716814ade00b5b143c1521a766ef119a368ba7325caf7937b422bdb63925.png"
+    },
+    {
+      "PackageId": "q3l7vvj0",
+      "PackageName": "Guide",
+      "ClipItemId": "rpol3",
+      "ClipName": "quan",
+      "FrameIndex": 11,
+      "SpriteItemId": "rpol3_11",
+      "LogicalPath": "image/fgui/scatter/Guide/quan/frame_0011.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/dcec4cdbc277e9b0b6535d00c4d0c6244b07bb2ad2a0f4dd604bccbe8bc46c67.png"
+    },
+    {
+      "PackageId": "q3l7vvj0",
+      "PackageName": "Guide",
+      "ClipItemId": "xcfj6",
+      "ClipName": "rswcfhd",
+      "FrameIndex": 0,
+      "SpriteItemId": "xcfj6_0",
+      "LogicalPath": "image/fgui/scatter/Guide/rswcfhd/frame_0000.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/70ef14714377dca160502813c5e503a9c6890512ce1471642304ffab019cb8b5.png"
+    },
+    {
+      "PackageId": "q3l7vvj0",
+      "PackageName": "Guide",
+      "ClipItemId": "xcfj6",
+      "ClipName": "rswcfhd",
+      "FrameIndex": 1,
+      "SpriteItemId": "xcfj6_1",
+      "LogicalPath": "image/fgui/scatter/Guide/rswcfhd/frame_0001.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/cb3b5d78efaa1af17ec3e9c4c637d1d38e09d029de5cb951f5c5881e66e1f0f2.png"
+    },
+    {
+      "PackageId": "q3l7vvj0",
+      "PackageName": "Guide",
+      "ClipItemId": "xcfj6",
+      "ClipName": "rswcfhd",
+      "FrameIndex": 2,
+      "SpriteItemId": "xcfj6_2",
+      "LogicalPath": "image/fgui/scatter/Guide/rswcfhd/frame_0002.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/983a82cf784f2e98ed1c67cb2dafd14a5945e0896cd6bf486f0fe2fccc9b0bba.png"
+    },
+    {
+      "PackageId": "q3l7vvj0",
+      "PackageName": "Guide",
+      "ClipItemId": "xcfj6",
+      "ClipName": "rswcfhd",
+      "FrameIndex": 3,
+      "SpriteItemId": "xcfj6_3",
+      "LogicalPath": "image/fgui/scatter/Guide/rswcfhd/frame_0003.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/85d6e9c3239e7e709ee5d4b430e47bfc3d845c40a6f243f936940852f3bc2203.png"
+    },
+    {
+      "PackageId": "q3l7vvj0",
+      "PackageName": "Guide",
+      "ClipItemId": "xcfj6",
+      "ClipName": "rswcfhd",
+      "FrameIndex": 4,
+      "SpriteItemId": "xcfj6_4",
+      "LogicalPath": "image/fgui/scatter/Guide/rswcfhd/frame_0004.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/0310068922670d5d69ab7485debb319b9e5f321951bfa4aeccb021e89cda7739.png"
+    },
+    {
+      "PackageId": "q3l7vvj0",
+      "PackageName": "Guide",
+      "ClipItemId": "xcfj6",
+      "ClipName": "rswcfhd",
+      "FrameIndex": 5,
+      "SpriteItemId": "xcfj6_5",
+      "LogicalPath": "image/fgui/scatter/Guide/rswcfhd/frame_0005.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/f1b025eed16f124bd67f2f136dd6b5e6ce2f396715e1b328d32825cbd7d65502.png"
+    },
+    {
+      "PackageId": "q3l7vvj0",
+      "PackageName": "Guide",
+      "ClipItemId": "xcfj6",
+      "ClipName": "rswcfhd",
+      "FrameIndex": 6,
+      "SpriteItemId": "xcfj6_6",
+      "LogicalPath": "image/fgui/scatter/Guide/rswcfhd/frame_0006.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/bc9f439509e03e30faacd39893584fba2dcd365bfea95a7fa539ad59bdedf290.png"
+    },
+    {
+      "PackageId": "q3l7vvj0",
+      "PackageName": "Guide",
+      "ClipItemId": "xcfj6",
+      "ClipName": "rswcfhd",
+      "FrameIndex": 7,
+      "SpriteItemId": "xcfj6_7",
+      "LogicalPath": "image/fgui/scatter/Guide/rswcfhd/frame_0007.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/16df7528c60ad7bc4b2c0e6d506db5e26cd820c9205128549c810a0d20ec642a.png"
+    },
+    {
+      "PackageId": "q3l7vvj0",
+      "PackageName": "Guide",
+      "ClipItemId": "xcfj6",
+      "ClipName": "rswcfhd",
+      "FrameIndex": 8,
+      "SpriteItemId": "xcfj6_8",
+      "LogicalPath": "image/fgui/scatter/Guide/rswcfhd/frame_0008.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/91d0f89089b7c142f671b83c35998f933418bfb4d6944285265d8f38cea1d72b.png"
+    },
+    {
+      "PackageId": "q3l7vvj0",
+      "PackageName": "Guide",
+      "ClipItemId": "xcfj6",
+      "ClipName": "rswcfhd",
+      "FrameIndex": 9,
+      "SpriteItemId": "xcfj6_9",
+      "LogicalPath": "image/fgui/scatter/Guide/rswcfhd/frame_0009.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/7b4f9601d2063eb8dab869d77e39febef6465c623c41c5a59ac0717d08c0e95a.png"
+    },
+    {
+      "PackageId": "q3l7vvj0",
+      "PackageName": "Guide",
+      "ClipItemId": "xcfj6",
+      "ClipName": "rswcfhd",
+      "FrameIndex": 10,
+      "SpriteItemId": "xcfj6_10",
+      "LogicalPath": "image/fgui/scatter/Guide/rswcfhd/frame_0010.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/8a3a980a4660b82939e744415905265c9d8dac9203fce4616051162e73954cf4.png"
+    },
+    {
+      "PackageId": "q3l7vvj0",
+      "PackageName": "Guide",
+      "ClipItemId": "xcfj6",
+      "ClipName": "rswcfhd",
+      "FrameIndex": 11,
+      "SpriteItemId": "xcfj6_11",
+      "LogicalPath": "image/fgui/scatter/Guide/rswcfhd/frame_0011.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/6e73d66c3503493c6ac8306b61f0d81681b658788f110f52e2be96642794d523.png"
+    },
+    {
+      "PackageId": "q3l7vvj0",
+      "PackageName": "Guide",
+      "ClipItemId": "xcfj6",
+      "ClipName": "rswcfhd",
+      "FrameIndex": 12,
+      "SpriteItemId": "xcfj6_12",
+      "LogicalPath": "image/fgui/scatter/Guide/rswcfhd/frame_0012.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/17463b2dd0f344697d9231e002a75dbc67a2c647d8c982c9183a72324d854b4c.png"
+    },
+    {
+      "PackageId": "g6qoonuh",
+      "PackageName": "HeadBar",
+      "ClipItemId": "rfrh7",
+      "ClipName": "fighting",
+      "FrameIndex": 0,
+      "SpriteItemId": "rfrh7_0",
+      "LogicalPath": "image/fgui/scatter/HeadBar/fighting/frame_0000.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/ea0cc3bf01849de689ccb812b73ea207b2cca518afa2b9d33b3ee3701dc9a09e.png"
+    },
+    {
+      "PackageId": "g6qoonuh",
+      "PackageName": "HeadBar",
+      "ClipItemId": "rfrh7",
+      "ClipName": "fighting",
+      "FrameIndex": 1,
+      "SpriteItemId": "rfrh7_1",
+      "LogicalPath": "image/fgui/scatter/HeadBar/fighting/frame_0001.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/4b824602608585a698eac83f76fab179cff844d530626f24509d532c9e1c200f.png"
+    },
+    {
+      "PackageId": "g6qoonuh",
+      "PackageName": "HeadBar",
+      "ClipItemId": "rfrh7",
+      "ClipName": "fighting",
+      "FrameIndex": 2,
+      "SpriteItemId": "rfrh7_2",
+      "LogicalPath": "image/fgui/scatter/HeadBar/fighting/frame_0002.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/dc2c76b3c92b38c5ef48ed645e854ab12c5bffaadb4477e26730b3847ef8724a.png"
+    },
+    {
+      "PackageId": "g6qoonuh",
+      "PackageName": "HeadBar",
+      "ClipItemId": "rfrh7",
+      "ClipName": "fighting",
+      "FrameIndex": 3,
+      "SpriteItemId": "rfrh7_3",
+      "LogicalPath": "image/fgui/scatter/HeadBar/fighting/frame_0003.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/73f2307434186bae03e1c7986b25925fa7035772f25fc46e2f4f49c56b8b47b9.png"
+    },
+    {
+      "PackageId": "g6qoonuh",
+      "PackageName": "HeadBar",
+      "ClipItemId": "rfrh7",
+      "ClipName": "fighting",
+      "FrameIndex": 4,
+      "SpriteItemId": "rfrh7_4",
+      "LogicalPath": "image/fgui/scatter/HeadBar/fighting/frame_0004.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/9a1823cbdbb27b0a58e022f19e71cafe836ff8a17b5070393bbb24216f29b156.png"
+    },
+    {
+      "PackageId": "g6qoonuh",
+      "PackageName": "HeadBar",
+      "ClipItemId": "rfrh7",
+      "ClipName": "fighting",
+      "FrameIndex": 5,
+      "SpriteItemId": "rfrh7_5",
+      "LogicalPath": "image/fgui/scatter/HeadBar/fighting/frame_0005.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/d869d9e0afadfd47dbd3034de7020113a460c9e60139ba2d6561c163ad8afff1.png"
+    },
+    {
+      "PackageId": "g6qoonuh",
+      "PackageName": "HeadBar",
+      "ClipItemId": "rfrh7",
+      "ClipName": "fighting",
+      "FrameIndex": 6,
+      "SpriteItemId": "rfrh7_6",
+      "LogicalPath": "image/fgui/scatter/HeadBar/fighting/frame_0006.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/7e9780a24b1bfa5d9b9bdcec8e2d8857f54c779e9fb9497abe519649d5e829c4.png"
+    },
+    {
+      "PackageId": "g6qoonuh",
+      "PackageName": "HeadBar",
+      "ClipItemId": "rfrh8",
+      "ClipName": "cool",
+      "FrameIndex": 0,
+      "SpriteItemId": "rfrh8_0",
+      "LogicalPath": "image/fgui/scatter/HeadBar/cool/frame_0000.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/c5422abd4ea0da28d2e98f4f55c699db278c5a0a5250928c3c5221e18607485f.png"
+    },
+    {
+      "PackageId": "g6qoonuh",
+      "PackageName": "HeadBar",
+      "ClipItemId": "rfrh8",
+      "ClipName": "cool",
+      "FrameIndex": 1,
+      "SpriteItemId": "rfrh8_1",
+      "LogicalPath": "image/fgui/scatter/HeadBar/cool/frame_0001.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/4b4e77c6c914d08f641eb68734adaaca52eb21c35a0e41c215d1e840ba1de6c4.png"
+    },
+    {
+      "PackageId": "oqv64gwp",
+      "PackageName": "ModalWaiting",
+      "ClipItemId": "p6036",
+      "ClipName": "qtm011",
+      "FrameIndex": 0,
+      "SpriteItemId": "p6036_0",
+      "LogicalPath": "image/fgui/scatter/ModalWaiting/qtm011/frame_0000.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/2456e2908902db0ab3365f9207d8bdde3bcedd91cbbaae1ef7450c549a08816e.png"
+    },
+    {
+      "PackageId": "oqv64gwp",
+      "PackageName": "ModalWaiting",
+      "ClipItemId": "p6036",
+      "ClipName": "qtm011",
+      "FrameIndex": 1,
+      "SpriteItemId": "p6036_1",
+      "LogicalPath": "image/fgui/scatter/ModalWaiting/qtm011/frame_0001.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/df9edf27aa230ace722e92f9764abcfffcf4e415a1cd2e6858d6a31df4e29aa5.png"
+    },
+    {
+      "PackageId": "oqv64gwp",
+      "PackageName": "ModalWaiting",
+      "ClipItemId": "p6036",
+      "ClipName": "qtm011",
+      "FrameIndex": 2,
+      "SpriteItemId": "p6036_2",
+      "LogicalPath": "image/fgui/scatter/ModalWaiting/qtm011/frame_0002.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/12f0ff612fe38f025088174fa2b4ec0bd61fbf1f0461cb51967eb4d434343936.png"
+    },
+    {
+      "PackageId": "oqv64gwp",
+      "PackageName": "ModalWaiting",
+      "ClipItemId": "p6036",
+      "ClipName": "qtm011",
+      "FrameIndex": 3,
+      "SpriteItemId": "p6036_3",
+      "LogicalPath": "image/fgui/scatter/ModalWaiting/qtm011/frame_0003.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/0eeadfa5791e63d4fc627987a5cca8a0bd5a970b2e8f1e8fc2ace580de09a20e.png"
+    },
+    {
+      "PackageId": "oqv64gwp",
+      "PackageName": "ModalWaiting",
+      "ClipItemId": "p6036",
+      "ClipName": "qtm011",
+      "FrameIndex": 4,
+      "SpriteItemId": "p6036_4",
+      "LogicalPath": "image/fgui/scatter/ModalWaiting/qtm011/frame_0004.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/4cb57dd0c154d213a142180fb05a9e1f5eeb78660cc6ad665addbe46e5bc2e72.png"
+    },
+    {
+      "PackageId": "oqv64gwp",
+      "PackageName": "ModalWaiting",
+      "ClipItemId": "p6036",
+      "ClipName": "qtm011",
+      "FrameIndex": 5,
+      "SpriteItemId": "p6036_5",
+      "LogicalPath": "image/fgui/scatter/ModalWaiting/qtm011/frame_0005.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/1ab18ed0f21030c3e9dacbbff85d37010821e8aeaba6034722db9b0d00f5ee15.png"
+    },
+    {
+      "PackageId": "qef31w6w",
+      "PackageName": "Model",
+      "ClipItemId": "rpol2",
+      "ClipName": "pet",
+      "FrameIndex": 0,
+      "SpriteItemId": "rpol2_0",
+      "LogicalPath": "image/fgui/scatter/Model/pet/frame_0000.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/df54bc8e0dcaf1171f6784ef7003954dab157b04cdc2416599d7a7225baa6d0a.png"
+    },
+    {
+      "PackageId": "qef31w6w",
+      "PackageName": "Model",
+      "ClipItemId": "rpol2",
+      "ClipName": "pet",
+      "FrameIndex": 1,
+      "SpriteItemId": "rpol2_1",
+      "LogicalPath": "image/fgui/scatter/Model/pet/frame_0001.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/a95f478ede4652472d0e6c3810553873b4b4d7e443e682659fd886d0de2db2f4.png"
+    },
+    {
+      "PackageId": "qef31w6w",
+      "PackageName": "Model",
+      "ClipItemId": "rpol2",
+      "ClipName": "pet",
+      "FrameIndex": 2,
+      "SpriteItemId": "rpol2_2",
+      "LogicalPath": "image/fgui/scatter/Model/pet/frame_0002.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/a50ecb7446ebd2697f664d836bd449ac08e96df805deccd13380c7f30f543ca8.png"
+    },
+    {
+      "PackageId": "qef31w6w",
+      "PackageName": "Model",
+      "ClipItemId": "rpol2",
+      "ClipName": "pet",
+      "FrameIndex": 3,
+      "SpriteItemId": "rpol2_3",
+      "LogicalPath": "image/fgui/scatter/Model/pet/frame_0003.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/86481a2de850461ae2561a8b170a10112b4a60f43bfb79e5e5fb4b8af805eb3a.png"
+    },
+    {
+      "PackageId": "qef31w6w",
+      "PackageName": "Model",
+      "ClipItemId": "rpol2",
+      "ClipName": "pet",
+      "FrameIndex": 4,
+      "SpriteItemId": "rpol2_4",
+      "LogicalPath": "image/fgui/scatter/Model/pet/frame_0004.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/dfd4fe19356574790a3e085bf1ff4d5723cf86044ce171cea92e53da077a949e.png"
+    },
+    {
+      "PackageId": "qef31w6w",
+      "PackageName": "Model",
+      "ClipItemId": "rpol2",
+      "ClipName": "pet",
+      "FrameIndex": 5,
+      "SpriteItemId": "rpol2_5",
+      "LogicalPath": "image/fgui/scatter/Model/pet/frame_0005.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/7a994094b399cd2eb579783f361cece14eb1134f04d28f82d928b2332bcdba9f.png"
+    },
+    {
+      "PackageId": "qef31w6w",
+      "PackageName": "Model",
+      "ClipItemId": "rpol2",
+      "ClipName": "pet",
+      "FrameIndex": 6,
+      "SpriteItemId": "rpol2_6",
+      "LogicalPath": "image/fgui/scatter/Model/pet/frame_0006.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/f2821e66ac13007680004d98671d77a490a393d62087987a16267b5c81c893fc.png"
+    },
+    {
+      "PackageId": "qef31w6w",
+      "PackageName": "Model",
+      "ClipItemId": "rpol2",
+      "ClipName": "pet",
+      "FrameIndex": 7,
+      "SpriteItemId": "rpol2_7",
+      "LogicalPath": "image/fgui/scatter/Model/pet/frame_0007.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/e88f3f61b880d684249ebd6a4151c953bea2e21b13c2100d5555faf5e872d033.png"
+    },
+    {
+      "PackageId": "jqu05wyc",
+      "PackageName": "Particles",
+      "ClipItemId": "chmf8",
+      "ClipName": "pet",
+      "FrameIndex": 0,
+      "SpriteItemId": "chmf8_0",
+      "LogicalPath": "image/fgui/scatter/Particles/pet/frame_0000.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/fde20e2136ad29442d3219fcf4cad25142fe7f23fe148f6e46fa31c4e5104bae.png"
+    },
+    {
+      "PackageId": "jqu05wyc",
+      "PackageName": "Particles",
+      "ClipItemId": "chmf8",
+      "ClipName": "pet",
+      "FrameIndex": 1,
+      "SpriteItemId": "chmf8_1",
+      "LogicalPath": "image/fgui/scatter/Particles/pet/frame_0001.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/96e441c4fc16385aa1bc7a531b95a156d4ee2d6178bc35eab06db5a5495ec800.png"
+    },
+    {
+      "PackageId": "jqu05wyc",
+      "PackageName": "Particles",
+      "ClipItemId": "chmf8",
+      "ClipName": "pet",
+      "FrameIndex": 2,
+      "SpriteItemId": "chmf8_2",
+      "LogicalPath": "image/fgui/scatter/Particles/pet/frame_0002.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/8685bec27f291246dbf4d08b075fcabb3aba99a39b96332fc1f2178e58ad7687.png"
+    },
+    {
+      "PackageId": "jqu05wyc",
+      "PackageName": "Particles",
+      "ClipItemId": "chmf8",
+      "ClipName": "pet",
+      "FrameIndex": 3,
+      "SpriteItemId": "chmf8_3",
+      "LogicalPath": "image/fgui/scatter/Particles/pet/frame_0003.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/7b7cd166d1b6f76390d54055d099cebf7249e5766e02e71d402e1f5b1bbeeb0a.png"
+    },
+    {
+      "PackageId": "jqu05wyc",
+      "PackageName": "Particles",
+      "ClipItemId": "chmf8",
+      "ClipName": "pet",
+      "FrameIndex": 4,
+      "SpriteItemId": "chmf8_4",
+      "LogicalPath": "image/fgui/scatter/Particles/pet/frame_0004.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/418cdceec062e79af1d29fe9d380f49742aa5da975860faa2cf3ab0e224141ff.png"
+    },
+    {
+      "PackageId": "jqu05wyc",
+      "PackageName": "Particles",
+      "ClipItemId": "chmf8",
+      "ClipName": "pet",
+      "FrameIndex": 5,
+      "SpriteItemId": "chmf8_5",
+      "LogicalPath": "image/fgui/scatter/Particles/pet/frame_0005.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/61d49955fb40a350326f2410555a4b1ee2f1e087b52d6727b905ba6f8e9da30d.png"
+    },
+    {
+      "PackageId": "jqu05wyc",
+      "PackageName": "Particles",
+      "ClipItemId": "chmf8",
+      "ClipName": "pet",
+      "FrameIndex": 6,
+      "SpriteItemId": "chmf8_6",
+      "LogicalPath": "image/fgui/scatter/Particles/pet/frame_0006.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/201ff18a37b1a4692573619c07223ac690a473f57feeb07774ca33b0eaa5c727.png"
+    },
+    {
+      "PackageId": "jqu05wyc",
+      "PackageName": "Particles",
+      "ClipItemId": "chmf8",
+      "ClipName": "pet",
+      "FrameIndex": 7,
+      "SpriteItemId": "chmf8_7",
+      "LogicalPath": "image/fgui/scatter/Particles/pet/frame_0007.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/71bf9d30e6e417bd60625f21404b46408ab6519e535c597aead0b746616da89e.png"
+    },
+    {
+      "PackageId": "zgmoraj4",
+      "PackageName": "Transition",
+      "ClipItemId": "nra412",
+      "ClipName": "U1UIT17",
+      "FrameIndex": 0,
+      "SpriteItemId": "nra412_0",
+      "LogicalPath": "image/fgui/scatter/Transition/U1UIT17/frame_0000.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/a0e919251d5f02f2ed00695efc63229102358a349705ee112754e396ac075f82.png"
+    },
+    {
+      "PackageId": "zgmoraj4",
+      "PackageName": "Transition",
+      "ClipItemId": "nra412",
+      "ClipName": "U1UIT17",
+      "FrameIndex": 1,
+      "SpriteItemId": "nra412_1",
+      "LogicalPath": "image/fgui/scatter/Transition/U1UIT17/frame_0001.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/8270ac58cd205e1b57d48f9a5e3b2d1fbe91953285af487c8afb10bd44f74d6a.png"
+    },
+    {
+      "PackageId": "zgmoraj4",
+      "PackageName": "Transition",
+      "ClipItemId": "nra412",
+      "ClipName": "U1UIT17",
+      "FrameIndex": 2,
+      "SpriteItemId": "nra412_2",
+      "LogicalPath": "image/fgui/scatter/Transition/U1UIT17/frame_0002.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/8ee00c8bdf74ebda54d6071ed641a3a9a6dcfb17b257a368b24bdfbe09921b49.png"
+    },
+    {
+      "PackageId": "zgmoraj4",
+      "PackageName": "Transition",
+      "ClipItemId": "nra412",
+      "ClipName": "U1UIT17",
+      "FrameIndex": 3,
+      "SpriteItemId": "nra412_3",
+      "LogicalPath": "image/fgui/scatter/Transition/U1UIT17/frame_0003.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/c169bed4606b46fcf416d3d9e251ae02cea9bf3dec27a9f7a784b0c518991aa7.png"
+    },
+    {
+      "PackageId": "zgmoraj4",
+      "PackageName": "Transition",
+      "ClipItemId": "nra412",
+      "ClipName": "U1UIT17",
+      "FrameIndex": 4,
+      "SpriteItemId": "nra412_4",
+      "LogicalPath": "image/fgui/scatter/Transition/U1UIT17/frame_0004.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/9ef228465dfefb91185abccabff1e129b5f2118a996d0b6840b715ed2f354d5b.png"
+    },
+    {
+      "PackageId": "zgmoraj4",
+      "PackageName": "Transition",
+      "ClipItemId": "nra412",
+      "ClipName": "U1UIT17",
+      "FrameIndex": 5,
+      "SpriteItemId": "nra412_5",
+      "LogicalPath": "image/fgui/scatter/Transition/U1UIT17/frame_0005.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/42e90a1967300b6deb9f8b747b26c2fb528a454820b11700d124d4e82fb67552.png"
+    },
+    {
+      "PackageId": "zgmoraj4",
+      "PackageName": "Transition",
+      "ClipItemId": "nra412",
+      "ClipName": "U1UIT17",
+      "FrameIndex": 6,
+      "SpriteItemId": "nra412_6",
+      "LogicalPath": "image/fgui/scatter/Transition/U1UIT17/frame_0006.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/7dafb4ce4eecda53946a97745e45d7aec642cef1c8f84f27917163530cf01536.png"
+    },
+    {
+      "PackageId": "zgmoraj4",
+      "PackageName": "Transition",
+      "ClipItemId": "nra412",
+      "ClipName": "U1UIT17",
+      "FrameIndex": 7,
+      "SpriteItemId": "nra412_7",
+      "LogicalPath": "image/fgui/scatter/Transition/U1UIT17/frame_0007.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/96b8713749f849e8436eccdeb45ab7636f79f0f7df949ade68e885167e121775.png"
+    },
+    {
+      "PackageId": "zgmoraj4",
+      "PackageName": "Transition",
+      "ClipItemId": "nra412",
+      "ClipName": "U1UIT17",
+      "FrameIndex": 8,
+      "SpriteItemId": "nra412_8",
+      "LogicalPath": "image/fgui/scatter/Transition/U1UIT17/frame_0008.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/7dcf263413f0880e9ff35794060228e6d0fdfc882683dbf9f976990bb2d6fede.png"
+    },
+    {
+      "PackageId": "zgmoraj4",
+      "PackageName": "Transition",
+      "ClipItemId": "nra412",
+      "ClipName": "U1UIT17",
+      "FrameIndex": 9,
+      "SpriteItemId": "nra412_9",
+      "LogicalPath": "image/fgui/scatter/Transition/U1UIT17/frame_0009.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/9736a6fb3cc477b84bef3fa2d2b2036156b7a1907f62fd0b14fb067db24ff0ca.png"
+    },
+    {
+      "PackageId": "5nx1f8vz",
+      "PackageName": "TreeView",
+      "ClipItemId": "ua5o7",
+      "ClipName": "heart",
+      "FrameIndex": 0,
+      "SpriteItemId": "ua5o7_0",
+      "LogicalPath": "image/fgui/scatter/TreeView/heart/frame_0000.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/b8709f4f189a703d57afea61bc61cb02b8b31daabb8954039c9f11fc352374df.png"
+    },
+    {
+      "PackageId": "5nx1f8vz",
+      "PackageName": "TreeView",
+      "ClipItemId": "ua5o7",
+      "ClipName": "heart",
+      "FrameIndex": 1,
+      "SpriteItemId": "ua5o7_1",
+      "LogicalPath": "image/fgui/scatter/TreeView/heart/frame_0001.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/25fb438b87b9024e072735d95c1078e574edaae1b4dbbefc397d0d385da421a4.png"
+    },
+    {
+      "PackageId": "5nx1f8vz",
+      "PackageName": "TreeView",
+      "ClipItemId": "ua5o7",
+      "ClipName": "heart",
+      "FrameIndex": 2,
+      "SpriteItemId": "ua5o7_2",
+      "LogicalPath": "image/fgui/scatter/TreeView/heart/frame_0002.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/01c3ad5eac3d40133ddbbbffb92f1182aea3d1c7528cf9ceee4321f55fff2da9.png"
+    },
+    {
+      "PackageId": "5nx1f8vz",
+      "PackageName": "TreeView",
+      "ClipItemId": "ua5o7",
+      "ClipName": "heart",
+      "FrameIndex": 3,
+      "SpriteItemId": "ua5o7_3",
+      "LogicalPath": "image/fgui/scatter/TreeView/heart/frame_0003.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/b3094b020523ee6e66c29bb7853876a12b5e477ae9bc5543dd415e605df5e598.png"
+    },
+    {
+      "PackageId": "5nx1f8vz",
+      "PackageName": "TreeView",
+      "ClipItemId": "ua5o7",
+      "ClipName": "heart",
+      "FrameIndex": 4,
+      "SpriteItemId": "ua5o7_4",
+      "LogicalPath": "image/fgui/scatter/TreeView/heart/frame_0004.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/1777d0434cbe50fd6bcf4658a4eb76884ff8a301627bfff3fc813c46ac513621.png"
+    },
+    {
+      "PackageId": "5nx1f8vz",
+      "PackageName": "TreeView",
+      "ClipItemId": "ua5o7",
+      "ClipName": "heart",
+      "FrameIndex": 5,
+      "SpriteItemId": "ua5o7_5",
+      "LogicalPath": "image/fgui/scatter/TreeView/heart/frame_0005.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/8c395da4db8fa4d8f404d6ca57eae379053106f6eed29c6109f3a3f95b9bdc46.png"
+    },
+    {
+      "PackageId": "5nx1f8vz",
+      "PackageName": "TreeView",
+      "ClipItemId": "ua5o7",
+      "ClipName": "heart",
+      "FrameIndex": 6,
+      "SpriteItemId": "ua5o7_6",
+      "LogicalPath": "image/fgui/scatter/TreeView/heart/frame_0006.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/2d5cbf3917fa3323052819039c435cc420741b2d21628995e12716c0e64a921d.png"
+    },
+    {
+      "PackageId": "5nx1f8vz",
+      "PackageName": "TreeView",
+      "ClipItemId": "ua5o7",
+      "ClipName": "heart",
+      "FrameIndex": 7,
+      "SpriteItemId": "ua5o7_7",
+      "LogicalPath": "image/fgui/scatter/TreeView/heart/frame_0007.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/db064c4c4ed44b62fe53c556a8337d11b4fb923220a1feb7ff911677f791473b.png"
+    },
+    {
+      "PackageId": "5nx1f8vz",
+      "PackageName": "TreeView",
+      "ClipItemId": "ua5o7",
+      "ClipName": "heart",
+      "FrameIndex": 8,
+      "SpriteItemId": "ua5o7_8",
+      "LogicalPath": "image/fgui/scatter/TreeView/heart/frame_0008.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/881ac11ccc736df3bb3846711be313fcbf3366a42ab39804ddc6cd1409db9be8.png"
+    },
+    {
+      "PackageId": "5nx1f8vz",
+      "PackageName": "TreeView",
+      "ClipItemId": "ua5o7",
+      "ClipName": "heart",
+      "FrameIndex": 9,
+      "SpriteItemId": "ua5o7_9",
+      "LogicalPath": "image/fgui/scatter/TreeView/heart/frame_0009.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/4bb6445adfc65e81f1feda7ae0314f87e19a59b79afe5ea0eb6a6649360dbe3c.png"
+    },
+    {
+      "PackageId": "47s7ydvu",
+      "PackageName": "TypingEffect",
+      "ClipItemId": "jruo1",
+      "ClipName": "bz",
+      "FrameIndex": 0,
+      "SpriteItemId": "jruo1_0",
+      "LogicalPath": "image/fgui/scatter/TypingEffect/bz/frame_0000.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/468f38f7cb2c33ec7dec4718eeafce5895bcdaeae3af54ee858393d32c386da5.png"
+    },
+    {
+      "PackageId": "47s7ydvu",
+      "PackageName": "TypingEffect",
+      "ClipItemId": "jruo1",
+      "ClipName": "bz",
+      "FrameIndex": 1,
+      "SpriteItemId": "jruo1_1",
+      "LogicalPath": "image/fgui/scatter/TypingEffect/bz/frame_0001.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/0a0364ab67e089cad5e7674a2dc8a3129bd9209135c6ef6d7db5b38ff728cb97.png"
+    },
+    {
+      "PackageId": "47s7ydvu",
+      "PackageName": "TypingEffect",
+      "ClipItemId": "jruo1",
+      "ClipName": "bz",
+      "FrameIndex": 2,
+      "SpriteItemId": "jruo1_2",
+      "LogicalPath": "image/fgui/scatter/TypingEffect/bz/frame_0002.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/49676d7a7070bcd1efa2da88898446a62662d4e906376e6ad4192a80957af553.png"
+    },
+    {
+      "PackageId": "47s7ydvu",
+      "PackageName": "TypingEffect",
+      "ClipItemId": "jruo1",
+      "ClipName": "bz",
+      "FrameIndex": 3,
+      "SpriteItemId": "jruo1_3",
+      "LogicalPath": "image/fgui/scatter/TypingEffect/bz/frame_0003.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/4fc5d9364100c31358c0863558b3bb5862def1df0f35bd3fd4848342b28c6459.png"
+    },
+    {
+      "PackageId": "47s7ydvu",
+      "PackageName": "TypingEffect",
+      "ClipItemId": "jruo1",
+      "ClipName": "bz",
+      "FrameIndex": 4,
+      "SpriteItemId": "jruo1_4",
+      "LogicalPath": "image/fgui/scatter/TypingEffect/bz/frame_0004.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/70badd005faac163d51622c524c0543f4ed2e964cc727fc9b4c6944365e02a65.png"
+    },
+    {
+      "PackageId": "47s7ydvu",
+      "PackageName": "TypingEffect",
+      "ClipItemId": "jruo1",
+      "ClipName": "bz",
+      "FrameIndex": 5,
+      "SpriteItemId": "jruo1_5",
+      "LogicalPath": "image/fgui/scatter/TypingEffect/bz/frame_0005.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/4a9025f02abb952648bf457201a5f112a32ecfb740f2d9d478e4d73f4f8a9467.png"
+    },
+    {
+      "PackageId": "47s7ydvu",
+      "PackageName": "TypingEffect",
+      "ClipItemId": "jruo1",
+      "ClipName": "bz",
+      "FrameIndex": 6,
+      "SpriteItemId": "jruo1_6",
+      "LogicalPath": "image/fgui/scatter/TypingEffect/bz/frame_0006.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/41bc3e54f61dc69d2834f14328582dc99aa08c9dea27a3046e6ab21bd29e682b.png"
+    },
+    {
+      "PackageId": "47s7ydvu",
+      "PackageName": "TypingEffect",
+      "ClipItemId": "jruo1",
+      "ClipName": "bz",
+      "FrameIndex": 7,
+      "SpriteItemId": "jruo1_7",
+      "LogicalPath": "image/fgui/scatter/TypingEffect/bz/frame_0007.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/8cae1964fb25e67efbdad3df4770ecbdcc456ad5be5602bf060636e3aa4f01e9.png"
+    },
+    {
+      "PackageId": "47s7ydvu",
+      "PackageName": "TypingEffect",
+      "ClipItemId": "jruo1",
+      "ClipName": "bz",
+      "FrameIndex": 8,
+      "SpriteItemId": "jruo1_8",
+      "LogicalPath": "image/fgui/scatter/TypingEffect/bz/frame_0008.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/9a7a102d0a62ab1d122802d4440c56e8d40bf95c85879182fdef7174f54e0a05.png"
+    },
+    {
+      "PackageId": "47s7ydvu",
+      "PackageName": "TypingEffect",
+      "ClipItemId": "jruo1",
+      "ClipName": "bz",
+      "FrameIndex": 9,
+      "SpriteItemId": "jruo1_9",
+      "LogicalPath": "image/fgui/scatter/TypingEffect/bz/frame_0009.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/dfcdd0a194e6e81ce54ef6daafa71beb15ad7cb28f5cd61fb8e1b4671123d35f.png"
+    },
+    {
+      "PackageId": "47s7ydvu",
+      "PackageName": "TypingEffect",
+      "ClipItemId": "jruo1",
+      "ClipName": "bz",
+      "FrameIndex": 10,
+      "SpriteItemId": "jruo1_10",
+      "LogicalPath": "image/fgui/scatter/TypingEffect/bz/frame_0010.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/d8abe22579c9af575d9ab55d6735048a61f2afbec0eef7c671e0cc76cc0e1429.png"
+    },
+    {
+      "PackageId": "47s7ydvu",
+      "PackageName": "TypingEffect",
+      "ClipItemId": "jruo2",
+      "ClipName": "ch",
+      "FrameIndex": 0,
+      "SpriteItemId": "jruo2_0",
+      "LogicalPath": "image/fgui/scatter/TypingEffect/ch/frame_0000.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/fd6e2bef31ebf07185627e3d74dd10bacec822349cf255fced22db34a27a6a97.png"
+    },
+    {
+      "PackageId": "47s7ydvu",
+      "PackageName": "TypingEffect",
+      "ClipItemId": "jruo2",
+      "ClipName": "ch",
+      "FrameIndex": 1,
+      "SpriteItemId": "jruo2_1",
+      "LogicalPath": "image/fgui/scatter/TypingEffect/ch/frame_0001.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/9dca86412fb9d0d61a7aa09763a3f7589fa73888df1c70c97dc2221a42e51307.png"
+    },
+    {
+      "PackageId": "47s7ydvu",
+      "PackageName": "TypingEffect",
+      "ClipItemId": "jruo2",
+      "ClipName": "ch",
+      "FrameIndex": 2,
+      "SpriteItemId": "jruo2_2",
+      "LogicalPath": "image/fgui/scatter/TypingEffect/ch/frame_0002.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/00ebb1fd257162bec962ac42ae817e601e7a596ac3a9eead5786bcb1172fb115.png"
+    },
+    {
+      "PackageId": "47s7ydvu",
+      "PackageName": "TypingEffect",
+      "ClipItemId": "jruo2",
+      "ClipName": "ch",
+      "FrameIndex": 3,
+      "SpriteItemId": "jruo2_3",
+      "LogicalPath": "image/fgui/scatter/TypingEffect/ch/frame_0003.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/628b5c2763b390e23b4663caf63ee571a6d747194b7688dfb690b5a3a021a346.png"
+    },
+    {
+      "PackageId": "47s7ydvu",
+      "PackageName": "TypingEffect",
+      "ClipItemId": "jruo2",
+      "ClipName": "ch",
+      "FrameIndex": 4,
+      "SpriteItemId": "jruo2_4",
+      "LogicalPath": "image/fgui/scatter/TypingEffect/ch/frame_0004.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/dce1b68b388da1d089bf54e9d7a48e913e18008a6daa19ab26a0530b75eeb8f0.png"
+    },
+    {
+      "PackageId": "47s7ydvu",
+      "PackageName": "TypingEffect",
+      "ClipItemId": "jruo2",
+      "ClipName": "ch",
+      "FrameIndex": 5,
+      "SpriteItemId": "jruo2_5",
+      "LogicalPath": "image/fgui/scatter/TypingEffect/ch/frame_0005.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/5cd4e8f3a883cced7e25e7e83280aa3467e51b4ca22a077fbc1c2346ff43bcde.png"
+    },
+    {
+      "PackageId": "47s7ydvu",
+      "PackageName": "TypingEffect",
+      "ClipItemId": "jruo2",
+      "ClipName": "ch",
+      "FrameIndex": 6,
+      "SpriteItemId": "jruo2_6",
+      "LogicalPath": "image/fgui/scatter/TypingEffect/ch/frame_0006.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/788329684840c3f1a3fb46a68bcbe85527b45d7308d52587879146fd799b30e4.png"
+    },
+    {
+      "PackageId": "47s7ydvu",
+      "PackageName": "TypingEffect",
+      "ClipItemId": "jruo2",
+      "ClipName": "ch",
+      "FrameIndex": 7,
+      "SpriteItemId": "jruo2_7",
+      "LogicalPath": "image/fgui/scatter/TypingEffect/ch/frame_0007.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/4b617501368d0477211c748058a64e334c44516510c5e89e9a26c7478a179e75.png"
+    },
+    {
+      "PackageId": "47s7ydvu",
+      "PackageName": "TypingEffect",
+      "ClipItemId": "jruo2",
+      "ClipName": "ch",
+      "FrameIndex": 8,
+      "SpriteItemId": "jruo2_8",
+      "LogicalPath": "image/fgui/scatter/TypingEffect/ch/frame_0008.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/0a6dcdb3b9475209dc598bbf4cddfd73035185966c9a7cf6dc2c78c87fdd71bb.png"
+    },
+    {
+      "PackageId": "47s7ydvu",
+      "PackageName": "TypingEffect",
+      "ClipItemId": "jruo3",
+      "ClipName": "cool",
+      "FrameIndex": 0,
+      "SpriteItemId": "jruo3_0",
+      "LogicalPath": "image/fgui/scatter/TypingEffect/cool/frame_0000.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/9f4917dfafc0f485adcab4e5283f3090d865da4a5143b861ad253a4a0385526f.png"
+    },
+    {
+      "PackageId": "47s7ydvu",
+      "PackageName": "TypingEffect",
+      "ClipItemId": "jruo3",
+      "ClipName": "cool",
+      "FrameIndex": 1,
+      "SpriteItemId": "jruo3_1",
+      "LogicalPath": "image/fgui/scatter/TypingEffect/cool/frame_0001.png",
+      "ImagePath": "image/fgui/scatter/_movieclip_shared/8541bfbf613241a36c780d4c9dffcd43498223b847a3c7d7c26b0848415a355e.png"
+    }
+  ]
+}
