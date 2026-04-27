@@ -4,7 +4,8 @@ param(
     [string]$OutputDir,
     [string]$Manifest,
     [string]$MovieClipManifest,
-    [bool]$SyncAppBundle = $true
+    [bool]$SyncAppBundle = $true,
+    [bool]$RemoveAtlasPng = $true
 )
 
 $ErrorActionPreference = "Stop"
@@ -29,6 +30,26 @@ if (-not (Test-Path $OutputDir)) {
     New-Item -ItemType Directory -Path $OutputDir -Force | Out-Null
 }
 
+function Remove-AtlasPngFiles {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$RootDir
+    )
+
+    if (-not (Test-Path -LiteralPath $RootDir)) {
+        return 0
+    }
+
+    $atlasFiles = Get-ChildItem -LiteralPath $RootDir -Recurse -File -Filter "*_atlas*.png" -ErrorAction SilentlyContinue
+    $removed = 0
+    foreach ($file in $atlasFiles) {
+        Remove-Item -LiteralPath $file.FullName -Force -ErrorAction SilentlyContinue
+        $removed++
+    }
+
+    return $removed
+}
+
 Write-Host "[FGUI][SCATTER] projectRoot=$ProjectRoot"
 Write-Host "[FGUI][SCATTER] input=$InputDir"
 Write-Host "[FGUI][SCATTER] output=$OutputDir"
@@ -40,6 +61,11 @@ $exitCode = $LASTEXITCODE
 if ($exitCode -ne 0) {
     Write-Error "Scatter export failed. exitCode=$exitCode"
     exit $exitCode
+}
+
+if ($RemoveAtlasPng) {
+    $removedInOutput = Remove-AtlasPngFiles -RootDir $OutputDir
+    Write-Host "[FGUI][SCATTER] removed atlas png in output: count=$removedInOutput"
 }
 
 if (-not (Test-Path $MovieClipManifest)) {
@@ -64,6 +90,11 @@ if ($SyncAppBundle) {
 
     Write-Host "[FGUI][SCATTER] sync AppBundle: $appBundleScatter"
     Copy-Item -Path (Join-Path $OutputDir "*") -Destination $appBundleScatter -Recurse -Force
+
+    if ($RemoveAtlasPng) {
+        $removedInAppBundle = Remove-AtlasPngFiles -RootDir $appBundleScatter
+        Write-Host "[FGUI][SCATTER] removed atlas png in AppBundle: count=$removedInAppBundle"
+    }
 }
 
 Write-Host "[FGUI][SCATTER] export finished"
