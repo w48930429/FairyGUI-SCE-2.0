@@ -717,6 +717,8 @@ public class GSlider : GComponent
     private float _barStartY;
     private PointF _clickPos;
     private float _clickPercent;
+    private float _gripOffsetXFromBarEdge;
+    private float _gripOffsetYFromBarEdge;
 
     public float Min { get => _min; set { _min = value; Update(); } }
     public float Max { get => _max; set { _max = value; Update(); } }
@@ -765,6 +767,21 @@ public class GSlider : GComponent
                 _wholeNumbers = buffer.ReadBool();
                 if (buffer.Position < buffer.Length)
                     _changeOnClick = buffer.ReadBool();
+            }
+        }
+
+        if (_gripObject != null)
+        {
+            if (_barObjectH != null)
+            {
+                var initialHorizontalEdge = _reverse ? _barObjectH.X : (_barObjectH.X + _barObjectH.Width);
+                _gripOffsetXFromBarEdge = _gripObject.X - initialHorizontalEdge;
+            }
+
+            if (_barObjectV != null)
+            {
+                var initialVerticalEdge = _reverse ? _barObjectV.Y : (_barObjectV.Y + _barObjectV.Height);
+                _gripOffsetYFromBarEdge = _gripObject.Y - initialVerticalEdge;
             }
         }
 
@@ -832,7 +849,8 @@ public class GSlider : GComponent
 
         var fullWidth = MathF.Max(0f, Width - _barMaxWidthDelta);
         var fullHeight = MathF.Max(0f, Height - _barMaxHeightDelta);
-        var visualPercent = _reverse ? (1f - percent) : percent;
+        var horizontalEdge = _barStartX;
+        var verticalEdge = _barStartY;
 
         if (_barObjectH != null)
         {
@@ -845,8 +863,13 @@ public class GSlider : GComponent
             {
                 _barObjectH.X = _barStartX + (fullWidth - barWidth);
             }
+            else
+            {
+                _barObjectH.X = _barStartX;
+            }
 
             _barObjectH.Width = barWidth;
+            horizontalEdge = _reverse ? _barObjectH.X : (_barObjectH.X + barWidth);
         }
 
         if (_barObjectV != null)
@@ -860,16 +883,21 @@ public class GSlider : GComponent
             {
                 _barObjectV.Y = _barStartY + (fullHeight - barHeight);
             }
+            else
+            {
+                _barObjectV.Y = _barStartY;
+            }
 
             _barObjectV.Height = barHeight;
+            verticalEdge = _reverse ? _barObjectV.Y : (_barObjectV.Y + barHeight);
         }
 
         if (_gripObject != null)
         {
             if (_barObjectH != null)
-                _gripObject.X = visualPercent * (Width - _gripObject.Width);
+                _gripObject.X = horizontalEdge + _gripOffsetXFromBarEdge;
             if (_barObjectV != null)
-                _gripObject.Y = visualPercent * (Height - _gripObject.Height);
+                _gripObject.Y = verticalEdge + _gripOffsetYFromBarEdge;
         }
     }
 
