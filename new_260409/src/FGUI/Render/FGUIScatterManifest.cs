@@ -164,7 +164,7 @@ internal static class FGUIScatterManifest
 
         if (manifest?.Entries == null || manifest.Entries.Count == 0)
         {
-            Game.Logger.LogError("[FGUI][SCATTER] manifest has no entries");
+            Game.Logger.LogWarning("[FGUI][SCATTER] manifest has no entries");
             _manifestAvailable = false;
             return;
         }
@@ -224,7 +224,7 @@ internal static class FGUIScatterManifest
 
         if (manifest?.Entries == null || manifest.Entries.Count == 0)
         {
-            Game.Logger.LogError("[FGUI][SCATTER][MOVIECLIP] manifest has no entries");
+            Game.Logger.LogWarning("[FGUI][SCATTER][MOVIECLIP] manifest has no entries");
             _movieClipManifestAvailable = false;
             return;
         }
