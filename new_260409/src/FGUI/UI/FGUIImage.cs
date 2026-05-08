@@ -15,6 +15,9 @@ public class GImage : GObject, IColorGear
     private int _fillOrigin;
     private float _fillAmount = 1;
     private bool _fillClockwise = true;
+    private FillMethod _lastUnsupportedFillMethod = FillMethod.None;
+    private bool _fillNativeUpgradeAttempted;
+    private bool _fillDiagLogged;
 
     public Color Color { get => _color; set { _color = value; UpdateDisplay(); } }
     public override string? Icon
@@ -67,6 +70,7 @@ public class GImage : GObject, IColorGear
         
         var adapter = Render.SCERenderContext.Instance.Adapter;
         if (adapter == null) return;
+        UpgradeNativeControlForFillIfNeeded(adapter);
 
         // 应用颜色着色（Tint）- 这是图片叠加颜色，不是背景色
         // 使用专门的SetTintColor方法，如果SCE不支持会fallback
@@ -91,7 +95,23 @@ public class GImage : GObject, IColorGear
         var renderWidth = MathF.Max(0f, _width);
         var renderHeight = MathF.Max(0f, _height);
         var fillAmount = Math.Clamp(_fillAmount, 0f, 1f);
-        if (_fillMethod != FillMethod.None && fillAmount < 1.0f)
+        var nativeFillApplied = adapter.TrySetImageFill(NativeObject, _fillMethod, _fillOrigin, _fillClockwise, fillAmount);
+        if (!_fillDiagLogged && _fillMethod != FillMethod.None)
+        {
+            _fillDiagLogged = true;
+            Game.Logger.LogWarning(
+                "[FGUI][FILL][DIAG] image={Name} pkg={Pkg}/{Item} type={NativeType} fill={FillMethod} origin={Origin} clockwise={Clockwise} amount={Amount:F2} applied={Applied}",
+                Name,
+                PackageItem?.Owner?.Name ?? "<none>",
+                PackageItem?.Name ?? "<none>",
+                NativeObject.GetType().Name,
+                _fillMethod,
+                _fillOrigin,
+                _fillClockwise,
+                fillAmount,
+                nativeFillApplied);
+        }
+        if (_fillMethod != FillMethod.None && fillAmount < 1.0f && !nativeFillApplied)
         {
             if (_fillMethod == FillMethod.Horizontal)
             {
@@ -115,8 +135,16 @@ public class GImage : GObject, IColorGear
             }
             else
             {
-                Game.Logger.LogWarning("[FGUI] Image '{Name}' FillMethod {FillMethod} not supported in SCE", Name, _fillMethod);
+                if (_lastUnsupportedFillMethod != _fillMethod)
+                {
+                    _lastUnsupportedFillMethod = _fillMethod;
+                    Game.Logger.LogWarning("[FGUI] Image '{Name}' FillMethod {FillMethod} not supported in SCE", Name, _fillMethod);
+                }
             }
+        }
+        else
+        {
+            _lastUnsupportedFillMethod = FillMethod.None;
         }
 
         var scaleFactor = UIRuntime.ContentScaleFactor;
@@ -131,6 +159,26 @@ public class GImage : GObject, IColorGear
 
         // 组合用户设置的缩放和翻转
         adapter.SetScale(NativeObject, flipScaleX * _scaleX, flipScaleY * _scaleY);
+    }
+
+    private void UpgradeNativeControlForFillIfNeeded(Render.ISCEAdapter adapter)
+    {
+        if (_fillMethod == FillMethod.None || NativeObject == null || _fillNativeUpgradeAttempted)
+        {
+            return;
+        }
+
+        var probeAmount = Math.Clamp(_fillAmount, 0f, 1f);
+        if (adapter.TrySetImageFill(NativeObject, _fillMethod, _fillOrigin, _fillClockwise, probeAmount))
+        {
+            return;
+        }
+
+        // Fill is configured but current native control can't apply it (often created too early as Panel).
+        _fillNativeUpgradeAttempted = true;
+        Render.SCERenderContext.Instance.DisposeNative(this);
+        Render.SCERenderContext.Instance.CreateNativeControl(this);
+        Parent?.ChildStateChanged(this);
     }
 
     internal void ApplyNativeVisualState()

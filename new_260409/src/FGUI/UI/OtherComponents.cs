@@ -669,14 +669,8 @@ public class GProgressBar : GComponent
     {
         if (barObject is GImage image && image.FillMethod != FillMethod.None)
         {
-            if (image.FillMethod == FillMethod.Horizontal || image.FillMethod == FillMethod.Vertical)
-            {
-                image.FillAmount = amount;
-                return true;
-            }
-
-            // Fallback: unsupported fill method (e.g. radial*) should use width/height based progress.
-            return false;
+            image.FillAmount = amount;
+            return true;
         }
 
         return false;
@@ -698,6 +692,9 @@ public class GProgressBar : GComponent
 
 public class GSlider : GComponent
 {
+    private const bool EnableSliderDiagLogs = true;
+    private const int SliderDiagLogLimit = 160;
+    private static int _sliderDiagLogCount;
     private const float MinRenderableBarWidth = 1f;
     private float _min, _max = 100, _value = 50;
     private bool _wholeNumbers;
@@ -747,15 +744,22 @@ public class GSlider : GComponent
             _barStartY = _barObjectV.Y;
         }
 
-        // SCE暂时没有slider原生控件。
-        // 先停用 FGUI Slider 的拖拽/点击交互绑定，仅保留静态显示与数值刷新。
-        // if (_gripObject != null)
-        // {
-        //     _gripObject.OnTouchBegin.Add(OnGripTouchBegin);
-        //     _gripObject.OnTouchMove.Add(OnGripTouchMove);
-        //     _gripObject.OnTouchEnd.Add(OnGripTouchEnd);
-        // }
-        // OnTouchBegin.Add(OnBarTouchBegin);
+        // SCE 侧按“bar + grip”组合语义实现 slider：
+        // grip 的坐标跟随 bar 已绘制长度边缘，支持拖拽与点击跳转。
+        if (_gripObject != null)
+        {
+            _gripObject.OnTouchBegin.Add(OnGripTouchBegin);
+            _gripObject.OnTouchMove.Add(OnGripTouchMove);
+            _gripObject.OnTouchEnd.Add(OnGripTouchEnd);
+        }
+        OnTouchBegin.Add(OnBarTouchBegin);
+        LogSliderDiag(
+            "[FGUI][SLIDER][BIND] name={Name} hasGrip={HasGrip} hasBarH={HasBarH} hasBarV={HasBarV} changeOnClick={ChangeOnClick}",
+            Name,
+            _gripObject != null,
+            _barObjectH != null,
+            _barObjectV != null,
+            _changeOnClick);
 
         var buffer = PackageItem?.RawData;
         if (buffer != null && buffer.Seek(0, 6))
@@ -904,18 +908,40 @@ public class GSlider : GComponent
     private void OnGripTouchBegin(EventContext ctx)
     {
         if (!TryGetPointerPosition(ctx, out var point))
+        {
+            LogSliderDiag("[FGUI][SLIDER][BEGIN] name={Name} skip=no-pointer", Name);
             return;
+        }
 
         _dragging = true;
         _clickPos = ScreenToLocal(point);
         _clickPercent = _max > _min ? (_value - _min) / (_max - _min) : 0f;
+        LogSliderDiag(
+            "[FGUI][SLIDER][BEGIN] name={Name} raw={RawX:0.##},{RawY:0.##} local={LocalX:0.##},{LocalY:0.##} clickPercent={ClickPercent:0.###} bar={BarW:0.##}x{BarH:0.##}",
+            Name,
+            point.X,
+            point.Y,
+            _clickPos.X,
+            _clickPos.Y,
+            _clickPercent,
+            _barMaxWidth,
+            _barMaxHeight);
         ctx.StopPropagation();
     }
 
     private void OnGripTouchMove(EventContext ctx)
     {
-        if (!_dragging || !TryGetPointerPosition(ctx, out var point))
+        if (!_dragging)
+        {
+            LogSliderDiag("[FGUI][SLIDER][MOVE] name={Name} skip=not-dragging", Name);
             return;
+        }
+
+        if (!TryGetPointerPosition(ctx, out var point))
+        {
+            LogSliderDiag("[FGUI][SLIDER][MOVE] name={Name} skip=no-pointer", Name);
+            return;
+        }
 
         var pt = ScreenToLocal(point);
         float deltaX = pt.X - _clickPos.X;
@@ -932,11 +958,22 @@ public class GSlider : GComponent
         else if (_barObjectV != null && _barMaxHeight > 0)
             percent += deltaY / _barMaxHeight;
 
+        LogSliderDiag(
+            "[FGUI][SLIDER][MOVE] name={Name} raw={RawX:0.##},{RawY:0.##} local={LocalX:0.##},{LocalY:0.##} delta={DX:0.##},{DY:0.##} percent={Percent:0.###}",
+            Name,
+            point.X,
+            point.Y,
+            pt.X,
+            pt.Y,
+            deltaX,
+            deltaY,
+            percent);
         UpdateWithPercent(percent, true);
     }
 
     private void OnGripTouchEnd(EventContext ctx)
     {
+        LogSliderDiag("[FGUI][SLIDER][END] name={Name} value={Value:0.###}", Name, _value);
         _dragging = false;
         DispatchEvent("onGripTouchEnd", null);
     }
@@ -944,17 +981,36 @@ public class GSlider : GComponent
     private void OnBarTouchBegin(EventContext ctx)
     {
         if (!_changeOnClick || _gripObject == null || !TryGetPointerPosition(ctx, out var point))
+        {
+            LogSliderDiag(
+                "[FGUI][SLIDER][BAR] name={Name} skip changeOnClick={ChangeOnClick} hasGrip={HasGrip}",
+                Name,
+                _changeOnClick,
+                _gripObject != null);
             return;
+        }
 
         var local = ScreenToLocal(point);
         float percent = _max > _min ? (_value - _min) / (_max - _min) : 0f;
-        float delta = 0f;
         if (_barObjectH != null && _barMaxWidth > 0)
-            delta = (local.X - _gripObject.X - _gripObject.Width * 0.5f) / _barMaxWidth;
+        {
+            var localPos = (local.X - _barStartX) / _barMaxWidth;
+            percent = _reverse ? (1f - localPos) : localPos;
+        }
         else if (_barObjectV != null && _barMaxHeight > 0)
-            delta = (local.Y - _gripObject.Y - _gripObject.Height * 0.5f) / _barMaxHeight;
+        {
+            var localPos = (local.Y - _barStartY) / _barMaxHeight;
+            percent = _reverse ? (1f - localPos) : localPos;
+        }
 
-        percent = _reverse ? (percent - delta) : (percent + delta);
+        LogSliderDiag(
+            "[FGUI][SLIDER][BAR] name={Name} raw={RawX:0.##},{RawY:0.##} local={LocalX:0.##},{LocalY:0.##} percent={Percent:0.###}",
+            Name,
+            point.X,
+            point.Y,
+            local.X,
+            local.Y,
+            percent);
         UpdateWithPercent(percent, true);
     }
 
@@ -987,6 +1043,17 @@ public class GSlider : GComponent
 
         point = default;
         return false;
+    }
+
+    private static void LogSliderDiag(string message, params object?[] args)
+    {
+        if (!EnableSliderDiagLogs || _sliderDiagLogCount >= SliderDiagLogLimit)
+        {
+            return;
+        }
+
+        _sliderDiagLogCount++;
+        Game.Logger.LogWarning(message, args);
     }
 }
 

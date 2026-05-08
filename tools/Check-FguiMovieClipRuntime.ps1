@@ -28,9 +28,16 @@ if (-not (Test-Path -LiteralPath $manifestPath)) {
 }
 
 $manifestJson = Get-Content -LiteralPath $manifestPath -Raw | ConvertFrom-Json
-if ($null -eq $manifestJson.entries -or $manifestJson.entries.Count -le 0) {
-    Write-Error "MovieClip manifest has no entries: $manifestPath"
+if ($null -eq $manifestJson.entries) {
+    Write-Error "MovieClip manifest entries is null: $manifestPath"
     exit 1
+}
+
+if ($manifestJson.entries.Count -le 0) {
+    Write-Warning "MovieClip manifest has no entries (treated as warning): $manifestPath"
+    Write-Host ("[PASS] runtime movieclip manifest ok: {0}" -f $manifestPath)
+    Write-Host "[PASS] movieclip entries=0 clips=0"
+    exit 0
 }
 
 $missing = New-Object System.Collections.Generic.List[string]

@@ -1,5 +1,6 @@
 #if CLIENT
 using System.Drawing;
+using FairyGUI;
 
 namespace FairyGUI.Render;
 
@@ -14,6 +15,7 @@ public interface ISCEAdapter
     object CreateVirtualizingPanel();
     object CreateCanvas();
     object CreateCanvas(float width, float height);
+    object CreateFillImageControl();
     
     // Basic Properties
     void SetPosition(object control, float x, float y);
@@ -26,6 +28,7 @@ public interface ISCEAdapter
     void SetGrayed(object control, bool grayed);
     void SetBackgroundColor(object control, Color color);
     void SetBackgroundImage(object control, string imagePath);
+    bool TrySetImageFill(object control, FillMethod fillMethod, int fillOrigin, bool fillClockwise, float fillAmount);
     void SetCanvasImage(object control, string imagePath);
     void SetCanvasEllipse(object control, Color fillColor);
     void ClearCanvasRenderState(object control);

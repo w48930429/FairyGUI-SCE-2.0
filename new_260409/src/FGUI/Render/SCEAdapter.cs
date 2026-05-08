@@ -8,6 +8,7 @@ using GameUI.Control.Behavior;
 using GameUI.Enum;
 using GameCore.ResourceType;
 using GameCore.Platform.SDL;
+using FairyGUI;
 
 namespace FairyGUI.Render;
 
@@ -45,7 +46,15 @@ public class SCEAdapter : ISCEAdapter
     private readonly HashSet<Type> _flipTypedUnsupportedTypes = new();
     private readonly HashSet<Type> _flipUnsupportedLoggedTypes = new();
     private readonly Dictionary<Type, TintCapability> _tintCapabilityCache = new();
+    private readonly Dictionary<Type, ImageFillCapability> _imageFillCapabilityCache = new();
     private readonly HashSet<Type> _tintUnsupportedLoggedTypes = new();
+    private bool _fillProgressFallbackLogged;
+    private bool _fillProgressUnsupportedLogged;
+    private bool _fillProgressControlFallbackLogged;
+    private bool _fillProgressControlCreatedLogged;
+    private bool _fillProgressImageCompatLogged;
+    private static readonly Type? ProgressControlType = typeof(Control).Assembly.GetType("GameUI.Control.Primitive.Progress");
+    private static readonly ConstructorInfo? ProgressControlCtor = ResolveProgressControlConstructor();
     // Keep hierarchy tracking in adapter as last-line idempotency protection.
     private readonly Dictionary<object, object> _attachedParentByChild = new();
     private int _hierarchyDiagLogCount;
@@ -115,12 +124,56 @@ public class SCEAdapter : ISCEAdapter
         public PropertyInfo? Property { get; init; }
         public bool Unsupported { get; init; }
     }
+
+    private sealed class ImageFillCapability
+    {
+        public PropertyInfo? FillMethod { get; init; }
+        public PropertyInfo? FillOrigin { get; init; }
+        public PropertyInfo? FillClockwise { get; init; }
+        public PropertyInfo? FillAmount { get; init; }
+        public PropertyInfo? ProgressValue { get; init; }
+        public PropertyInfo? ProgressionMode { get; init; }
+        public PropertyInfo? ProgressRotation { get; init; }
+        public bool Unsupported { get; init; }
+    }
     
     public object CreatePanel()
     {
         var panel = new Panel();
         panel.Background(Color.Transparent);
         return panel;
+    }
+
+    public object CreateFillImageControl()
+    {
+        if (ProgressControlType != null && ProgressControlCtor != null)
+        {
+            try
+            {
+                var control = ProgressControlCtor.Invoke(Array.Empty<object>()) as Control;
+                if (control != null)
+                {
+                    control.Background(Color.Transparent);
+                    if (!_fillProgressControlCreatedLogged)
+                    {
+                        _fillProgressControlCreatedLogged = true;
+                        Game.Logger.LogInformation("[FGUI] fill image control created as {Type}", control.GetType().Name);
+                    }
+                    return control;
+                }
+            }
+            catch
+            {
+                // Fallback to Panel.
+            }
+        }
+
+        if (!_fillProgressControlFallbackLogged)
+        {
+            _fillProgressControlFallbackLogged = true;
+            Game.Logger.LogWarning("[FGUI] Progress control unavailable. fill image fallback to Panel.");
+        }
+        return CreatePanel();
     }
 
     public object CreateLabel()
@@ -562,11 +615,64 @@ public class SCEAdapter : ISCEAdapter
             var resolvedImagePath = ResolveControlImagePath(imagePath);
             // SCE Control has Image property for setting image path
             c.Image = resolvedImagePath;
+            var type = c.GetType();
+            if (type.Name.Contains("Progress", StringComparison.OrdinalIgnoreCase))
+            {
+                // Some Progress implementations render fill via mask/foreground image.
+                var compatApplied = false;
+                compatApplied |= TrySetStringProperty(type, c, "ImageMask", resolvedImagePath);
+                compatApplied |= TrySetStringProperty(type, c, "FillImage", resolvedImagePath);
+                compatApplied |= TrySetStringProperty(type, c, "ProgressImage", resolvedImagePath);
+                if (compatApplied && !_fillProgressImageCompatLogged)
+                {
+                    _fillProgressImageCompatLogged = true;
+                    Game.Logger.LogInformation("[FGUI] Progress image compat applied via ImageMask/FillImage.");
+                }
+            }
             if (EnableImagePipelineInfoLogs)
             {
                 Game.Logger.LogInformation("[FGUI] SetBackgroundImage: {Path}", resolvedImagePath);
             }
         }
+    }
+
+    public bool TrySetImageFill(object control, FillMethod fillMethod, int fillOrigin, bool fillClockwise, float fillAmount)
+    {
+        if (control is not Control c)
+        {
+            return false;
+        }
+
+        var type = c.GetType();
+        if (!_imageFillCapabilityCache.TryGetValue(type, out var capability))
+        {
+            capability = ResolveImageFillCapability(type);
+            _imageFillCapabilityCache[type] = capability;
+        }
+
+        if (capability.Unsupported)
+        {
+            return false;
+        }
+
+        var appliedAny = false;
+        appliedAny |= TryAssignFillValue(c, capability.FillMethod, fillMethod);
+        appliedAny |= TryAssignFillValue(c, capability.FillOrigin, fillOrigin);
+        appliedAny |= TryAssignFillValue(c, capability.FillClockwise, fillClockwise);
+        appliedAny |= TryAssignFillValue(c, capability.FillAmount, Math.Clamp(fillAmount, 0f, 1f));
+        var progressApplied = TryApplyProgressFill(c, capability, fillMethod, fillOrigin, fillClockwise, fillAmount);
+        if (progressApplied && !_fillProgressFallbackLogged)
+        {
+            _fillProgressFallbackLogged = true;
+            Game.Logger.LogInformation("[FGUI] image fill mapped to Progress(Value/ProgressionMode/Rotation).");
+        }
+        else if (!appliedAny && !progressApplied && !_fillProgressUnsupportedLogged && fillMethod != FillMethod.None)
+        {
+            _fillProgressUnsupportedLogged = true;
+            Game.Logger.LogWarning("[FGUI] native fill unsupported for type={Type}.", c.GetType().Name);
+        }
+
+        return appliedAny || progressApplied;
     }
 
     /// <summary>
@@ -1595,6 +1701,212 @@ public class SCEAdapter : ISCEAdapter
         }
 
         return false;
+    }
+
+    private static ImageFillCapability ResolveImageFillCapability(Type type)
+    {
+        var fillMethod = type.GetProperty("FillMethod", BindingFlags.Instance | BindingFlags.Public);
+        var fillOrigin = type.GetProperty("FillOrigin", BindingFlags.Instance | BindingFlags.Public);
+        var fillClockwise = type.GetProperty("FillClockwise", BindingFlags.Instance | BindingFlags.Public);
+        var fillAmount = type.GetProperty("FillAmount", BindingFlags.Instance | BindingFlags.Public);
+        var progressValue = type.GetProperty("Value", BindingFlags.Instance | BindingFlags.Public) ??
+                            type.GetProperty("Progress", BindingFlags.Instance | BindingFlags.Public);
+        var progressionMode = type.GetProperty("ProgressionMode", BindingFlags.Instance | BindingFlags.Public);
+        var progressRotation = type.GetProperty("ProgressRotation", BindingFlags.Instance | BindingFlags.Public);
+
+        var canFillMethod = fillMethod?.CanWrite == true;
+        var canFillOrigin = fillOrigin?.CanWrite == true;
+        var canFillClockwise = fillClockwise?.CanWrite == true;
+        var canFillAmount = fillAmount?.CanWrite == true;
+        var canProgressValue = progressValue?.CanWrite == true;
+        var canProgressionMode = progressionMode?.CanWrite == true;
+        var canProgressRotation = progressRotation?.CanWrite == true;
+
+        if (!canFillMethod && !canFillOrigin && !canFillClockwise && !canFillAmount &&
+            !canProgressValue && !canProgressionMode && !canProgressRotation)
+        {
+            return new ImageFillCapability { Unsupported = true };
+        }
+
+        return new ImageFillCapability
+        {
+            FillMethod = canFillMethod ? fillMethod : null,
+            FillOrigin = canFillOrigin ? fillOrigin : null,
+            FillClockwise = canFillClockwise ? fillClockwise : null,
+            FillAmount = canFillAmount ? fillAmount : null,
+            ProgressValue = canProgressValue ? progressValue : null,
+            ProgressionMode = canProgressionMode ? progressionMode : null,
+            ProgressRotation = canProgressRotation ? progressRotation : null,
+            Unsupported = false,
+        };
+    }
+
+    private static bool TryAssignFillValue(Control control, PropertyInfo? property, object value)
+    {
+        if (property?.CanWrite != true)
+        {
+            return false;
+        }
+
+        var targetType = property.PropertyType;
+        var actualType = Nullable.GetUnderlyingType(targetType) ?? targetType;
+        try
+        {
+            if (actualType.IsEnum)
+            {
+                object enumValue;
+                if (value.GetType().IsEnum)
+                {
+                    enumValue = Enum.ToObject(actualType, Convert.ToInt32(value));
+                }
+                else
+                {
+                    var numeric = Convert.ToInt32(value);
+                    enumValue = Enum.ToObject(actualType, numeric);
+                }
+
+                property.SetValue(control, enumValue);
+                return true;
+            }
+
+            var converted = Convert.ChangeType(value, actualType);
+            property.SetValue(control, converted);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private static ConstructorInfo? ResolveProgressControlConstructor()
+    {
+        if (ProgressControlType == null || !typeof(Control).IsAssignableFrom(ProgressControlType))
+        {
+            return null;
+        }
+
+        return ProgressControlType.GetConstructor(
+                   BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic,
+                   binder: null,
+                   types: Type.EmptyTypes,
+                   modifiers: null)
+               ?? ProgressControlType.GetConstructor(Type.EmptyTypes);
+    }
+
+    private static bool TryApplyProgressFill(
+        Control control,
+        ImageFillCapability capability,
+        FillMethod fillMethod,
+        int fillOrigin,
+        bool fillClockwise,
+        float fillAmount)
+    {
+        var appliedAny = false;
+
+        var modeName = ResolveProgressionMode(fillMethod, fillOrigin, fillClockwise);
+        if (capability.ProgressionMode?.PropertyType.IsEnum == true && !string.IsNullOrWhiteSpace(modeName))
+        {
+            appliedAny |= TryAssignEnumValueByName(control, capability.ProgressionMode, modeName!);
+        }
+
+        if (capability.ProgressRotation != null &&
+            TryResolveProgressRotation(fillMethod, fillOrigin, out var rotation))
+        {
+            appliedAny |= TryAssignFillValue(control, capability.ProgressRotation, rotation);
+        }
+
+        if (capability.ProgressValue != null)
+        {
+            appliedAny |= TryAssignFillValue(control, capability.ProgressValue, Math.Clamp(fillAmount, 0f, 1f));
+        }
+
+        return appliedAny;
+    }
+
+    private static string? ResolveProgressionMode(FillMethod fillMethod, int fillOrigin, bool fillClockwise)
+    {
+        return fillMethod switch
+        {
+            FillMethod.Horizontal => fillOrigin == (int)OriginHorizontal.Right ? "RightToLeft" : "LeftToRight",
+            FillMethod.Vertical => fillOrigin == (int)OriginVertical.Bottom ? "BottomToTop" : "TopToBottom",
+            // FGUI radial fill and native Progress use opposite winding in current adapter coordinate convention.
+            FillMethod.Radial90 or FillMethod.Radial180 or FillMethod.Radial360 => fillClockwise ? "CounterClockwise" : "Clockwise",
+            _ => null
+        };
+    }
+
+    private static bool TryResolveProgressRotation(FillMethod fillMethod, int fillOrigin, out float rotation)
+    {
+        // Match FGUI origin semantics with native Progress rotation.
+        switch (fillMethod)
+        {
+            case FillMethod.Radial360:
+                // Mirror vertical origin to align FGUI texture-space with native Progress space.
+                var radial360Origin = fillOrigin switch
+                {
+                    (int)Origin360.Top => (int)Origin360.Bottom,
+                    (int)Origin360.Bottom => (int)Origin360.Top,
+                    _ => fillOrigin
+                };
+
+                // Native Progress: 0=Top, 90=Right, 180=Bottom, -90=Left.
+                rotation = radial360Origin switch
+                {
+                    (int)Origin360.Top => 0f,
+                    (int)Origin360.Right => 90f,
+                    (int)Origin360.Bottom => 180f,
+                    (int)Origin360.Left => -90f,
+                    _ => 0f
+                };
+                return true;
+            case FillMethod.Radial180:
+                rotation = fillOrigin switch
+                {
+                    (int)Origin180.Top => -90f,
+                    (int)Origin180.Bottom => 90f,
+                    (int)Origin180.Left => 180f,
+                    _ => 0f,
+                };
+                return true;
+            case FillMethod.Radial90:
+                rotation = fillOrigin switch
+                {
+                    (int)Origin90.TopLeft => 180f,
+                    (int)Origin90.TopRight => -90f,
+                    (int)Origin90.BottomLeft => 90f,
+                    _ => 0f,
+                };
+                return true;
+            default:
+                rotation = 0f;
+                return false;
+        }
+    }
+
+    private static bool TryAssignEnumValueByName(Control control, PropertyInfo? property, string enumName)
+    {
+        if (property?.CanWrite != true)
+        {
+            return false;
+        }
+
+        var targetType = Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType;
+        if (!targetType.IsEnum)
+        {
+            return false;
+        }
+
+        try
+        {
+            var value = Enum.Parse(targetType, enumName, ignoreCase: true);
+            property.SetValue(control, value);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
     }
 
     private static bool TrySetBoolProperty(Type type, object instance, string propertyName, bool value)

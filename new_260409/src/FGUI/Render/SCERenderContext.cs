@@ -104,6 +104,12 @@ public class SCERenderContext
             return _adapter.CreateCanvas();
         }
 
+        if (image.FillMethod != FillMethod.None)
+        {
+            // Fill image should use a fill-capable native control to match ability cooldown visuals.
+            return _adapter.CreateFillImageControl();
+        }
+
         if (UIRuntime.ControlOnlyImageMode)
         {
             return _adapter.CreatePanel();
@@ -394,13 +400,22 @@ public class SCERenderContext
         var chars = token.ToCharArray();
         for (var i = 0; i < chars.Length; i++)
         {
-            if (Path.GetInvalidFileNameChars().Contains(chars[i]))
+            var ch = chars[i];
+            if (char.IsLetterOrDigit(ch) || ch == '_' || ch == '-' || ch == '.')
+            {
+                continue;
+            }
+
+            if (Path.GetInvalidFileNameChars().Contains(ch) || char.IsWhiteSpace(ch) || ch == '/')
             {
                 chars[i] = '_';
+                continue;
             }
+
+            chars[i] = '_';
         }
 
-        return new string(chars).Trim();
+        return new string(chars).Trim('_', ' ');
     }
 
     private static string ResolveSceImagePath(PackageItem atlasItem)
@@ -618,7 +633,7 @@ public class SCERenderContext
                 relayTarget.DispatchEventWithContext("onTouchBegin", relayContext, beginPoint);
             }
 
-            if (!ShouldCaptureForTouchMove(obj))
+            if (!ShouldCaptureForTouchMove(obj, relayTarget))
             {
                 return;
             }
@@ -634,14 +649,15 @@ public class SCERenderContext
                 return;
             }
 
+            var moveRecipient = relayTarget ?? obj;
             var movePoint = new PointF(x, y);
             var moveContext = new EventContext
             {
-                Sender = obj,
+                Sender = moveRecipient,
                 Type = "onTouchMove",
                 Data = movePoint
             };
-            obj.DispatchEventWithContext("onTouchMove", moveContext, movePoint);
+            moveRecipient.DispatchEventWithContext("onTouchMove", moveContext, movePoint);
         });
 
         _adapter.OnPointerRelease(native, () =>
@@ -764,11 +780,23 @@ public class SCERenderContext
                obj.HasEventListener("onRollOut");
     }
 
-    private static bool ShouldCaptureForTouchMove(GObject obj)
+    private static bool ShouldCaptureForTouchMove(GObject obj, GObject? relayTarget)
     {
-        if (!obj.HasEventListener("onTouchMove"))
+        var captureTarget = relayTarget ?? obj;
+        var hasMoveListener = obj.HasEventListener("onTouchMove") || (relayTarget?.HasEventListener("onTouchMove") ?? false);
+        if (!hasMoveListener)
         {
             return false;
+        }
+
+        if (captureTarget is GSlider || captureTarget is GScrollBar)
+        {
+            return true;
+        }
+
+        if (HasSliderAncestor(captureTarget))
+        {
+            return true;
         }
 
         if (obj is GButton || obj.Draggable)
@@ -781,14 +809,23 @@ public class SCERenderContext
             return false;
         }
 
-        // SCE暂时没有slider原生控件。
-        // Slider/ScrollBar 先不走底层捕获，避免与全局点击链路互相影响。
-        if (obj is GSlider || obj is GScrollBar)
+        return true;
+    }
+
+    private static bool HasSliderAncestor(GObject obj)
+    {
+        var current = obj.Parent;
+        while (current != null)
         {
-            return false;
+            if (current is GSlider || current is GScrollBar)
+            {
+                return true;
+            }
+
+            current = current.Parent;
         }
 
-        return true;
+        return false;
     }
 
     private static GObject? ResolveTouchRelayTarget(GObject obj)

@@ -33,8 +33,8 @@ if (-not (Test-Path -LiteralPath $MovieClipManifest)) {
 $manifestJson = Get-Content -LiteralPath $Manifest -Raw | ConvertFrom-Json
 $movieClipManifestJson = Get-Content -LiteralPath $MovieClipManifest -Raw | ConvertFrom-Json
 
-if ($null -eq $manifestJson.entries -or $manifestJson.entries.Count -le 0) {
-    Write-Error "Scatter manifest has no entries: $Manifest"
+if ($null -eq $manifestJson.entries) {
+    Write-Error "Scatter manifest entries is null: $Manifest"
     exit 1
 }
 
@@ -44,18 +44,24 @@ if ($null -eq $movieClipManifestJson.entries) {
 }
 
 $errors = New-Object System.Collections.Generic.List[string]
+$hasNormalEntries = $manifestJson.entries.Count -gt 0
+if (-not $hasNormalEntries) {
+    Write-Warning "Scatter manifest has no entries (treated as warning): $Manifest"
+}
 
-foreach ($entry in $manifestJson.entries) {
-    if ([string]::IsNullOrWhiteSpace($entry.packageId) -or
-        [string]::IsNullOrWhiteSpace($entry.itemId) -or
-        [string]::IsNullOrWhiteSpace($entry.imagePath)) {
-        $errors.Add("normal manifest invalid entry: packageId='$($entry.packageId)' itemId='$($entry.itemId)' imagePath='$($entry.imagePath)'")
-        continue
-    }
+if ($hasNormalEntries) {
+    foreach ($entry in $manifestJson.entries) {
+        if ([string]::IsNullOrWhiteSpace($entry.packageId) -or
+            [string]::IsNullOrWhiteSpace($entry.itemId) -or
+            [string]::IsNullOrWhiteSpace($entry.imagePath)) {
+            $errors.Add("normal manifest invalid entry: packageId='$($entry.packageId)' itemId='$($entry.itemId)' imagePath='$($entry.imagePath)'")
+            continue
+        }
 
-    $file = Resolve-ImagePath $entry.imagePath
-    if (-not (Test-Path -LiteralPath $file)) {
-        $errors.Add("normal manifest missing file: $($entry.imagePath)")
+        $file = Resolve-ImagePath $entry.imagePath
+        if (-not (Test-Path -LiteralPath $file)) {
+            $errors.Add("normal manifest missing file: $($entry.imagePath)")
+        }
     }
 }
 

@@ -1,6 +1,6 @@
 param(
     [string]$ProjectRoot = (Join-Path $PSScriptRoot "..\rpg_3d_2604140"),
-    [switch]$RequireItemBagEntry = $false
+    [switch]$RequireItemBagEntry = $true
 )
 
 $ErrorActionPreference = "Stop"
@@ -84,3 +84,4 @@ Write-Host "[PASS] FGUI migration reference check passed."
 Write-Host ("[PASS] ProjectRoot={0}" -f $ProjectRoot)
 Write-Host ("[PASS] ItemBagEntryPresent={0}" -f $hasItemBagEntry)
 exit 0
+
