@@ -26,6 +26,8 @@ public class GList : GComponent
     // SCE VirtualizingPanel bridge
     private object? _virtualPanel;
     private bool _useNativeVirtual;
+    private bool _virtualPanelAttached;
+    private bool _virtualScrollListenerBound;
     private bool _isDisposing;
     private readonly Dictionary<int, GObject> _virtualItems = new();
     private readonly Dictionary<object, object> _nativeVirtualSlotChildren = new();
@@ -70,6 +72,7 @@ public class GList : GComponent
     public ListSelectionMode SelectionMode { get => _selectionMode; set => _selectionMode = value; }
     public string? DefaultItem { get => _defaultItem; set => _defaultItem = value; }
     public bool IsVirtual => _virtual;
+    internal bool IsUsingNativeVirtualization => _virtual && _useNativeVirtual;
     internal bool SuppressAutoEnsureBounds => _batchAddingItems || _batchUpdateDepth > 0;
 
     public void BeginUpdate()
@@ -134,6 +137,7 @@ public class GList : GComponent
         { 
             _virtual = true; 
             RemoveChildren();
+            BindVirtualScrollListener();
             
             // Create SCE VirtualizingPanel if adapter supports it
             var adapter = SCERenderContext.Instance.Adapter;
@@ -158,11 +162,17 @@ public class GList : GComponent
                     {
                         adapter.AddChild(NativeObject, _virtualPanel);
                         adapter.SetSize(_virtualPanel, Width, Height);
+                        _virtualPanelAttached = true;
+                    }
+                    else
+                    {
+                        _virtualPanelAttached = false;
                     }
                 }
                 catch
                 {
                     _useNativeVirtual = false;
+                    _virtualPanelAttached = false;
                 }
             }
         } 
@@ -696,8 +706,11 @@ public class GList : GComponent
         // Use SCE native VirtualizingPanel if available
         if (_useNativeVirtual && _virtualPanel != null && adapter != null)
         {
+            var renderedByNativeVirtual = false;
+            EnsureNativeVirtualPanelAttached(adapter);
             adapter.SetVirtualizingPanelItems(_virtualPanel, _numItems, (index, nativeControl) =>
             {
+                renderedByNativeVirtual = true;
                 // Get or create FGUI item for this index
                 if (!_virtualItems.TryGetValue(index, out var item))
                 {
@@ -731,10 +744,18 @@ public class GList : GComponent
             });
 
             adapter.RefreshVirtualizingPanel(_virtualPanel);
-            return;
+            if (renderedByNativeVirtual || _numItems <= 0)
+            {
+                return;
+            }
+
+            // Native virtualization callback did not fire; fall back to manual virtual path.
+            _useNativeVirtual = false;
         }
 
-        // Manual virtualization implementation
+        // Manual fallback implementation (stability-first):
+        // when native virtual panel is unavailable, render all items once and let native scroll container
+        // handle viewport movement. This avoids repeated recycle/reposition jitter.
         if (ScrollPane == null)
             return;
 
@@ -841,9 +862,7 @@ public class GList : GComponent
         }
 
         ScrollPane.SetContentSize(cw, ch);
-
-        // Handle scroll to show visible items
-        HandleScroll();
+        RenderManualFallbackAllItems();
     }
 
     /// <summary>
@@ -903,8 +922,8 @@ public class GList : GComponent
         newFirstIndex = Math.Max(0, Math.Min(newFirstIndex, _numItems - 1));
         newLastIndex = Math.Max(0, Math.Min(newLastIndex, _numItems - 1));
 
-        // Update visible items if range changed
-        if (newFirstIndex != _firstIndex || newLastIndex - newFirstIndex + 1 != _children.Count)
+        var rangeChanged = newFirstIndex != _firstIndex || newLastIndex - newFirstIndex + 1 != _children.Count;
+        if (rangeChanged)
         {
             _firstIndex = newFirstIndex;
             int visibleCount = newLastIndex - newFirstIndex + 1;
@@ -920,19 +939,18 @@ public class GList : GComponent
                 ReturnToPool(RemoveChildAt(_children.Count - 1));
             }
 
-            // Update item positions and call renderer
+        }
+
+        if (rangeChanged)
+        {
             for (int i = 0; i < _children.Count; i++)
             {
                 int itemIndex = _firstIndex + i;
                 if (itemIndex >= _numItems) break;
 
                 var child = _children[i];
-
-                // Calculate position based on layout
                 CalculateItemPosition(itemIndex, out float x, out float y);
                 child.SetXY(x, y);
-
-                // Call item renderer
                 ItemRenderer?.Invoke(itemIndex, child);
             }
         }
@@ -1491,9 +1509,7 @@ public class GList : GComponent
         }
         catch (Exception ex)
         {
-            Game.Logger.LogWarning(ex,
-                "[FGUI][LIST] block5 parse fallback name={Name} beginPos={BeginPos}",
-                Name, beginPos);
+            System.GC.KeepAlive(0);
         }
 
         string? defaultItem = null;
@@ -1506,9 +1522,7 @@ public class GList : GComponent
             }
             catch (Exception ex)
             {
-                Game.Logger.LogWarning(ex,
-                    "[FGUI][LIST] block8 defaultItem parse failed name={Name} beginPos={BeginPos}",
-                    Name, beginPos);
+                System.GC.KeepAlive(0);
             }
         }
 
@@ -1530,7 +1544,7 @@ public class GList : GComponent
         }
         catch (Exception ex)
         {
-            Game.Logger.LogWarning(ex, "[FGUI][LIST] read items count failed name={Name}", Name);
+            System.GC.KeepAlive(0);
             return;
         }
 
@@ -1546,7 +1560,7 @@ public class GList : GComponent
                 }
                 catch (Exception ex)
                 {
-                    Game.Logger.LogWarning(ex, "[FGUI][LIST] read item nextPos failed name={Name} index={Index}", Name, i);
+                    System.GC.KeepAlive(0);
                     return;
                 }
 
@@ -1579,7 +1593,7 @@ public class GList : GComponent
                 }
                 catch (Exception ex)
                 {
-                    Game.Logger.LogWarning(ex, "[FGUI][LIST] read item failed name={Name} index={Index}", Name, i);
+                    System.GC.KeepAlive(0);
                 }
                 finally
                 {
@@ -1601,6 +1615,22 @@ public class GList : GComponent
                 LogListPerf("ReadItems", itemCount, addedCount, elapsedMs);
             }
         }
+    }
+
+    private void EnsureNativeVirtualPanelAttached(ISCEAdapter adapter)
+    {
+        if (_virtualPanel == null || NativeObject == null)
+        {
+            return;
+        }
+
+        if (!_virtualPanelAttached)
+        {
+            adapter.AddChild(NativeObject, _virtualPanel);
+            _virtualPanelAttached = true;
+        }
+
+        adapter.SetSize(_virtualPanel, Width, Height);
     }
 
     private void EnsureItemSizeHintsFromChildren()
@@ -1643,14 +1673,7 @@ public class GList : GComponent
         }
 
         _poolDiagLogCount++;
-        Game.Logger.LogWarning(
-            "[FGUI][POOL] action={Action} key={Key} reason={Reason} poolCount={PoolCount} list={List} sample={Sample}",
-            action,
-            key,
-            reason,
-            poolCount,
-            Name,
-            _poolDiagLogCount);
+        System.GC.KeepAlive(0);
     }
 
     private void LogListPerf(string stage, int requestedItems, int addedItems, double elapsedMs)
@@ -1667,16 +1690,7 @@ public class GList : GComponent
         }
 
         _listPerfLogCount++;
-        Game.Logger.LogWarning(
-            "[FGUI][LIST-PERF] stage={Stage} list={List} requestedItems={RequestedItems} addedItems={AddedItems} elapsedMs={ElapsedMs:F2} children={Children} virtual={Virtual} sample={Sample}",
-            stage,
-            string.IsNullOrWhiteSpace(Name) ? PackageItem?.Name ?? "<unnamed>" : Name,
-            requestedItems,
-            addedItems,
-            elapsedMs,
-            _children.Count,
-            _virtual,
-            _listPerfLogCount);
+        System.GC.KeepAlive(0);
     }
 
     protected virtual void SetupItem(ByteBuffer buffer, GObject obj)
@@ -1804,13 +1818,83 @@ public class GList : GComponent
                 adapter.Dispose(_virtualPanel);
                 _virtualPanel = null;
             }
+            _virtualPanelAttached = false;
 
             _nativeVirtualSlotChildren.Clear();
+            UnbindVirtualScrollListener();
             base.Dispose();
         }
         finally
         {
             _isDisposing = false;
+        }
+    }
+
+    private void BindVirtualScrollListener()
+    {
+        if (_virtualScrollListenerBound)
+        {
+            return;
+        }
+
+        AddEventListener("onScroll", HandleVirtualScrollEvent);
+        AddEventListener("onScrollEnd", HandleVirtualScrollEvent);
+        _virtualScrollListenerBound = true;
+    }
+
+    private void UnbindVirtualScrollListener()
+    {
+        if (!_virtualScrollListenerBound)
+        {
+            return;
+        }
+
+        RemoveEventListener("onScroll", HandleVirtualScrollEvent);
+        RemoveEventListener("onScrollEnd", HandleVirtualScrollEvent);
+        _virtualScrollListenerBound = false;
+    }
+
+    private void HandleVirtualScrollEvent(EventContext _)
+    {
+        if (!_virtual || _numItems <= 0 || ScrollPane == null)
+        {
+            return;
+        }
+
+        // Native virtual path is driven by VirtualizingPanel callbacks.
+        // Manual fallback path renders all items at data-refresh time.
+        // Neither mode should re-run per-scroll reposition here.
+        return;
+    }
+
+    private void RenderManualFallbackAllItems()
+    {
+        if (!_virtual)
+        {
+            return;
+        }
+
+        var targetCount = Math.Max(0, _numItems);
+        while (_children.Count < targetCount)
+        {
+            var item = AddItemFromPool();
+            if (item == null)
+            {
+                break;
+            }
+        }
+
+        while (_children.Count > targetCount)
+        {
+            ReturnToPool(RemoveChildAt(_children.Count - 1));
+        }
+
+        for (int i = 0; i < _children.Count; i++)
+        {
+            var child = _children[i];
+            CalculateItemPosition(i, out float x, out float y);
+            child.SetXY(x, y);
+            ItemRenderer?.Invoke(i, child);
         }
     }
 

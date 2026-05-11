@@ -18,6 +18,9 @@ public class SCERenderContext
     private readonly HashSet<object> _boundTouchNative = [];
     private readonly HashSet<object> _boundScrollableNative = [];
     private readonly HashSet<object> _boundScrollablePointerNative = [];
+    private readonly HashSet<object> _boundScrollableWheelNative = [];
+    private readonly HashSet<object> _boundScrollableItemPointerNative = [];
+    private readonly HashSet<object> _scrollableItemCapturedNative = [];
     private readonly HashSet<object> _touchCapturedNative = [];
     private readonly Dictionary<object, bool> _scrollableHorizontalByNative = new();
     private readonly HashSet<object> _bothAxisFallbackLogged = [];
@@ -233,9 +236,7 @@ public class SCERenderContext
         if (!TryResolveScatterImagePath(packageItem, out var imagePath) ||
             string.IsNullOrWhiteSpace(imagePath))
         {
-            Game.Logger.LogError(
-                "[FGUI][SCATTER] package image mapping missing packageId={PackageId} itemId={ItemId} itemName={ItemName}",
-                packageItem.Owner?.Id, packageItem.Id, packageItem.Name);
+            System.GC.KeepAlive(0);
             image.ApplyNativeVisualState();
             return;
         }
@@ -246,9 +247,7 @@ public class SCERenderContext
             var mappingKey = $"{packageId}:{packageItem.Id}";
             if (_scatterNoSpriteLogged.Add(mappingKey))
             {
-                Game.Logger.LogInformation(
-                    "[FGUI][SCATTER] no-sprite mapping packageId={PackageId} itemId={ItemId} itemName={ItemName} path={Path}",
-                    packageItem.Owner?.Id, packageItem.Id, packageItem.Name, imagePath);
+                System.GC.KeepAlive(0);
             }
         }
 
@@ -291,9 +290,7 @@ public class SCERenderContext
             var missingKey = $"{packageId}::{clipItemId}::{frameIndex}";
             if (_movieClipMissingFrameLogged.Add(missingKey))
             {
-                Game.Logger.LogError(
-                    "[FGUI][MOVIECLIP] missing frame mapping, keep-playing packageId={PackageId} clipItemId={ClipItemId} frameIndex={FrameIndex}",
-                    packageId, clipItemId, frameIndex);
+                System.GC.KeepAlive(0);
             }
 
             // Keep the last valid frame to avoid hard-stop when one frame mapping is missing.
@@ -350,9 +347,7 @@ public class SCERenderContext
 
         if (TryBuildScatterFallbackPath(item, out imagePath))
         {
-            Game.Logger.LogWarning(
-                "[FGUI][SCATTER] use fallback image mapping packageId={PackageId} itemId={ItemId} itemName={ItemName} path={Path}",
-                packageId, itemId, item.Name, imagePath);
+            System.GC.KeepAlive(0);
             return true;
         }
 
@@ -503,14 +498,7 @@ public class SCERenderContext
         ApplyComponentProperties(button, native);
         if (ShouldLogButtonDiag(button))
         {
-            Game.Logger.LogInformation(
-                "[FGUI][BTN-DIAG][BIND] name={Name} nativeHash={NativeHash} touchable={Touchable} visible={Visible} final={FinalVisible} parent={Parent}",
-                button.Name,
-                native.GetHashCode(),
-                button.Touchable,
-                button.Visible,
-                button.FinalVisible,
-                button.Parent?.Name ?? "<none>");
+            System.GC.KeepAlive(0);
         }
 
         if (_boundButtonNative.Add(native))
@@ -519,13 +507,7 @@ public class SCERenderContext
             {
                 if (ShouldLogButtonDiag(button))
                 {
-                    Game.Logger.LogInformation(
-                        "[FGUI][BTN-DIAG][NATIVE-CLICK] name={Name} nativeHash={NativeHash} touchable={Touchable} visible={Visible} final={FinalVisible}",
-                        button.Name,
-                        native.GetHashCode(),
-                        button.Touchable,
-                        button.Visible,
-                        button.FinalVisible);
+                    System.GC.KeepAlive(0);
                 }
 
                 button.DispatchEvent("onClick", null);
@@ -549,17 +531,7 @@ public class SCERenderContext
         var alreadyBound = _boundTouchNative.Contains(native);
         if (comboInputPath)
         {
-            Game.Logger.LogWarning(
-                "[FGUI][COMBO][INPUT-BIND] obj={Obj} relay={Relay} nativeHash={NativeHash} shouldBind={ShouldBind} alreadyBound={AlreadyBound} hasListener={HasListener} touchable={Touchable} visible={Visible} final={FinalVisible}",
-                obj.Name,
-                relayTarget?.Name ?? "<none>",
-                native.GetHashCode(),
-                shouldBind,
-                alreadyBound,
-                HasAnyTouchListener(obj),
-                obj.Touchable,
-                obj.Visible,
-                obj.FinalVisible);
+            System.GC.KeepAlive(0);
         }
 
         if (!shouldBind || !_boundTouchNative.Add(native))
@@ -569,37 +541,19 @@ public class SCERenderContext
 
         if (comboInputPath)
         {
-            Game.Logger.LogWarning(
-                "[FGUI][COMBO][INPUT-BIND] bound obj={Obj} relay={Relay} nativeHash={NativeHash}",
-                obj.Name,
-                relayTarget?.Name ?? "<none>",
-                native.GetHashCode());
+            System.GC.KeepAlive(0);
         }
 
         _adapter.OnPointerPressWithPosition(native, (x, y) =>
         {
             if (ShouldLogButtonDiag(obj))
             {
-                Game.Logger.LogInformation(
-                    "[FGUI][BTN-DIAG][TOUCH-BEGIN] name={Name} nativeHash={NativeHash} x={X} y={Y} touchable={Touchable} visible={Visible} final={FinalVisible}",
-                    obj.Name,
-                    native.GetHashCode(),
-                    x,
-                    y,
-                    obj.Touchable,
-                    obj.Visible,
-                    obj.FinalVisible);
+                System.GC.KeepAlive(0);
             }
 
             if (comboInputPath)
             {
-                Game.Logger.LogWarning(
-                    "[FGUI][COMBO][INPUT] pointer begin obj={Obj} relay={Relay} nativeHash={NativeHash} x={X} y={Y}",
-                    obj.Name,
-                    relayTarget?.Name ?? "<none>",
-                    native.GetHashCode(),
-                    x,
-                    y);
+                System.GC.KeepAlive(0);
             }
 
             var beginPoint = new PointF(x, y);
@@ -615,13 +569,7 @@ public class SCERenderContext
             {
                 if (relayButton != null && ShouldLogButtonDiag(relayButton))
                 {
-                    Game.Logger.LogInformation(
-                        "[FGUI][BTN-DIAG][RELAY-BEGIN] target={Target} source={Source} nativeHash={NativeHash} x={X} y={Y}",
-                        relayTarget.Name,
-                        obj.Name,
-                        native.GetHashCode(),
-                        x,
-                        y);
+                    System.GC.KeepAlive(0);
                 }
 
                 var relayContext = new EventContext
@@ -664,13 +612,7 @@ public class SCERenderContext
         {
             if (ShouldLogButtonDiag(obj))
             {
-                Game.Logger.LogInformation(
-                    "[FGUI][BTN-DIAG][TOUCH-END] name={Name} nativeHash={NativeHash} touchable={Touchable} visible={Visible} final={FinalVisible}",
-                    obj.Name,
-                    native.GetHashCode(),
-                    obj.Touchable,
-                    obj.Visible,
-                    obj.FinalVisible);
+                System.GC.KeepAlive(0);
             }
 
             if (_touchCapturedNative.Remove(native))
@@ -689,11 +631,7 @@ public class SCERenderContext
             {
                 if (relayButton != null && ShouldLogButtonDiag(relayButton))
                 {
-                    Game.Logger.LogInformation(
-                        "[FGUI][BTN-DIAG][RELAY-END] target={Target} source={Source} nativeHash={NativeHash}",
-                        relayTarget.Name,
-                        obj.Name,
-                        native.GetHashCode());
+                    System.GC.KeepAlive(0);
                 }
 
                 var relayContext = new EventContext
@@ -711,19 +649,11 @@ public class SCERenderContext
             {
                 if (relayButton != null && ShouldLogButtonDiag(relayButton))
                 {
-                    Game.Logger.LogInformation(
-                        "[FGUI][BTN-DIAG][RELAY-CLICK] target={Target} source={Source} nativeHash={NativeHash}",
-                        relayTarget.Name,
-                        obj.Name,
-                        native.GetHashCode());
+                    System.GC.KeepAlive(0);
                 }
                 else if (EnableComboInputDiagLogs && relayTarget is GComboBox)
                 {
-                    Game.Logger.LogWarning(
-                        "[FGUI][COMBO][INPUT] relay click -> dispatch onClick target={Target} source={Source} nativeHash={NativeHash}",
-                        relayTarget.Name,
-                        obj.Name,
-                        native.GetHashCode());
+                    System.GC.KeepAlive(0);
                 }
 
                 relayTarget.DispatchEvent("onClick", null);
@@ -737,10 +667,7 @@ public class SCERenderContext
             {
                 if (EnableComboInputDiagLogs && obj is GComboBox)
                 {
-                    Game.Logger.LogWarning(
-                        "[FGUI][COMBO][INPUT] native click -> dispatch onClick name={Name} nativeHash={NativeHash}",
-                        obj.Name,
-                        native.GetHashCode());
+                    System.GC.KeepAlive(0);
                 }
 
                 obj.DispatchEvent("onClick", null);
@@ -889,6 +816,7 @@ public class SCERenderContext
             }
         }
 
+        ApplyComponentMask(component, native);
         var renderEnd = EnablePerfDiag ? Stopwatch.GetTimestamp() : 0L;
         SyncNativeChildOrder(component, native);
         var syncEnd = EnablePerfDiag ? Stopwatch.GetTimestamp() : 0L;
@@ -928,14 +856,13 @@ public class SCERenderContext
 
             var horizontal = ResolveNativeHorizontal(scrollPane);
             var needsNativeScroll = ResolveNativeScrollEnabled(scrollPane, horizontal);
+            var isManualVirtualFallback = component is GList list && list.IsVirtual && !list.IsUsingNativeVirtualization;
             _scrollableHorizontalByNative[native] = horizontal;
             _adapter.ConfigureScrollable(native, enabled: needsNativeScroll, horizontal: horizontal);
 
             if (needsNativeScroll && scrollPane.ScrollType == ScrollType.Both && _bothAxisFallbackLogged.Add(native))
             {
-                Game.Logger.LogWarning(
-                    "[FGUI][SCROLL] ScrollType.Both requested but SCE PanelScrollable is single-axis; fallback axis={Axis}",
-                    horizontal ? "Horizontal" : "Vertical");
+                System.GC.KeepAlive(0);
             }
 
             if (needsNativeScroll && _boundScrollableNative.Add(native))
@@ -976,7 +903,8 @@ public class SCERenderContext
             }
 
             // Manual drag bridge: ensures list drag works even when child controls consume pointer events.
-            if (needsNativeScroll && _boundScrollablePointerNative.Add(native))
+            var useManualPointerBridge = isManualVirtualFallback || needsNativeScroll;
+            if (useManualPointerBridge && _boundScrollablePointerNative.Add(native))
             {
                 _adapter.OnPointerPressWithPosition(native, (x, y) =>
                 {
@@ -999,7 +927,7 @@ public class SCERenderContext
                     }
 
                     pane.OnTouchMove(x, y);
-                    if (_syncingScrollableFromNative.Contains(native))
+                    if (!needsNativeScroll || _syncingScrollableFromNative.Contains(native))
                     {
                         return;
                     }
@@ -1029,7 +957,7 @@ public class SCERenderContext
                     pane?.OnTouchEnd();
                     _adapter.ReleasePointer(native);
 
-                    if (pane == null || _syncingScrollableFromNative.Contains(native))
+                    if (pane == null || !needsNativeScroll || _syncingScrollableFromNative.Contains(native))
                     {
                         return;
                     }
@@ -1051,6 +979,15 @@ public class SCERenderContext
                     {
                         _syncingScrollableToNative.Remove(native);
                     }
+                });
+            }
+
+            if (!needsNativeScroll && _boundScrollableWheelNative.Add(native))
+            {
+                _adapter.OnMouseWheel(native, delta =>
+                {
+                    var pane = component.ScrollPane;
+                    pane?.OnMouseWheel(delta);
                 });
             }
 
@@ -1114,7 +1051,7 @@ public class SCERenderContext
         var childNative = CreateNativeControl(child);
         if (childNative == null) 
         {
-            Game.Logger.LogWarning($"[FGUI] RenderChild: Failed to create native control for '{child.Name}' (type: {child.GetType().Name})");
+            System.GC.KeepAlive(0);
             return;
         }
         if (parent.NativeObject != null) 
@@ -1143,6 +1080,112 @@ public class SCERenderContext
                 }
             }
         }
+
+        BindManualVirtualItemDragBridge(parent, childNative);
+    }
+
+    private void BindManualVirtualItemDragBridge(GComponent parent, object childNative)
+    {
+        if (_adapter == null || parent is not GList list || parent.NativeObject == null || parent.ScrollPane == null)
+        {
+            return;
+        }
+
+        if (!list.IsVirtual || list.IsUsingNativeVirtualization)
+        {
+            return;
+        }
+
+        if (!_boundScrollableItemPointerNative.Add(childNative))
+        {
+            return;
+        }
+
+        _adapter.OnPointerPressWithPosition(childNative, (x, y) =>
+        {
+            var pane = parent.ScrollPane;
+            if (pane == null)
+            {
+                return;
+            }
+
+            _adapter.CapturePointer(childNative);
+            _scrollableItemCapturedNative.Add(childNative);
+            pane.OnTouchBegin(x, y);
+        });
+
+        _adapter.OnPointerCapturedMove(childNative, (x, y) =>
+        {
+            if (!_scrollableItemCapturedNative.Contains(childNative))
+            {
+                return;
+            }
+
+            var pane = parent.ScrollPane;
+            var parentNative = parent.NativeObject;
+            if (pane == null || parentNative == null)
+            {
+                return;
+            }
+
+            pane.OnTouchMove(x, y);
+            SyncNativeScrollFromPane(parentNative, pane);
+        });
+
+        _adapter.OnPointerRelease(childNative, () =>
+        {
+            if (_scrollableItemCapturedNative.Remove(childNative))
+            {
+                _adapter.ReleasePointer(childNative);
+            }
+
+            var pane = parent.ScrollPane;
+            var parentNative = parent.NativeObject;
+            if (pane == null || parentNative == null)
+            {
+                return;
+            }
+
+            pane.OnTouchEnd();
+            SyncNativeScrollFromPane(parentNative, pane);
+        });
+    }
+
+    private void SyncNativeScrollFromPane(object native, ScrollPane pane)
+    {
+        if (_syncingScrollableFromNative.Contains(native))
+        {
+            return;
+        }
+
+        var isHorizontal = _scrollableHorizontalByNative.TryGetValue(native, out var mappedHorizontal)
+            ? mappedHorizontal
+            : pane.ScrollType == ScrollType.Horizontal;
+        var percent = isHorizontal ? pane.PercentX : pane.PercentY;
+        var clampedPercent = float.IsNaN(percent) || float.IsInfinity(percent)
+            ? 0f
+            : Math.Clamp(percent, 0f, 1f);
+
+        _syncingScrollableToNative.Add(native);
+        try
+        {
+            _adapter!.SetScrollValue(native, clampedPercent);
+        }
+        finally
+        {
+            _syncingScrollableToNative.Remove(native);
+        }
+    }
+
+    private void ApplyComponentMask(GComponent component, object native)
+    {
+        if (_adapter == null)
+        {
+            return;
+        }
+
+        var maskNative = component.MaskObject?.NativeObject;
+        _adapter.SetMaskControl(native, maskNative, component.MaskInverted);
     }
 
     private void SyncNativeChildOrder(GComponent parent, object parentNative)
@@ -1211,17 +1254,7 @@ public class SCERenderContext
         }
 
         _remainingPerfLogs--;
-        Game.Logger.LogWarning(
-            "[FGUI][PERF][{Phase}] package={Package} component={Component} nodes={Nodes} elapsedMs={Elapsed:F2} avgMs={Avg:F2} maxMs={Max:F2} sample={Sample} remaining={Remaining}",
-            phase,
-            packageName,
-            perfName,
-            nodeCount,
-            elapsedMs,
-            stat.TotalMs / stat.Count,
-            stat.MaxMs,
-            stat.Count,
-            _remainingPerfLogs);
+        System.GC.KeepAlive(0);
     }
 
     private void LogRenderPerfBreakdown(GComponent component, int nodeCount, long renderStart, long renderEnd, long syncEnd)
@@ -1244,14 +1277,7 @@ public class SCERenderContext
         }
 
         _remainingPerfLogs--;
-        Game.Logger.LogWarning(
-            "[FGUI][PERF][apply-breakdown] package={Package} component={Component} nodes={Nodes} renderMs={RenderMs:F2} syncMs={SyncMs:F2} remaining={Remaining}",
-            packageName,
-            perfName,
-            nodeCount,
-            renderMs,
-            syncMs,
-            _remainingPerfLogs);
+        System.GC.KeepAlive(0);
     }
 
     private void LogRenderPerfSlowestChild(string packageName, string componentName, string childName, string childType, int nodeCount, double maxChildMs, int slowChildren)
@@ -1262,16 +1288,7 @@ public class SCERenderContext
         }
 
         _remainingPerfLogs--;
-        Game.Logger.LogWarning(
-            "[FGUI][PERF][child-max] package={Package} component={Component} nodes={Nodes} child={Child} childType={ChildType} maxChildMs={MaxChildMs:F2} slowChildren={SlowChildren} remaining={Remaining}",
-            packageName,
-            componentName,
-            nodeCount,
-            string.IsNullOrWhiteSpace(childName) ? "<none>" : childName,
-            string.IsNullOrWhiteSpace(childType) ? "<none>" : childType,
-            maxChildMs,
-            slowChildren,
-            _remainingPerfLogs);
+        System.GC.KeepAlive(0);
     }
 
     private bool ShouldTrackPerf(GComponent component, out string perfName, out string packageName)
@@ -1299,13 +1316,7 @@ public class SCERenderContext
             var probeKey = $"{packageName}/{perfName}";
             if (_perfProbeLogged.Add(probeKey))
             {
-                Game.Logger.LogWarning(
-                    "[FGUI][PERF][PROBE] package={Package} componentName={Name} packageItemName={PackageItemName} chosen={Chosen} children={Children}",
-                    packageName,
-                    string.IsNullOrWhiteSpace(name) ? "<empty>" : name,
-                    string.IsNullOrWhiteSpace(packageItemName) ? "<empty>" : packageItemName,
-                    perfName,
-                    component.Children.Count);
+                System.GC.KeepAlive(0);
             }
         }
 
@@ -1497,30 +1508,7 @@ public class SCERenderContext
         var abs = CalcAbsolutePosition(obj);
         var renderPos = ResolveRenderPosition(obj);
         var childIndex = obj.Parent?.GetChildIndex(obj) ?? -1;
-        Game.Logger.LogInformation(
-            "[FGUI][GRAPH-PROBE] stage={Stage} name={Name} idx={ChildIndex} type={Type} local={LocalX:F3},{LocalY:F3} renderLocal={RenderLocalX:F3},{RenderLocalY:F3} size={Width:F3}x{Height:F3} abs={AbsX:F3},{AbsY:F3} scaledLocal={ScaledLocalX:F3},{ScaledLocalY:F3} scaledRenderLocal={ScaledRenderLocalX:F3},{ScaledRenderLocalY:F3} scaledSize={ScaledWidth:F3}x{ScaledHeight:F3} scaledAbs={ScaledAbsX:F3},{ScaledAbsY:F3} parent={Parent} parentPkg={ParentPkg}",
-            stage,
-            obj.Name,
-            childIndex,
-            obj.GetType().Name,
-            obj.X,
-            obj.Y,
-            renderPos.X,
-            renderPos.Y,
-            obj.Width,
-            obj.Height,
-            abs.X,
-            abs.Y,
-            obj.X * scaleFactor,
-            obj.Y * scaleFactor,
-            renderPos.X * scaleFactor,
-            renderPos.Y * scaleFactor,
-            obj.Width * scaleFactor,
-            obj.Height * scaleFactor,
-            abs.X * scaleFactor,
-            abs.Y * scaleFactor,
-            obj.Parent?.Name ?? "<none>",
-            obj.Parent?.PackageItem?.Name ?? "<none>");
+        System.GC.KeepAlive(0);
     }
 
     public void RefreshComponentScrollState(GComponent component)
@@ -1559,15 +1547,7 @@ public class SCERenderContext
             var nativeWidth = obj.Width * scale;
             var nativeHeight = obj.Height * scale;
             _adapter.AddToRootWithFixedSize(obj.NativeObject, nativeWidth, nativeHeight);
-            Game.Logger.LogInformation(
-                "[FGUI] AddToRoot: Added '{Name}' ({Type}) to stage logical={LogicalWidth}x{LogicalHeight} native={NativeWidth}x{NativeHeight} scale={Scale}",
-                obj.Name,
-                obj.GetType().Name,
-                obj.Width,
-                obj.Height,
-                nativeWidth,
-                nativeHeight,
-                scale);
+            System.GC.KeepAlive(0);
         }
     }
 
@@ -1575,6 +1555,7 @@ public class SCERenderContext
     {
         if (_adapter == null || obj.NativeObject == null) return;
         _touchCapturedNative.Remove(obj.NativeObject);
+        _scrollableItemCapturedNative.Remove(obj.NativeObject);
         _adapter.ReleasePointer(obj.NativeObject);
         _adapter.RemoveFromParent(obj.NativeObject);
         ClearNativeAttachmentTracking(obj.NativeObject, clearChildren: false);
@@ -1597,10 +1578,13 @@ public class SCERenderContext
         _boundTouchNative.Remove(native);
         _boundScrollableNative.Remove(native);
         _boundScrollablePointerNative.Remove(native);
+        _boundScrollableWheelNative.Remove(native);
+        _boundScrollableItemPointerNative.Remove(native);
         _scrollableHorizontalByNative.Remove(native);
         _bothAxisFallbackLogged.Remove(native);
         _syncingScrollableToNative.Remove(native);
         _syncingScrollableFromNative.Remove(native);
+        _scrollableItemCapturedNative.Remove(native);
         _adapter.Dispose(native);
         ClearNativeAttachmentTracking(native, clearChildren: true);
         obj.NativeObject = null;

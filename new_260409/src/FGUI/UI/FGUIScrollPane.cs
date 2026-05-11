@@ -1,6 +1,7 @@
 #if CLIENT
 using System.Drawing;
 using FairyGUI;
+using FairyGUI.Render;
 using FairyGUI.Utils;
 
 namespace FairyGUI;
@@ -599,6 +600,11 @@ public class ScrollPane
             if (newY < 0) newY *= PULL_RATIO;
             else if (newY > maxY) newY = maxY + (newY - maxY) * PULL_RATIO;
         }
+        else
+        {
+            newX = ClampX(newX);
+            newY = ClampY(newY);
+        }
         
         _xPos = newX;
         _yPos = newY;
@@ -749,9 +755,27 @@ public class ScrollPane
     {
         if (_contentWidth != width || _contentHeight != height)
         {
+            var oldOverflowX = Math.Max(0f, _contentWidth - _viewWidth);
+            var oldOverflowY = Math.Max(0f, _contentHeight - _viewHeight);
             _contentWidth = width;
             _contentHeight = height;
             SetPos(_xPos, _yPos, false);
+
+            // Content overflow state can change after data binding (e.g. virtual list NumItems update).
+            // Re-apply native scrollability only when scrollable-state flips, otherwise it can cause
+            // feedback loops in virtual list scroll syncing.
+            if (Owner?.NativeObject != null)
+            {
+                var newOverflowX = Math.Max(0f, _contentWidth - _viewWidth);
+                var newOverflowY = Math.Max(0f, _contentHeight - _viewHeight);
+                const float epsilon = 0.01f;
+                var wasScrollable = oldOverflowX > epsilon || oldOverflowY > epsilon;
+                var nowScrollable = newOverflowX > epsilon || newOverflowY > epsilon;
+                if (wasScrollable != nowScrollable)
+                {
+                    SCERenderContext.Instance.UpdateSize(Owner);
+                }
+            }
         }
     }
 

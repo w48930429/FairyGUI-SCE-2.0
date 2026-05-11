@@ -52,6 +52,7 @@ public interface ISCEAdapter
     void SetCornerRadius(object control, float radius);
     void SetZIndex(object control, int zIndex);
     void SetClipContent(object control, bool clip);
+    void SetMaskControl(object control, object? maskControl, bool inverted);
     void ConfigureScrollable(object control, bool enabled, bool horizontal);
     void SetScrollValue(object control, float value);
     void OnScrollChanged(object control, Action<float> handler);
@@ -70,6 +71,7 @@ public interface ISCEAdapter
     void OnPointerPress(object control, Action handler);
     void OnPointerPressWithPosition(object control, Action<float, float> handler);
     void OnPointerRelease(object control, Action handler);
+    void OnMouseWheel(object control, Action<float> handler);
     
     // Touch Behavior (Gestures)
     void EnableTouchBehavior(object control, TouchBehaviorConfig config);

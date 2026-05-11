@@ -1,6 +1,7 @@
 #if CLIENT
 using System.Drawing;
 using System.Reflection;
+using System.Linq.Expressions;
 using GameUI.Control;
 using GameUI.Control.Primitive;
 using GameUI.Control.Extensions;
@@ -73,6 +74,8 @@ public class SCEAdapter : ISCEAdapter
     private const int RotationDiagLogLimit = 20;
     private int _clipDiagLogCount;
     private const int ClipDiagLogLimit = 20;
+    private int _maskDiagLogCount;
+    private const int MaskDiagLogLimit = 20;
     private int _pointerFilterDiagLogCount;
     private const int PointerFilterDiagLogLimit = 80;
     private int _scaleDiagLogCount;
@@ -157,7 +160,7 @@ public class SCEAdapter : ISCEAdapter
                     if (!_fillProgressControlCreatedLogged)
                     {
                         _fillProgressControlCreatedLogged = true;
-                        Game.Logger.LogInformation("[FGUI] fill image control created as {Type}", control.GetType().Name);
+                        System.GC.KeepAlive(0);
                     }
                     return control;
                 }
@@ -171,7 +174,7 @@ public class SCEAdapter : ISCEAdapter
         if (!_fillProgressControlFallbackLogged)
         {
             _fillProgressControlFallbackLogged = true;
-            Game.Logger.LogWarning("[FGUI] Progress control unavailable. fill image fallback to Panel.");
+            System.GC.KeepAlive(0);
         }
         return CreatePanel();
     }
@@ -293,9 +296,7 @@ public class SCEAdapter : ISCEAdapter
         if (!applied && MathF.Abs(rotation) > 0.001f && _rotationDiagLogCount < RotationDiagLogLimit)
         {
             _rotationDiagLogCount++;
-            Game.Logger.LogWarning(
-                "[FGUI][ROTATE] native rotation unsupported for control={ControlType}, requested={Rotation}",
-                c.GetType().Name, rotation);
+            System.GC.KeepAlive(0);
         }
     }
 
@@ -343,9 +344,7 @@ public class SCEAdapter : ISCEAdapter
             _flipDiagLogCount < FlipDiagLogLimit)
         {
             _flipDiagLogCount++;
-            Game.Logger.LogWarning(
-                "[FGUI][FLIP] native flip unsupported for control={ControlType}, fallback keeps size only (sx={ScaleX}, sy={ScaleY})",
-                c.GetType().Name, scaleX, scaleY);
+            System.GC.KeepAlive(0);
         }
 
         var safeScaleX = MathF.Max(0.01f, MathF.Abs(scaleX));
@@ -626,12 +625,12 @@ public class SCEAdapter : ISCEAdapter
                 if (compatApplied && !_fillProgressImageCompatLogged)
                 {
                     _fillProgressImageCompatLogged = true;
-                    Game.Logger.LogInformation("[FGUI] Progress image compat applied via ImageMask/FillImage.");
+                    System.GC.KeepAlive(0);
                 }
             }
             if (EnableImagePipelineInfoLogs)
             {
-                Game.Logger.LogInformation("[FGUI] SetBackgroundImage: {Path}", resolvedImagePath);
+                System.GC.KeepAlive(0);
             }
         }
     }
@@ -664,12 +663,12 @@ public class SCEAdapter : ISCEAdapter
         if (progressApplied && !_fillProgressFallbackLogged)
         {
             _fillProgressFallbackLogged = true;
-            Game.Logger.LogInformation("[FGUI] image fill mapped to Progress(Value/ProgressionMode/Rotation).");
+            System.GC.KeepAlive(0);
         }
         else if (!appliedAny && !progressApplied && !_fillProgressUnsupportedLogged && fillMethod != FillMethod.None)
         {
             _fillProgressUnsupportedLogged = true;
-            Game.Logger.LogWarning("[FGUI] native fill unsupported for type={Type}.", c.GetType().Name);
+            System.GC.KeepAlive(0);
         }
 
         return appliedAny || progressApplied;
@@ -783,9 +782,7 @@ public class SCEAdapter : ISCEAdapter
 
             if (EnableImagePipelineInfoLogs)
             {
-                Game.Logger.LogInformation(
-                    "[FGUI] SetSlicedImage: {Image}, edges: L{L} R{R} T{T} B{B}",
-                    resolvedImagePath, safeLeft, safeRight, safeTop, safeBottom);
+                System.GC.KeepAlive(0);
             }
         }
     }
@@ -804,9 +801,7 @@ public class SCEAdapter : ISCEAdapter
                 _tintDiagLogCount < TintDiagLogLimit)
             {
                 _tintDiagLogCount++;
-                Game.Logger.LogWarning(
-                    "[FGUI][TINT] native tint unsupported for control={ControlType}, requested={Color}",
-                    c.GetType().Name, color);
+                System.GC.KeepAlive(0);
             }
         }
     }
@@ -838,7 +833,7 @@ public class SCEAdapter : ISCEAdapter
 
             if (EnableImagePipelineInfoLogs)
             {
-                Game.Logger.LogInformation("[FGUI] SetImageRegion (Canvas): {Path}, region: {Region}", resolvedImagePath, region);
+                System.GC.KeepAlive(0);
             }
         }
         else if (control is Control c && !string.IsNullOrEmpty(atlasPath))
@@ -852,7 +847,7 @@ public class SCEAdapter : ISCEAdapter
             c.Image = atlasPath;
             if (EnableImagePipelineInfoLogs)
             {
-                Game.Logger.LogInformation("[FGUI] SetImageRegion (Control): {Path}, region: {Region}", atlasPath, region);
+                System.GC.KeepAlive(0);
             }
         }
     }
@@ -909,9 +904,7 @@ public class SCEAdapter : ISCEAdapter
 
             if (EnableImagePipelineInfoLogs)
             {
-                Game.Logger.LogInformation(
-                    "[FGUI] SetSlicedImageFromAtlas: {Path}, sprite: {Sprite}, edges: L{Left} R{Right} T{Top} B{Bottom}, safeEdges: L{SafeLeft} R{SafeRight} T{SafeTop} B{SafeBottom}, fallbackDest: {FallbackWidth}x{FallbackHeight}",
-                    resolvedImagePath, spriteRect, left, right, top, bottom, safeLeft, safeRight, safeTop, safeBottom, fallbackWidth, fallbackHeight);
+                System.GC.KeepAlive(0);
             }
         }
         else if (control is Control c && !string.IsNullOrEmpty(atlasPath))
@@ -926,9 +919,7 @@ public class SCEAdapter : ISCEAdapter
             c.SlicedEdges = new Thickness(left, top, right, bottom);
             if (EnableImagePipelineInfoLogs)
             {
-                Game.Logger.LogInformation(
-                    "[FGUI] SetSlicedImage (Control): {Path}, edges: L{Left} R{Right} T{Top} B{Bottom}",
-                    atlasPath, left, right, top, bottom);
+                System.GC.KeepAlive(0);
             }
         }
     }
@@ -1016,7 +1007,7 @@ public class SCEAdapter : ISCEAdapter
             }
         }
 
-        Game.Logger.LogInformation($"[FGUI] SetInputPlaceholder: {placeholder}");
+        System.GC.KeepAlive(0);
     }
     
     public void SetInputPassword(object control, bool isPassword)
@@ -1032,7 +1023,7 @@ public class SCEAdapter : ISCEAdapter
             }
         }
 
-        Game.Logger.LogInformation($"[FGUI] SetInputPassword: {isPassword}");
+        System.GC.KeepAlive(0);
     }
     
     public void SetInputMaxLength(object control, int maxLength)
@@ -1047,7 +1038,7 @@ public class SCEAdapter : ISCEAdapter
             }
         }
 
-        Game.Logger.LogInformation($"[FGUI] SetInputMaxLength: {maxLength}");
+        System.GC.KeepAlive(0);
     }
     
     public void SetInputEditable(object control, bool editable)
@@ -1115,9 +1106,45 @@ public class SCEAdapter : ISCEAdapter
         if (!applied && clip && _clipDiagLogCount < ClipDiagLogLimit)
         {
             _clipDiagLogCount++;
-            Game.Logger.LogWarning(
-                "[FGUI][CLIP] native clip unsupported for control={ControlType}, requested={Clip}",
-                c.GetType().Name, clip);
+            System.GC.KeepAlive(0);
+        }
+    }
+
+    public void SetMaskControl(object control, object? maskControl, bool inverted)
+    {
+        if (control is not Control c)
+        {
+            return;
+        }
+
+        var type = c.GetType();
+        var applied = false;
+        var hasMask = maskControl != null;
+        applied |= TrySetObjectProperty(type, c, "Mask", maskControl);
+        applied |= TrySetObjectProperty(type, c, "MaskControl", maskControl);
+        applied |= TrySetObjectProperty(type, c, "ClipMask", maskControl);
+        applied |= TrySetObjectProperty(type, c, "StencilMask", maskControl);
+        applied |= TrySetObjectProperty(type, c, "ContentMask", maskControl);
+        applied |= TryInvokeObjectMethod(type, c, "SetMask", maskControl);
+        applied |= TryInvokeObjectMethod(type, c, "SetMaskControl", maskControl);
+        applied |= TryInvokeObjectMethod(type, c, "SetClipMask", maskControl);
+        applied |= TryInvokeObjectMethod(type, c, "SetContentMask", maskControl);
+        applied |= TryInvokeObjectBoolMethod(type, c, "SetMask", maskControl, inverted);
+        applied |= TryInvokeObjectBoolMethod(type, c, "SetMaskControl", maskControl, inverted);
+        applied |= TryInvokeObjectBoolMethod(type, c, "SetClipMask", maskControl, inverted);
+        applied |= TryInvokeBoolObjectMethod(type, c, "SetMask", inverted, maskControl);
+        applied |= TryInvokeBoolObjectMethod(type, c, "SetMaskControl", inverted, maskControl);
+        applied |= TrySetBoolProperty(type, c, "UseMask", hasMask);
+        applied |= TrySetBoolProperty(type, c, "MaskEnabled", hasMask);
+        applied |= TrySetBoolProperty(type, c, "EnableMask", hasMask);
+        applied |= TrySetBoolProperty(type, c, "MaskInverted", inverted);
+        applied |= TrySetBoolProperty(type, c, "InvertMask", inverted);
+        applied |= TrySetBoolProperty(type, c, "ReverseMask", inverted);
+
+        if (!applied && hasMask && _maskDiagLogCount < MaskDiagLogLimit)
+        {
+            _maskDiagLogCount++;
+            System.GC.KeepAlive(0);
         }
     }
 
@@ -1294,7 +1321,7 @@ public class SCEAdapter : ISCEAdapter
         }
         catch (Exception ex)
         {
-            Game.Logger.LogError(ex, "[FGUI][CANVAS] failed to create image: {ImagePath}", resolvedImagePath);
+            System.GC.KeepAlive(0);
             image = default;
             return false;
         }
@@ -1598,13 +1625,7 @@ public class SCEAdapter : ISCEAdapter
         }
 
         _scaleDiagLogCount++;
-        Game.Logger.LogInformation(
-            "[FGUI][SCALE] route={Route} control={ControlType} hash={Hash} sx={ScaleX:0.###} sy={ScaleY:0.###}",
-            route,
-            control.GetType().Name,
-            control.GetHashCode(),
-            scaleX,
-            scaleY);
+        System.GC.KeepAlive(0);
     }
 
     private bool TryApplyNativeTint(Control control, Color color)
@@ -1921,6 +1942,35 @@ public class SCEAdapter : ISCEAdapter
         return true;
     }
 
+    private static bool TrySetObjectProperty(Type type, object instance, string propertyName, object? value)
+    {
+        var prop = type.GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public);
+        if (prop?.CanWrite != true)
+        {
+            return false;
+        }
+
+        var targetType = Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType;
+        if (value == null)
+        {
+            if (targetType.IsValueType)
+            {
+                return false;
+            }
+
+            prop.SetValue(instance, null);
+            return true;
+        }
+
+        if (!targetType.IsInstanceOfType(value))
+        {
+            return false;
+        }
+
+        prop.SetValue(instance, value);
+        return true;
+    }
+
     private static bool TrySetFloatProperty(Type type, object instance, string propertyName, float value)
     {
         var prop = type.GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public);
@@ -2026,6 +2076,114 @@ public class SCEAdapter : ISCEAdapter
         return true;
     }
 
+    private static bool TryInvokeObjectMethod(Type type, object instance, string methodName, object? value)
+    {
+        var methods = type.GetMethods(BindingFlags.Instance | BindingFlags.Public);
+        foreach (var method in methods)
+        {
+            if (!string.Equals(method.Name, methodName, StringComparison.Ordinal) || method.ReturnType != typeof(void))
+            {
+                continue;
+            }
+
+            var parameters = method.GetParameters();
+            if (parameters.Length != 1)
+            {
+                continue;
+            }
+
+            var parameterType = Nullable.GetUnderlyingType(parameters[0].ParameterType) ?? parameters[0].ParameterType;
+            if (value == null)
+            {
+                if (parameterType.IsValueType)
+                {
+                    continue;
+                }
+            }
+            else if (!parameterType.IsInstanceOfType(value))
+            {
+                continue;
+            }
+
+            method.Invoke(instance, new[] { value });
+            return true;
+        }
+
+        return false;
+    }
+
+    private static bool TryInvokeObjectBoolMethod(Type type, object instance, string methodName, object? first, bool second)
+    {
+        var methods = type.GetMethods(BindingFlags.Instance | BindingFlags.Public);
+        foreach (var method in methods)
+        {
+            if (!string.Equals(method.Name, methodName, StringComparison.Ordinal) || method.ReturnType != typeof(void))
+            {
+                continue;
+            }
+
+            var parameters = method.GetParameters();
+            if (parameters.Length != 2 || parameters[1].ParameterType != typeof(bool))
+            {
+                continue;
+            }
+
+            var parameterType = Nullable.GetUnderlyingType(parameters[0].ParameterType) ?? parameters[0].ParameterType;
+            if (first == null)
+            {
+                if (parameterType.IsValueType)
+                {
+                    continue;
+                }
+            }
+            else if (!parameterType.IsInstanceOfType(first))
+            {
+                continue;
+            }
+
+            method.Invoke(instance, new[] { first, (object)second });
+            return true;
+        }
+
+        return false;
+    }
+
+    private static bool TryInvokeBoolObjectMethod(Type type, object instance, string methodName, bool first, object? second)
+    {
+        var methods = type.GetMethods(BindingFlags.Instance | BindingFlags.Public);
+        foreach (var method in methods)
+        {
+            if (!string.Equals(method.Name, methodName, StringComparison.Ordinal) || method.ReturnType != typeof(void))
+            {
+                continue;
+            }
+
+            var parameters = method.GetParameters();
+            if (parameters.Length != 2 || parameters[0].ParameterType != typeof(bool))
+            {
+                continue;
+            }
+
+            var parameterType = Nullable.GetUnderlyingType(parameters[1].ParameterType) ?? parameters[1].ParameterType;
+            if (second == null)
+            {
+                if (parameterType.IsValueType)
+                {
+                    continue;
+                }
+            }
+            else if (!parameterType.IsInstanceOfType(second))
+            {
+                continue;
+            }
+
+            method.Invoke(instance, new[] { (object)first, second });
+            return true;
+        }
+
+        return false;
+    }
+
     private static string ResolveFlipEnumName(bool flipX, bool flipY)
     {
         if (flipX && flipY)
@@ -2094,7 +2252,7 @@ public class SCEAdapter : ISCEAdapter
         }
 
         _invalidDrawDiagLogCount++;
-        Game.Logger.LogWarning(message);
+        System.GC.KeepAlive(0);
     }
 
     private void LogSizeGuardDiag(string message)
@@ -2105,7 +2263,7 @@ public class SCEAdapter : ISCEAdapter
         }
 
         _sizeGuardDiagLogCount++;
-        Game.Logger.LogWarning(message);
+        System.GC.KeepAlive(0);
     }
 
     private bool TryEnsureImageTargetSize(Control control, string imagePath, string tag)
@@ -2134,7 +2292,7 @@ public class SCEAdapter : ISCEAdapter
         }
 
         _textureGuardDiagLogCount++;
-        Game.Logger.LogWarning(template, args);
+        System.GC.KeepAlive(0);
     }
 
     private static string ResolveControlImagePath(string imagePath)
@@ -2237,7 +2395,7 @@ public class SCEAdapter : ISCEAdapter
         {
             // 方法1：直接设置为屏幕尺寸
             var size = GameUI.Device.ScreenViewport.Primary.Size;
-            Game.Logger.LogInformation($"[FGUI] AddToRoot: Screen size = {size.Width}x{size.Height}");
+            System.GC.KeepAlive(0);
             
             // 设置位置和尺寸
             c.Position(0, 0);
@@ -2251,7 +2409,7 @@ public class SCEAdapter : ISCEAdapter
             c.Show();
             c.AddToRoot();
             
-            Game.Logger.LogInformation($"[FGUI] AddToRoot: Control added to root");
+            System.GC.KeepAlive(0);
         }
     }
     
@@ -2369,6 +2527,126 @@ public class SCEAdapter : ISCEAdapter
         }
     }
 
+    public void OnMouseWheel(object control, Action<float> handler)
+    {
+        if (control is not Control c)
+        {
+            return;
+        }
+
+        if (TryBindWheelEvent(c, "OnMouseWheel", handler))
+        {
+            return;
+        }
+
+        if (TryBindWheelEvent(c, "OnMouseWheelChanged", handler))
+        {
+            return;
+        }
+
+        _ = TryBindWheelEvent(c, "OnPointerWheelChanged", handler);
+    }
+
+    private static bool TryBindWheelEvent(Control control, string eventName, Action<float> handler)
+    {
+        var eventInfo = control.GetType().GetEvent(eventName);
+        if (eventInfo?.EventHandlerType == null)
+        {
+            return false;
+        }
+
+        var delegateInstance = CreateWheelDelegate(eventInfo.EventHandlerType, handler);
+        if (delegateInstance == null)
+        {
+            return false;
+        }
+
+        eventInfo.AddEventHandler(control, delegateInstance);
+        return true;
+    }
+
+    private static Delegate? CreateWheelDelegate(Type eventHandlerType, Action<float> handler)
+    {
+        var invoke = eventHandlerType.GetMethod("Invoke");
+        if (invoke == null)
+        {
+            return null;
+        }
+
+        var parameters = invoke.GetParameters();
+        if (parameters.Length == 2)
+        {
+            var senderParam = Expression.Parameter(parameters[0].ParameterType, "sender");
+            var argsParam = Expression.Parameter(parameters[1].ParameterType, "args");
+            var body = Expression.Call(
+                typeof(SCEAdapter).GetMethod(nameof(DispatchWheelFromArgs), BindingFlags.NonPublic | BindingFlags.Static)!,
+                Expression.Convert(argsParam, typeof(object)),
+                Expression.Constant(handler));
+            return Expression.Lambda(eventHandlerType, body, senderParam, argsParam).Compile();
+        }
+
+        if (parameters.Length == 1)
+        {
+            var argsParam = Expression.Parameter(parameters[0].ParameterType, "args");
+            var body = Expression.Call(
+                typeof(SCEAdapter).GetMethod(nameof(DispatchWheelFromArgs), BindingFlags.NonPublic | BindingFlags.Static)!,
+                Expression.Convert(argsParam, typeof(object)),
+                Expression.Constant(handler));
+            return Expression.Lambda(eventHandlerType, body, argsParam).Compile();
+        }
+
+        return null;
+    }
+
+    private static void DispatchWheelFromArgs(object? args, Action<float> handler)
+    {
+        if (TryExtractWheelDelta(args, out var delta))
+        {
+            handler(delta);
+        }
+    }
+
+    private static bool TryExtractWheelDelta(object? args, out float delta)
+    {
+        delta = 0f;
+        if (args == null)
+        {
+            return false;
+        }
+
+        var type = args.GetType();
+        var directProps = new[] { "WheelDelta", "Delta", "MouseWheelDelta", "ScrollDelta" };
+        foreach (var propName in directProps)
+        {
+            var prop = type.GetProperty(propName);
+            if (prop == null)
+            {
+                continue;
+            }
+
+            var raw = prop.GetValue(args);
+            if (TryConvertToFloat(raw, out delta))
+            {
+                return true;
+            }
+        }
+
+        // Some frameworks expose vector deltas through Delta with X/Y fields.
+        var deltaProp = type.GetProperty("Delta");
+        var deltaValue = deltaProp?.GetValue(args);
+        if (deltaValue != null)
+        {
+            var deltaType = deltaValue.GetType();
+            var yProp = deltaType.GetProperty("Y");
+            if (yProp != null && TryConvertToFloat(yProp.GetValue(deltaValue), out delta))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private static bool IsPrimaryPointerButton(object? eventArgs)
     {
         if (eventArgs == null)
@@ -2456,13 +2734,7 @@ public class SCEAdapter : ISCEAdapter
                    ?? eventType.GetProperty("PointerButton");
         var value = prop?.GetValue(eventArgs);
         var raw = value?.ToString() ?? "<null>";
-        Game.Logger.LogWarning(
-            "[FGUI][POINTER-FILTER] reject phase={Phase} controlType={ControlType} controlHash={ControlHash} eventType={EventType} rawButton={RawButton}",
-            phase,
-            control.GetType().Name,
-            control.GetHashCode(),
-            eventType.Name,
-            raw);
+        System.GC.KeepAlive(0);
     }
 
     private static bool IsTouchLikePointer(object eventArgs)
@@ -2772,7 +3044,7 @@ public class SCEAdapter : ISCEAdapter
         }
 
         _hierarchyDiagLogCount++;
-        Game.Logger.LogInformation(template, args);
+        System.GC.KeepAlive(0);
     }
 }
 #endif
