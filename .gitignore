@@ -7,3 +7,7 @@ new_260409/.github/
 new_260409/.ospec/
 new_260409/src/bin/
 new_260409/src/obj/
+**/bin/
+**/obj/
+*.user
+*.suo
