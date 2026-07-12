@@ -9,6 +9,7 @@ internal sealed partial class ModalWaitingUILogic : FguiUILogicBase
     private static readonly object GlobalWaitToken = new();
     private static readonly ModalWaitingTestWindow TestWindow = new();
     private static GGraph? GlobalWaitPane;
+    private static bool globalWaitPaneResizeListenerBound;
 
     private GObject? openWindowButton;
 
@@ -95,6 +96,7 @@ internal sealed partial class ModalWaitingUILogic : FguiUILogicBase
 
     private static void ShowGlobalWait()
     {
+        EnsureGlobalWaitPaneResizeListener();
         if (GlobalWaitPane == null || GlobalWaitPane.Disposed)
         {
             GlobalWaitPane = new GGraph
@@ -104,10 +106,45 @@ internal sealed partial class ModalWaitingUILogic : FguiUILogicBase
             };
         }
 
-        GlobalWaitPane.SetSize(UIRuntime.RootWidth, UIRuntime.RootHeight, true);
-        GlobalWaitPane.DrawRect(GlobalWaitPane.Width, GlobalWaitPane.Height, 0, Color.Transparent, Color.FromArgb(100, 0, 0, 0));
+        ResizeGlobalWaitPane();
         GlobalWaitPane.Visible = true;
         UIRuntime.AddToRoot(GlobalWaitPane);
+    }
+
+    private static void EnsureGlobalWaitPaneResizeListener()
+    {
+        if (globalWaitPaneResizeListenerBound)
+        {
+            return;
+        }
+
+        UIRuntime.RootSizeChanged += OnRootSizeChanged;
+        globalWaitPaneResizeListenerBound = true;
+    }
+
+    private static void OnRootSizeChanged(float _, float __)
+    {
+        if (GlobalWaitPane == null || GlobalWaitPane.Disposed || !GlobalWaitPane.Visible)
+        {
+            return;
+        }
+
+        ResizeGlobalWaitPane();
+    }
+
+    private static void ResizeGlobalWaitPane()
+    {
+        if (GlobalWaitPane == null)
+        {
+            return;
+        }
+
+        GlobalWaitPane.DrawRect(
+            UIRuntime.RootWidth,
+            UIRuntime.RootHeight,
+            0,
+            Color.Transparent,
+            Color.FromArgb(100, 0, 0, 0));
     }
 
     private static void CloseGlobalWait()

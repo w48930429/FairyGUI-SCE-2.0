@@ -62,16 +62,19 @@ internal static class FguiMgr
             return;
         }
 
-        var pkgName = string.IsNullOrWhiteSpace(packageName) ? (view.PackageItem?.Owner?.Name ?? "<unknown>") : packageName;
-        var compName = string.IsNullOrWhiteSpace(componentName) ? (view.PackageItem?.Name ?? view.Name ?? "<unknown>") : componentName;
-        FGUIBootstrapClientSys.ApplyRootSizedLayout(view, pkgName, compName);
-        UIRuntime.AddToRoot(view);
+        UIRuntime.AddToFullScreenRoot(view);
     }
 
     public static void Remove(GObject? view, bool dispose = true)
     {
         if (view == null)
         {
+            return;
+        }
+
+        if (UIRuntime.IsFullScreenContent(view))
+        {
+            UIRuntime.RemoveFromRoot(view, dispose);
             return;
         }
 

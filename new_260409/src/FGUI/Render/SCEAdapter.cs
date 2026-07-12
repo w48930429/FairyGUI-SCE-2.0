@@ -852,10 +852,57 @@ public class SCEAdapter : ISCEAdapter
         }
     }
 
+    public void DrawBmFontText(object control, string atlasPath, string text, IReadOnlyDictionary<char, RectangleF> charRects, float scaleFactor)
+    {
+        if (control is not Canvas canvas || string.IsNullOrEmpty(atlasPath) || string.IsNullOrEmpty(text))
+        {
+            return;
+        }
+
+        var resolvedImagePath = ResolveControlImagePath(atlasPath);
+        if (!TryGetCanvasImage(resolvedImagePath, out var image))
+        {
+            return;
+        }
+
+        // Clear any existing render state to avoid double-render
+        if (_canvasImageStates.TryGetValue(canvas, out var existingState))
+        {
+            existingState.RenderMode = CanvasRenderMode.PlainImage;
+            existingState.CurrentImage = null;
+        }
+
+        canvas.OnRender += (sender, e) =>
+        {
+            canvas.ResetState();
+            float cursorX = 0f;
+            foreach (var ch in text)
+            {
+                if (!charRects.TryGetValue(ch, out var srcRect))
+                {
+                    continue;
+                }
+
+                var sw = srcRect.Width * scaleFactor;
+                var sh = srcRect.Height * scaleFactor;
+                if (sw < MinCanvasDrawSize || sh < MinCanvasDrawSize)
+                {
+                    cursorX += srcRect.Width * scaleFactor;
+                    continue;
+                }
+
+                canvas.DrawImage(image,
+                    srcRect.X, srcRect.Y, srcRect.Width, srcRect.Height,
+                    cursorX, 0f, sw, sh);
+                cursorX += sw;
+            }
+        };
+    }
+
     /// <summary>
     /// Set sliced (nine-patch) image from atlas with proper region cropping
     /// </summary>
-    public void SetSlicedImageFromAtlas(object control, string atlasPath, RectangleF spriteRect, 
+    public void SetSlicedImageFromAtlas(object control, string atlasPath, RectangleF spriteRect,
         int left, int right, int top, int bottom, float destWidth, float destHeight)
     {
         if (control is Canvas canvas && !string.IsNullOrEmpty(atlasPath))

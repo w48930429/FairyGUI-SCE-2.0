@@ -26,6 +26,8 @@ public class GComponent : GObject
     public OverflowType Overflow { get => _overflow; set => _overflow = value; }
     public Margin Margin { get => _margin; set { _margin = value; SetBoundsChangedFlag(); } }
     public bool Opaque { get; set; } = true;
+    public GObject? MaskObject { get; set; }
+    public bool MaskInverted { get; set; }
 
     public GObject AddChild(GObject child) => AddChildAt(child, _children.Count);
 

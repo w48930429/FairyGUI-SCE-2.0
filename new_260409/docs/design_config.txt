@@ -1,0 +1,522 @@
+# 4基础兵种升级强化配表结构 v1
+
+## 1. 目标
+
+这份配表结构用于把前面已经确定的内容落到可执行层，方便：
+
+- 程序接表
+- 策划调数值
+- 美术和战斗表现对齐
+- 后续扩展精锐兵块、阵型、军械
+
+---
+
+## 2. 推荐拆表方式
+
+建议至少拆成 7 张表：
+
+1. `unit_base`：兵块基础表
+2. `unit_level_growth`：兵种基础等级成长表
+3. `unit_branch_group`：兵种强化分支组表
+4. `unit_branch_level`：兵种强化分支等级表
+5. `elite_unit_base`：精锐兵块基础表
+6. `elite_specialization_level`：精锐专精等级表
+7. `position_modifier`：位置修正表
+
+如果你后面把阵型也做表驱动，再加：
+
+8. `formation_base`
+9. `formation_position_modifier`
+
+---
+
+# 3. unit_base：兵块基础表
+
+## 3.1 用途
+定义基础兵种的原始战斗数据。
+
+## 3.2 一行一个基础兵种
+建议当前 4 行：
+- 盾兵
+- 枪兵
+- 弓兵
+- 骑兵
+
+## 3.3 字段设计
+
+| 字段名 | 类型 | 示例 | 说明 |
+|---|---|---:|---|
+| unit_id | string | shield_basic | 兵种唯一ID |
+| unit_name | string | 盾兵 | 显示名 |
+| unit_type | string | shield | 兵种分类 |
+| hp_base | int | 1200 | 基础生命 |
+| atk_base | int | 80 | 基础攻击 |
+| def_base | int | 60 | 基础防御 |
+| atk_interval_base | float | 1.6 | 攻击间隔秒数 |
+| range_base | float | 1.0 | 攻击射程 |
+| move_speed_base | int | 80 | 移速 |
+| stability_base | int | 90 | 稳定 |
+| special_stat_type | string | block | 特性类型 |
+| special_stat_base | int | 70 | 特性初值 |
+| preferred_slots | string | front_center,front_left,front_right | 推荐位置 |
+| tags | string | frontliner,tank | 标签 |
+
+## 3.4 示例
+
+| unit_id | unit_name | unit_type | hp_base | atk_base | def_base | atk_interval_base | range_base | move_speed_base | stability_base | special_stat_type | special_stat_base | preferred_slots | tags |
+|---|---|---|---:|---:|---:|---:|---:|---:|---:|---|---:|---|---|
+| shield_basic | 盾兵 | shield | 1200 | 80 | 60 | 1.6 | 1.0 | 80 | 90 | block | 70 | front_center,front_left,front_right | frontliner,tank |
+| spear_basic | 枪兵 | spear | 950 | 105 | 40 | 1.4 | 1.2 | 85 | 75 | intercept | 85 | front_left,front_right,front_center | anti_cavalry,frontliner |
+| archer_basic | 弓兵 | archer | 700 | 125 | 20 | 1.2 | 4.5 | 75 | 40 | focus | 70 | back_left,back_right | ranged,backline |
+| cavalry_basic | 骑兵 | cavalry | 900 | 115 | 35 | 1.3 | 1.0 | 120 | 55 | momentum | 100 | front_left,front_right | cavalry,flanker |
+
+---
+
+# 4. unit_level_growth：兵种基础等级成长表
+
+## 4.1 用途
+定义基础兵种等级成长。
+
+## 4.2 规则建议
+一行表示某兵种某等级的最终修正值。  
+不要只存公式，直接落表更方便平衡。
+
+## 4.3 字段设计
+
+| 字段名 | 类型 | 示例 | 说明 |
+|---|---|---:|---|
+| unit_id | string | shield_basic | 对应基础兵种ID |
+| level | int | 1 | 等级 |
+| hp_multiplier | float | 1.00 | 生命倍率 |
+| atk_multiplier | float | 1.00 | 攻击倍率 |
+| def_bonus | int | 0 | 防御固定加值 |
+
+## 4.4 成长模板建议
+- 生命：每级 +8%
+- 攻击：每级 +5%
+- 防御：每级 +4
+
+## 4.5 示例（盾兵）
+
+| unit_id | level | hp_multiplier | atk_multiplier | def_bonus |
+|---|---:|---:|---:|---:|
+| shield_basic | 1 | 1.00 | 1.00 | 0 |
+| shield_basic | 2 | 1.08 | 1.05 | 4 |
+| shield_basic | 3 | 1.17 | 1.10 | 8 |
+| shield_basic | 4 | 1.26 | 1.16 | 12 |
+| shield_basic | 5 | 1.36 | 1.22 | 16 |
+| shield_basic | 6 | 1.47 | 1.28 | 20 |
+| shield_basic | 7 | 1.59 | 1.34 | 24 |
+| shield_basic | 8 | 1.71 | 1.41 | 28 |
+| shield_basic | 9 | 1.85 | 1.48 | 32 |
+| shield_basic | 10 | 2.00 | 1.55 | 36 |
+
+> 注：这里我故意做成比较平滑、易控的表，不完全照数学连乘，方便调平衡。
+
+---
+
+# 5. unit_branch_group：兵种强化分支组表
+
+## 5.1 用途
+定义每个兵种有哪些分支。
+
+## 5.2 一行一个分支
+
+## 5.3 字段设计
+
+| 字段名 | 类型 | 示例 | 说明 |
+|---|---|---|---|
+| branch_id | string | shield_tank | 分支ID |
+| unit_type | string | shield | 所属兵种类型 |
+| branch_name | string | 坚甲 | 分支显示名 |
+| branch_desc | string | 强化主抗线能力 | 描述 |
+| unlock_level | int | 3 | 解锁所需兵种等级 |
+| branch_order | int | 1 | 排序 |
+
+## 5.4 示例
+
+| branch_id | unit_type | branch_name | branch_desc | unlock_level | branch_order |
+|---|---|---|---|---:|---:|
+| shield_tank | shield | 坚甲 | 提升承伤与前中坦度 | 3 | 1 |
+| shield_hold | shield | 固守 | 提升阻滞与抗突进能力 | 3 | 2 |
+| shield_guard | shield | 护卫 | 提升后排保护与补位 | 3 | 3 |
+| spear_anti_cav | spear | 破骑 | 强化反骑能力 | 3 | 1 |
+| spear_linehold | spear | 稳阵 | 强化站线与稳定 | 3 | 2 |
+| spear_pierce | spear | 突刺 | 强化正面输出 | 3 | 3 |
+| archer_power | archer | 强射 | 强化单发与压前排 | 3 | 1 |
+| archer_rapid | archer | 连射 | 强化高频输出与收割 | 3 | 2 |
+| archer_guard | archer | 守势 | 强化后排生存 | 3 | 3 |
+| cavalry_charge | cavalry | 冲阵 | 强化正面强冲 | 3 | 1 |
+| cavalry_flank | cavalry | 轻袭 | 强化切后与再突进 | 3 | 2 |
+| cavalry_melee | cavalry | 缠斗 | 强化切入后的站场能力 | 3 | 3 |
+
+---
+
+# 6. unit_branch_level：兵种强化分支等级表
+
+## 6.1 用途
+定义每条分支每一级到底加什么。
+
+## 6.2 一行表示某分支某等级
+
+## 6.3 字段设计
+建议所有可能用到的字段都给，没用的填 0。
+
+| 字段名 | 类型 | 示例 | 说明 |
+|---|---|---:|---|
+| branch_id | string | shield_tank | 分支ID |
+| level | int | 1 | 分支等级 |
+| hp_multiplier_add | float | 0.10 | 生命额外倍率 |
+| atk_multiplier_add | float | 0.00 | 攻击额外倍率 |
+| def_bonus_add | int | 8 | 防御加值 |
+| atk_interval_pct | float | 0.00 | 攻速修正，负值表示更快 |
+| range_add | float | 0.0 | 射程加值 |
+| move_speed_add | int | 0 | 移速加值 |
+| stability_add | int | 10 | 稳定加值 |
+| special_stat_add | int | 0 | 特性值加成 |
+| damage_to_front_pct | float | 0.00 | 对前排伤害 |
+| damage_to_back_pct | float | 0.00 | 对后排伤害 |
+| damage_to_cavalry_pct | float | 0.00 | 对骑兵伤害 |
+| damage_to_low_hp_pct | float | 0.00 | 对残血伤害 |
+| rear_expose_threshold_pct | float | 0.00 | 后排暴露阈值提升 |
+| rear_damage_reduction_pct | float | 0.00 | 后排减伤 |
+| refill_speed_pct | float | 0.00 | 补位速度 |
+| retrigger_dash_pct | float | 0.00 | 再突进成功率 |
+| first_charge_damage_pct | float | 0.00 | 首次冲锋伤害 |
+| after_shield_decay_pct | float | 0.00 | 撞盾后冲势衰减修正 |
+| notes | string | 前中位承伤-8% | 特殊说明 |
+
+---
+
+## 6.4 示例：盾兵分支
+
+### 坚甲
+| branch_id | level | hp_multiplier_add | atk_multiplier_add | def_bonus_add | atk_interval_pct | range_add | move_speed_add | stability_add | special_stat_add | damage_to_front_pct | damage_to_back_pct | damage_to_cavalry_pct | damage_to_low_hp_pct | rear_expose_threshold_pct | rear_damage_reduction_pct | refill_speed_pct | retrigger_dash_pct | first_charge_damage_pct | after_shield_decay_pct | notes |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| shield_tank | 1 | 0.00 | 0.00 | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 防御+8 |
+| shield_tank | 2 | 0.10 | 0.00 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 生命+10% |
+| shield_tank | 3 | 0.00 | 0.00 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 前中位承伤-8% |
+
+### 固守
+| branch_id | level | hp_multiplier_add | atk_multiplier_add | def_bonus_add | atk_interval_pct | range_add | move_speed_add | stability_add | special_stat_add | damage_to_front_pct | damage_to_back_pct | damage_to_cavalry_pct | damage_to_low_hp_pct | rear_expose_threshold_pct | rear_damage_reduction_pct | refill_speed_pct | retrigger_dash_pct | first_charge_damage_pct | after_shield_decay_pct | notes |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| shield_hold | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 10 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 稳定+10 |
+| shield_hold | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 10 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 阻滞+10 |
+| shield_hold | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 骑兵穿透后伤害-10% |
+
+### 护卫
+| branch_id | level | hp_multiplier_add | atk_multiplier_add | def_bonus_add | atk_interval_pct | range_add | move_speed_add | stability_add | special_stat_add | damage_to_front_pct | damage_to_back_pct | damage_to_cavalry_pct | damage_to_low_hp_pct | rear_expose_threshold_pct | rear_damage_reduction_pct | refill_speed_pct | retrigger_dash_pct | first_charge_damage_pct | after_shield_decay_pct | notes |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| shield_guard | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0.10 | 0 | 0 | 0 | 0 | 0 | 后排暴露阈值+10% |
+| shield_guard | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0.08 | 0 | 0 | 0 | 0 | 后排减伤8% |
+| shield_guard | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0.12 | 0 | 0 | 0 | 补位速度+12% |
+
+---
+
+# 7. elite_unit_base：精锐兵块基础表
+
+## 7.1 用途
+定义精锐兵块原始属性。
+
+## 7.2 一行一个精锐兵块
+
+## 7.3 字段设计
+
+| 字段名 | 类型 | 示例 | 说明 |
+|---|---|---|---|
+| elite_id | string | shield_heavy | 精锐ID |
+| elite_name | string | 重盾兵 | 显示名 |
+| base_unit_type | string | shield | 所属基础兵种 |
+| hp_base | int | 1450 | 基础生命 |
+| atk_base | int | 70 | 基础攻击 |
+| def_base | int | 80 | 基础防御 |
+| atk_interval_base | float | 1.8 | 攻击间隔 |
+| range_base | float | 1.0 | 射程 |
+| move_speed_base | int | 70 | 移速 |
+| stability_base | int | 110 | 稳定 |
+| special_stat_type | string | block | 特性类型 |
+| special_stat_base | int | 85 | 特性值 |
+| cost | int | 2 | 指挥值成本，首版不用可默认1 |
+| preferred_slots | string | front_center | 推荐位置 |
+| elite_tags | string | tank,anti_breakthrough | 精锐标签 |
+| special_rule_notes | string | 前中位承伤更强 | 特殊规则备注 |
+
+## 7.4 示例
+
+| elite_id | elite_name | base_unit_type | hp_base | atk_base | def_base | atk_interval_base | range_base | move_speed_base | stability_base | special_stat_type | special_stat_base | cost | preferred_slots | elite_tags | special_rule_notes |
+|---|---|---|---:|---:|---:|---:|---:|---:|---:|---|---:|---:|---|---|---|
+| shield_heavy | 重盾兵 | shield | 1450 | 70 | 80 | 1.8 | 1.0 | 70 | 110 | block | 85 | 2 | front_center | tank,anchor | 前中抗线强 |
+| shield_anti_charge | 拒马盾兵 | shield | 1280 | 75 | 65 | 1.7 | 1.0 | 75 | 95 | block | 95 | 2 | front_center,front_left,front_right | anti_charge,protector | 骑兵冲势削弱高 |
+| spear_long | 长枪兵 | spear | 920 | 110 | 42 | 1.45 | 1.4 | 82 | 80 | intercept | 110 | 2 | front_left,front_right | anti_cavalry | 极致反骑 |
+| spear_heavy | 重枪兵 | spear | 1080 | 110 | 52 | 1.45 | 1.2 | 80 | 88 | intercept | 90 | 2 | front_center,front_left,front_right | frontliner | 泛用前排 |
+| archer_guard | 羽林弓 | archer | 720 | 155 | 22 | 1.45 | 4.8 | 75 | 42 | focus | 95 | 2 | back_left,back_right | sniper | 点杀后排 |
+| archer_repeater | 连弩兵 | archer | 730 | 95 | 18 | 0.85 | 4.0 | 78 | 40 | focus | 75 | 2 | back_left,back_right | sustained_dps | 高频压制 |
+| cavalry_heavy | 玄甲骑 | cavalry | 1050 | 130 | 45 | 1.35 | 1.0 | 115 | 65 | momentum | 125 | 2 | front_left,front_right | breaker | 破阵重骑 |
+| cavalry_light | 轻骑 | cavalry | 760 | 120 | 25 | 1.15 | 1.0 | 140 | 45 | momentum | 110 | 2 | front_left,front_right | flanker | 机动切后 |
+
+---
+
+# 8. elite_specialization_level：精锐专精等级表
+
+## 8.1 用途
+定义每个精锐兵块的额外成长。
+
+## 8.2 一行表示某精锐某专精等级
+
+## 8.3 字段设计
+
+| 字段名 | 类型 | 示例 | 说明 |
+|---|---|---:|---|
+| elite_id | string | shield_heavy | 对应精锐ID |
+| level | int | 1 | 专精等级 |
+| hp_multiplier_add | float | 0.04 | 生命额外加成 |
+| atk_multiplier_add | float | 0.03 | 攻击额外加成 |
+| def_bonus_add | int | 3 | 防御加值 |
+| move_speed_add | int | 0 | 移速加值 |
+| stability_add | int | 5 | 稳定加值 |
+| special_stat_add | int | 5 | 特性值加值 |
+| damage_to_shield_pct | float | 0.00 | 对盾兵伤害 |
+| damage_to_back_pct | float | 0.00 | 对后排伤害 |
+| damage_to_cavalry_pct | float | 0.00 | 对骑兵伤害 |
+| retrigger_dash_pct | float | 0.00 | 再突进成功率 |
+| notes | string | 前中位承伤-5% | 特殊说明 |
+
+## 8.4 示例
+
+### 重盾兵专精
+| elite_id | level | hp_multiplier_add | atk_multiplier_add | def_bonus_add | move_speed_add | stability_add | special_stat_add | damage_to_shield_pct | damage_to_back_pct | damage_to_cavalry_pct | retrigger_dash_pct | notes |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| shield_heavy | 1 | 0.04 | 0.00 | 3 | 0 | 5 | 5 | 0 | 0 | 0 | 0 | 生命+4%，防御+3，稳定+5，阻滞+5 |
+| shield_heavy | 2 | 0.04 | 0.00 | 3 | 0 | 5 | 5 | 0 | 0 | 0 | 0 | 同上 |
+| shield_heavy | 3 | 0.04 | 0.00 | 3 | 0 | 5 | 5 | 0 | 0 | 0 | 0 | 前中位承伤-5% |
+
+### 长枪兵专精
+| elite_id | level | hp_multiplier_add | atk_multiplier_add | def_bonus_add | move_speed_add | stability_add | special_stat_add | damage_to_shield_pct | damage_to_back_pct | damage_to_cavalry_pct | retrigger_dash_pct | notes |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| spear_long | 1 | 0.00 | 0.03 | 0 | 0 | 0 | 8 | 0 | 0 | 0.03 | 0 | 攻击+3%，拦截+8，对骑兵伤害+3% |
+| spear_long | 2 | 0.00 | 0.03 | 0 | 0 | 0 | 8 | 0 | 0 | 0.03 | 0 | 同上 |
+| spear_long | 3 | 0.00 | 0.03 | 0 | 0 | 0 | 8 | 0 | 0 | 0.03 | -0.10 | 骑兵撞击后再突进成功率-10% |
+
+### 羽林弓专精
+| elite_id | level | hp_multiplier_add | atk_multiplier_add | def_bonus_add | move_speed_add | stability_add | special_stat_add | damage_to_shield_pct | damage_to_back_pct | damage_to_cavalry_pct | retrigger_dash_pct | notes |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| archer_guard | 1 | 0.00 | 0.04 | 0 | 0 | 0 | 8 | 0 | 0.03 | 0 | 0 | 攻击+4%，集火+8，对后排+3% |
+| archer_guard | 2 | 0.00 | 0.04 | 0 | 0 | 0 | 8 | 0 | 0.03 | 0 | 0 | 同上 |
+| archer_guard | 3 | 0.00 | 0.04 | 0 | 0 | 0 | 8 | 0 | 0.03 | 0 | 0 | 对主将伤害+10% |
+
+### 玄甲骑专精
+| elite_id | level | hp_multiplier_add | atk_multiplier_add | def_bonus_add | move_speed_add | stability_add | special_stat_add | damage_to_shield_pct | damage_to_back_pct | damage_to_cavalry_pct | retrigger_dash_pct | notes |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| cavalry_heavy | 1 | 0.04 | 0.03 | 0 | 0 | 0 | 8 | 0.03 | 0 | 0 | 0 | 生命+4%，攻击+3%，冲势+8，对盾兵+3% |
+| cavalry_heavy | 2 | 0.04 | 0.03 | 0 | 0 | 0 | 8 | 0.03 | 0 | 0 | 0 | 同上 |
+| cavalry_heavy | 3 | 0.04 | 0.03 | 0 | 0 | 0 | 8 | 0.10 | 0 | 0 | 0 | 对盾兵额外伤害+10% |
+
+---
+
+# 9. position_modifier：位置修正表
+
+## 9.1 用途
+定义固定 5 位置的基础修正。
+
+## 9.2 一行一个位置
+
+## 9.3 字段设计
+
+| 字段名 | 类型 | 示例 | 说明 |
+|---|---|---:|---|
+| slot_id | string | front_center | 位置ID |
+| slot_name | string | 前中 | 显示名 |
+| damage_taken_pct | float | 0.15 | 承伤修正，正值多吃伤害 |
+| atk_output_pct | float | 0.00 | 输出修正 |
+| stability_add | int | 10 | 稳定加值 |
+| intercept_pct | float | 0.00 | 拦截修正 |
+| cavalry_entry_pct | float | 0.00 | 骑兵切入修正 |
+| target_priority_pct | float | 0.25 | 被优先攻击修正 |
+
+## 9.4 示例
+
+| slot_id | slot_name | damage_taken_pct | atk_output_pct | stability_add | intercept_pct | cavalry_entry_pct | target_priority_pct |
+|---|---|---:|---:|---:|---:|---:|---:|
+| front_left | 前左 | 0.05 | 0.00 | 0 | 0.10 | 0.10 | 0.05 |
+| front_center | 前中 | 0.15 | 0.00 | 10 | 0.00 | 0.00 | 0.25 |
+| front_right | 前右 | 0.05 | 0.00 | 0 | 0.10 | 0.10 | 0.05 |
+| back_left | 后左 | -0.20 | 0.10 | 0 | 0.00 | 0.00 | -0.05 |
+| back_right | 后右 | -0.20 | 0.10 | 0 | 0.00 | 0.00 | -0.05 |
+
+---
+
+# 10. formation_base：阵型主表
+
+## 10.1 用途
+定义阵型整体效果。
+
+## 10.2 字段设计
+
+| 字段名 | 类型 | 示例 | 说明 |
+|---|---|---|---|
+| formation_id | string | square | 阵型ID |
+| formation_name | string | 方圆阵 | 名称 |
+| formation_type | string | defense | 类型 |
+| needs_side_choice | bool | false | 是否需要选择强侧 |
+| global_move_speed_pct | float | -0.05 | 全队移速修正 |
+| global_push_speed_pct | float | -0.08 | 推进速度修正 |
+| rear_expose_threshold_pct | float | 0.20 | 后排暴露阈值修正 |
+| cavalry_retrigger_pct | float | -0.20 | 骑兵再突进成功率修正 |
+| front_refill_speed_pct | float | 0.15 | 前排补位速度 |
+| wing_link_speed_pct | float | 0.00 | 两翼联动速度 |
+| notes | string | 稳守防崩 | 备注 |
+
+---
+
+# 11. formation_position_modifier：阵型-位置修正表
+
+## 11.1 用途
+定义阵型对不同位置的具体修正。
+
+## 11.2 字段设计
+
+| 字段名 | 类型 | 示例 | 说明 |
+|---|---|---|---|
+| formation_id | string | square | 阵型ID |
+| slot_id | string | front_center | 位置ID |
+| atk_pct | float | 0.00 | 攻击修正 |
+| def_add | int | 10 | 防御修正 |
+| stability_add | int | 15 | 稳定修正 |
+| damage_taken_pct | float | -0.10 | 承伤修正 |
+| atk_speed_pct | float | 0.00 | 攻速修正 |
+| move_speed_pct | float | 0.00 | 移速修正 |
+| output_pct | float | 0.00 | 输出修正 |
+| intercept_pct | float | 0.10 | 拦截修正 |
+| cavalry_entry_pct | float | -0.10 | 骑兵切入修正 |
+| target_priority_pct | float | 0.00 | 被锁定优先级修正 |
+
+---
+
+# 12. 程序结算顺序建议
+
+为了避免策划和程序理解偏差，建议明确结算顺序：
+
+## 12.1 基础兵块
+1. 读取 `unit_base`
+2. 读取 `unit_level_growth`
+3. 叠加基础等级成长
+4. 叠加兵种强化分支
+5. 叠加位置修正
+6. 叠加阵型修正
+7. 叠加军械 / 主将 / 其他系统
+
+## 12.2 精锐兵块
+1. 读取 `elite_unit_base`
+2. 读取所属基础兵种的 `unit_level_growth`
+3. 叠加该兵种基础等级成长
+4. 叠加兵种强化分支
+5. 叠加 `elite_specialization_level`
+6. 叠加位置修正
+7. 叠加阵型修正
+8. 叠加军械 / 主将 / 其他系统
+
+---
+
+# 13. 首版建议先做哪些字段
+
+为了快速起原型，首版可以只接这些：
+
+## 必接字段
+- hp
+- atk
+- def
+- atk_interval
+- move_speed
+- range
+- stability
+- special_stat
+- damage_taken_pct
+- atk_output_pct
+- rear_expose_threshold_pct
+- cavalry_retrigger_pct
+
+## 第二阶段再接
+- target_priority_pct
+- refill_speed_pct
+- intercept_pct
+- cavalry_entry_pct
+- 各种特定目标伤害
+
+---
+
+# 14. 最小可用版本建议
+
+如果你要最快做出一轮可战斗测试，建议先只实现：
+
+### 基础
+- `unit_base`
+- `unit_level_growth`
+- `position_modifier`
+
+### 成长
+- `unit_branch_group`
+- `unit_branch_level`
+
+### 精锐
+- `elite_unit_base`
+- `elite_specialization_level`
+
+### 阵型
+- `formation_base`
+- `formation_position_modifier`
+
+这套已经够你做：
+- 基础兵种
+- 分支成长
+- 精锐兵块
+- 位置修正
+- 阵型差异
+
+---
+
+# 15. 命名建议
+
+为了后面好维护，ID统一风格：
+
+## 基础兵种
+- shield_basic
+- spear_basic
+- archer_basic
+- cavalry_basic
+
+## 分支
+- shield_tank
+- shield_hold
+- shield_guard
+- spear_anti_cav
+- spear_linehold
+- spear_pierce
+- archer_power
+- archer_rapid
+- archer_guard
+- cavalry_charge
+- cavalry_flank
+- cavalry_melee
+
+## 精锐
+- shield_heavy
+- shield_anti_charge
+- spear_long
+- spear_heavy
+- archer_guard
+- archer_repeater
+- cavalry_heavy
+- cavalry_light
+
+## 位置
+- front_left
+- front_center
+- front_right
+- back_left
+- back_right
+
+## 阵型
+- square
+- wedge
+- spread_wing
+- long_snake

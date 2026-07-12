@@ -34,6 +34,7 @@ public interface ISCEAdapter
     void ClearCanvasRenderState(object control);
     void SetSlicedImage(object control, string imagePath, int left, int right, int top, int bottom);
     void SetImageRegion(object control, string atlasPath, RectangleF region, bool rotated);
+    void DrawBmFontText(object control, string atlasPath, string text, IReadOnlyDictionary<char, RectangleF> charRects, float scaleFactor);
     void SetTintColor(object control, Color color);  // 图片着色（与背景色不同）
     void SetText(object control, string text);
     void SetTextColor(object control, Color color);

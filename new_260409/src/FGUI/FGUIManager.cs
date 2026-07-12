@@ -46,6 +46,14 @@ public static class UIRuntime
     private static ImageAssetMode _imageAssetMode = ImageAssetMode.ScatterOnly;
     private static SemanticRootMode _semanticRootMode = SemanticRootMode.SceStageDirect;
     private static readonly HashSet<GObject> _sceStageObjects = [];
+    private static readonly HashSet<FGUIRoot> _fullScreenRoots = [];
+    private static readonly Dictionary<GObject, FGUIRoot> _fullScreenRootByContent = [];
+    private static bool _screenSizeListenerBound;
+
+    /// <summary>
+    /// 根视口尺寸变化时触发。全屏遮罩等非 FGUIRoot 对象可订阅此事件刷新自身尺寸。
+    /// </summary>
+    public static event Action<float, float>? RootSizeChanged;
     
     /// <summary>
     /// 设计分辨率宽度
@@ -82,8 +90,11 @@ public static class UIRuntime
         if (_initialized) return;
         DesignResolutionX = designWidth;
         DesignResolutionY = designHeight;
+        EnsureScreenSizeListener();
         UpdateContentScaleFactor();
         _sceStageObjects.Clear();
+        _fullScreenRoots.Clear();
+        _fullScreenRootByContent.Clear();
         _initialized = true;
     }
 
@@ -242,9 +253,40 @@ public static class UIRuntime
             obj.RemoveFromParent();
         }
 
+        PrepareRootForStage(obj);
+
         obj.AddToStage();
         _sceStageObjects.Add(obj);
     }
+
+    /// <summary>
+    /// 将页面组件保留为原具体类型，并由全屏根节点承载。不要用于窗口、Popup 或拖拽代理。
+    /// </summary>
+    public static FGUIRoot AddToFullScreenRoot(GComponent content)
+    {
+        if (content == null)
+        {
+            throw new ArgumentNullException(nameof(content));
+        }
+
+        if (_fullScreenRootByContent.TryGetValue(content, out var existingRoot) && !existingRoot.Disposed)
+        {
+            return existingRoot;
+        }
+
+        if (content.Parent != null)
+        {
+            content.RemoveFromParent();
+        }
+
+        var root = new FGUIRoot();
+        root.SetContent(content);
+        _fullScreenRootByContent[content] = root;
+        AddToRoot(root);
+        return root;
+    }
+
+    public static bool IsFullScreenContent(GObject obj) => _fullScreenRootByContent.ContainsKey(obj);
 
     public static void RemoveFromRoot(GObject obj, bool dispose = false)
     {
@@ -253,7 +295,27 @@ public static class UIRuntime
             return;
         }
 
+        if (_fullScreenRootByContent.TryGetValue(obj, out var contentRoot))
+        {
+            _fullScreenRootByContent.Remove(obj);
+            if (obj.Parent == contentRoot)
+            {
+                contentRoot.RemoveChild(obj, dispose: false);
+            }
+
+            RemoveFromRoot(contentRoot, dispose: true);
+            if (dispose && !obj.Disposed)
+            {
+                obj.Dispose();
+            }
+            return;
+        }
+
         _sceStageObjects.Remove(obj);
+        if (obj is FGUIRoot fullScreenRoot)
+        {
+            UnregisterFullScreenRoot(fullScreenRoot);
+        }
         if (obj.NativeObject != null)
         {
             SCERenderContext.Instance.RemoveFromParent(obj);
@@ -303,6 +365,81 @@ public static class UIRuntime
         }
 
         return (MathF.Max(1f, DesignResolutionX), MathF.Max(1f, DesignResolutionY));
+    }
+
+    internal static void PrepareRootForStage(GObject obj)
+    {
+        if (obj is not FGUIRoot fullScreenRoot)
+        {
+            return;
+        }
+
+        var rootSize = GetLogicalRootSize();
+        fullScreenRoot.ApplyViewportSize(rootSize.Width, rootSize.Height);
+        _fullScreenRoots.Add(fullScreenRoot);
+    }
+
+    internal static void UnregisterFullScreenRoot(FGUIRoot root)
+    {
+        _fullScreenRoots.Remove(root);
+
+        List<GObject>? hostedContent = null;
+        foreach (var pair in _fullScreenRootByContent)
+        {
+            if (ReferenceEquals(pair.Value, root))
+            {
+                hostedContent ??= [];
+                hostedContent.Add(pair.Key);
+            }
+        }
+
+        if (hostedContent != null)
+        {
+            foreach (var content in hostedContent)
+            {
+                _fullScreenRootByContent.Remove(content);
+            }
+        }
+    }
+
+    private static void EnsureScreenSizeListener()
+    {
+        if (_screenSizeListenerBound)
+        {
+            return;
+        }
+
+        GameUI.Device.ScreenViewport.Primary.OnSizeChanged += OnScreenSizeChanged;
+        _screenSizeListenerBound = true;
+    }
+
+    private static void OnScreenSizeChanged(int _, int __)
+    {
+        UpdateContentScaleFactor();
+        var rootSize = GetLogicalRootSize();
+
+        List<FGUIRoot>? staleRoots = null;
+        foreach (var root in _fullScreenRoots)
+        {
+            if (root.Disposed)
+            {
+                staleRoots ??= [];
+                staleRoots.Add(root);
+                continue;
+            }
+
+            root.ApplyViewportSize(rootSize.Width, rootSize.Height);
+        }
+
+        if (staleRoots != null)
+        {
+            foreach (var root in staleRoots)
+            {
+                _fullScreenRoots.Remove(root);
+            }
+        }
+
+        RootSizeChanged?.Invoke(rootSize.Width, rootSize.Height);
     }
 }
 #endif

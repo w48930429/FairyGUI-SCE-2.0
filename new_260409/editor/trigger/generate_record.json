@@ -1,0 +1,26 @@
+{
+  "Date": "2026-07-12 13:48:30.544",
+  "LastModifiedTimestamp": 1783835310544,
+  "Libs": {
+    "global_default": {
+      "LastModifiedTimestamp": 1783188851651,
+      "Path": "D:\\ProgramFiles\\\u661F\u706B\u7F16\u8F91\u56682\\Update\\editor-alpha.spark.xd.com\\Res\\_m\\maps\\global_default\\235\\global_default"
+    },
+    "script": {
+      "LastModifiedTimestamp": 0,
+      "Path": "E:/Project_SCE/new_260409/new_260409"
+    },
+    "lib_game_options": {
+      "LastModifiedTimestamp": 0,
+      "Path": "D:\\ProgramFiles\\\u661F\u706B\u7F16\u8F91\u56682\\Update\\editor-alpha.spark.xd.com\\Res\\_m\\maps\\script_libs\\lib_game_options\\203\\lib_game_options"
+    },
+    "gamesystemui": {
+      "LastModifiedTimestamp": 1774938975349,
+      "Path": "D:\\ProgramFiles\\\u661F\u706B\u7F16\u8F91\u56682\\Update\\editor-alpha.spark.xd.com\\Res\\_m\\maps\\gamesystemui\\30\\GameSystemUI"
+    },
+    "gamesparkcore": {
+      "LastModifiedTimestamp": 1779764472469,
+      "Path": "D:\\ProgramFiles\\\u661F\u706B\u7F16\u8F91\u56682\\Update\\editor-alpha.spark.xd.com\\Res\\_m\\maps\\gamesparkcore\\25\\gamesparkcore"
+    }
+  }
+}

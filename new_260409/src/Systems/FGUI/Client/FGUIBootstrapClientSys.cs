@@ -106,8 +106,7 @@ public sealed class FGUIBootstrapClientSys : IGameClass
             return null;
         }
 
-        ApplyRootSizedLayout(view, packageName, componentName);
-        UIRuntime.AddToRoot(view);
+        UIRuntime.AddToFullScreenRoot(view);
         Game.Logger.LogInformation("[FGUI] Show component: {Package}/{Component}", packageName, componentName);
         return view;
     }

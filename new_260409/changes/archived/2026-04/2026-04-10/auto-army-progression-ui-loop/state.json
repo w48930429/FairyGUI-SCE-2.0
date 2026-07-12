@@ -1,0 +1,28 @@
+{
+  "version": "1.0",
+  "feature": "auto-army-progression-ui-loop",
+  "mode": "full",
+  "status": "archived",
+  "current_step": "archived",
+  "affects": [
+    "src/AutoArmy/AutoArmyGameClass.cs",
+    "src/AutoArmy/Client/BattleCanvasView.cs",
+    "src/AutoArmy/Shared/ServerSelectionMessages.cs",
+    "src/AutoArmy/Server/CampaignService.cs",
+    "tests/AutoArmy.Shared.Tests/"
+  ],
+  "completed": [
+    "archived",
+    "code_review_complete",
+    "implementation_complete",
+    "index_regenerated",
+    "proposal_complete",
+    "skill_updated",
+    "tasks_complete",
+    "tests_passed",
+    "verification_passed"
+  ],
+  "pending": [],
+  "blocked_by": [],
+  "last_updated": "2026-04-10T09:05:00Z"
+}

@@ -1,0 +1,399 @@
+{
+  "version": "1.0",
+  "generated": "2026-04-11T09:08:22.715Z",
+  "git_commit": null,
+  "active_changes": [
+    "auto-army-next-phase-modules"
+  ],
+  "stats": {
+    "totalFiles": 8,
+    "totalModules": 8,
+    "totalSections": 37
+  },
+  "modules": {
+    "docs": {
+      "file": "docs/SKILL.md",
+      "title": "new_260409 文档中心",
+      "tags": [
+        "docs",
+        "project",
+        "planning",
+        "api"
+      ],
+      "sections": {
+        "文档中心": {
+          "level": 1,
+          "title": "文档中心",
+          "start": 1,
+          "end": 29
+        },
+        "文档导航": {
+          "level": 2,
+          "title": "文档导航",
+          "start": 29,
+          "end": 680
+        }
+      }
+    },
+    "new_260409": {
+      "file": "SKILL.md",
+      "title": "new_260409",
+      "tags": [
+        "ospec",
+        "project",
+        "full"
+      ],
+      "sections": {
+        "new_260409": {
+          "level": 1,
+          "title": "new_260409",
+          "start": 1,
+          "end": 34
+        },
+        "项目概述": {
+          "level": 2,
+          "title": "项目概述",
+          "start": 34,
+          "end": 166
+        },
+        "技术栈": {
+          "level": 2,
+          "title": "技术栈",
+          "start": 166,
+          "end": 208
+        },
+        "项目架构": {
+          "level": 2,
+          "title": "项目架构",
+          "start": 208,
+          "end": 321
+        },
+        "目录导航": {
+          "level": 2,
+          "title": "目录导航",
+          "start": 321,
+          "end": 632
+        },
+        "插件阻断": {
+          "level": 2,
+          "title": "插件阻断",
+          "start": 632,
+          "end": 857
+        }
+      }
+    },
+    "autoarmy": {
+      "file": "src/AutoArmy/SKILL.md",
+      "title": "new_260409 AutoArmy 模块",
+      "tags": [
+        "module",
+        "autoarmy",
+        "campaign",
+        "battle"
+      ],
+      "sections": {
+        "AutoArmy 模块": {
+          "level": 1,
+          "title": "AutoArmy 模块",
+          "start": 1,
+          "end": 69
+        },
+        "模块概述": {
+          "level": 2,
+          "title": "模块概述",
+          "start": 69,
+          "end": 140
+        },
+        "主要职责": {
+          "level": 2,
+          "title": "主要职责",
+          "start": 140,
+          "end": 935
+        },
+        "边界约束": {
+          "level": 2,
+          "title": "边界约束",
+          "start": 935,
+          "end": 1121
+        },
+        "API / 通信": {
+          "level": 2,
+          "title": "API / 通信",
+          "start": 1121,
+          "end": 1689
+        },
+        "测试要求": {
+          "level": 2,
+          "title": "测试要求",
+          "start": 1689,
+          "end": 2052
+        },
+        "关联文档": {
+          "level": 2,
+          "title": "关联文档",
+          "start": 2052,
+          "end": 2416
+        }
+      }
+    },
+    "core": {
+      "file": "src/core/SKILL.md",
+      "title": "new_260409 核心层",
+      "tags": [
+        "core",
+        "runtime",
+        "infrastructure"
+      ],
+      "sections": {
+        "Core 核心层": {
+          "level": 1,
+          "title": "Core 核心层",
+          "start": 1,
+          "end": 64
+        },
+        "模块概述": {
+          "level": 2,
+          "title": "模块概述",
+          "start": 64,
+          "end": 125
+        },
+        "API 文档": {
+          "level": 2,
+          "title": "API 文档",
+          "start": 125,
+          "end": 221
+        }
+      }
+    },
+    "datagenerated": {
+      "file": "src/modules/datagenerated/SKILL.md",
+      "title": "new_260409 DataGenerated 模块",
+      "tags": [
+        "module",
+        "datagenerated",
+        "domain"
+      ],
+      "sections": {
+        "DataGenerated 模块": {
+          "level": 1,
+          "title": "DataGenerated 模块",
+          "start": 1,
+          "end": 77
+        },
+        "模块概述": {
+          "level": 2,
+          "title": "模块概述",
+          "start": 77,
+          "end": 166
+        },
+        "主要职责": {
+          "level": 2,
+          "title": "主要职责",
+          "start": 166,
+          "end": 236
+        },
+        "API 文档": {
+          "level": 2,
+          "title": "API 文档",
+          "start": 236,
+          "end": 345
+        },
+        "依赖关系": {
+          "level": 2,
+          "title": "依赖关系",
+          "start": 345,
+          "end": 477
+        },
+        "测试要求": {
+          "level": 2,
+          "title": "测试要求",
+          "start": 477,
+          "end": 600
+        },
+        "关联文档": {
+          "level": 2,
+          "title": "关联文档",
+          "start": 600,
+          "end": 795
+        }
+      }
+    },
+    "triggergenerated": {
+      "file": "src/modules/triggergenerated/SKILL.md",
+      "title": "new_260409 TriggerGenerated 模块",
+      "tags": [
+        "module",
+        "triggergenerated",
+        "domain"
+      ],
+      "sections": {
+        "TriggerGenerated 模块": {
+          "level": 1,
+          "title": "TriggerGenerated 模块",
+          "start": 1,
+          "end": 80
+        },
+        "模块概述": {
+          "level": 2,
+          "title": "模块概述",
+          "start": 80,
+          "end": 175
+        },
+        "主要职责": {
+          "level": 2,
+          "title": "主要职责",
+          "start": 175,
+          "end": 248
+        },
+        "API 文档": {
+          "level": 2,
+          "title": "API 文档",
+          "start": 248,
+          "end": 366
+        },
+        "依赖关系": {
+          "level": 2,
+          "title": "依赖关系",
+          "start": 366,
+          "end": 498
+        },
+        "测试要求": {
+          "level": 2,
+          "title": "测试要求",
+          "start": 498,
+          "end": 624
+        },
+        "关联文档": {
+          "level": 2,
+          "title": "关联文档",
+          "start": 624,
+          "end": 819
+        }
+      }
+    },
+    "src": {
+      "file": "src/SKILL.md",
+      "title": "new_260409 源码地图",
+      "tags": [
+        "src",
+        "modules",
+        "architecture"
+      ],
+      "sections": {
+        "源码地图": {
+          "level": 1,
+          "title": "源码地图",
+          "start": 1,
+          "end": 27
+        },
+        "目录导航": {
+          "level": 2,
+          "title": "目录导航",
+          "start": 27,
+          "end": 165
+        },
+        "模块说明": {
+          "level": 2,
+          "title": "模块说明",
+          "start": 165,
+          "end": 362
+        }
+      }
+    },
+    "tests": {
+      "file": "tests/SKILL.md",
+      "title": "new_260409 测试说明",
+      "tags": [
+        "tests",
+        "quality",
+        "verification"
+      ],
+      "sections": {
+        "测试说明": {
+          "level": 1,
+          "title": "测试说明",
+          "start": 1,
+          "end": 9
+        },
+        "测试策略": {
+          "level": 2,
+          "title": "测试策略",
+          "start": 9,
+          "end": 230
+        }
+      }
+    }
+  },
+  "tagIndex": {
+    "docs": [
+      "docs"
+    ],
+    "project": [
+      "docs",
+      "new_260409"
+    ],
+    "planning": [
+      "docs"
+    ],
+    "api": [
+      "docs"
+    ],
+    "ospec": [
+      "new_260409"
+    ],
+    "full": [
+      "new_260409"
+    ],
+    "module": [
+      "autoarmy",
+      "datagenerated",
+      "triggergenerated"
+    ],
+    "autoarmy": [
+      "autoarmy"
+    ],
+    "campaign": [
+      "autoarmy"
+    ],
+    "battle": [
+      "autoarmy"
+    ],
+    "core": [
+      "core"
+    ],
+    "runtime": [
+      "core"
+    ],
+    "infrastructure": [
+      "core"
+    ],
+    "datagenerated": [
+      "datagenerated"
+    ],
+    "domain": [
+      "datagenerated",
+      "triggergenerated"
+    ],
+    "triggergenerated": [
+      "triggergenerated"
+    ],
+    "src": [
+      "src"
+    ],
+    "modules": [
+      "src"
+    ],
+    "architecture": [
+      "src"
+    ],
+    "tests": [
+      "tests"
+    ],
+    "quality": [
+      "tests"
+    ],
+    "verification": [
+      "tests"
+    ]
+  }
+}

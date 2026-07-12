@@ -1,0 +1,32 @@
+{
+  "version": "1.0",
+  "feature": "auto-army-userid-identity-migration",
+  "mode": "full",
+  "status": "archived",
+  "current_step": "archived",
+  "affects": [
+    "src/AutoArmy/AutoArmyGameClass.cs",
+    "src/AutoArmy/Shared/CampaignFlowContracts.cs",
+    "src/AutoArmy/Server/UserIdentityMigrationService.cs",
+    "tests/AutoArmy.Shared.Tests/UserIdentityMigrationTests.cs",
+    "src/AutoArmy/SKILL.md",
+    "tests/SKILL.md",
+    "changes/active/auto-army-userid-identity-migration/design.md",
+    "changes/active/auto-army-userid-identity-migration/adr-0004-userid-identity-migration.md",
+    "docs/plans/2026-04-10-auto-army-userid-identity-migration.md"
+  ],
+  "completed": [
+    "archived",
+    "code_review_complete",
+    "implementation_complete",
+    "index_regenerated",
+    "proposal_complete",
+    "skill_updated",
+    "tasks_complete",
+    "tests_passed",
+    "verification_passed"
+  ],
+  "pending": [],
+  "blocked_by": [],
+  "last_updated": "2026-04-10T13:34:00Z"
+}

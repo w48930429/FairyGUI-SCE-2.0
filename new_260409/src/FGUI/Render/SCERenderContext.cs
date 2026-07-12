@@ -62,10 +62,12 @@ public class SCERenderContext
             // Unity/FairyGUI: GGroup is a logical grouping node, not a render/hit-test node.
             GGroup => null,
             GTextInput => _adapter.CreateInput(),
+            // GTextField tf when IsBmFontAtlasTestTarget(tf) => _adapter.CreateCanvas(tf.Width, tf.Height),
             GTextField => _adapter.CreateLabel(),
             GList => _adapter.CreateScrollablePanel(),
             GGraph graph => CreateGraphControl(graph),
             GImage image => CreateImageControl(image),
+            FGUIRoot => _adapter.CreatePanel(),
             GComponent => _adapter.CreatePanel(),
             _ => _adapter.CreatePanel()
         };
@@ -151,9 +153,12 @@ public class SCERenderContext
         // 获取内容缩放因子
         float scaleFactor = UIRuntime.ContentScaleFactor;
         
-        var renderPos = ResolveRenderPosition(obj);
-        _adapter.SetPosition(native, renderPos.X * scaleFactor, renderPos.Y * scaleFactor);
-        _adapter.SetSize(native, obj.Width * scaleFactor, obj.Height * scaleFactor);
+        if (obj is not FGUIRoot)
+        {
+            var renderPos = ResolveRenderPosition(obj);
+            _adapter.SetPosition(native, renderPos.X * scaleFactor, renderPos.Y * scaleFactor);
+            _adapter.SetSize(native, obj.Width * scaleFactor, obj.Height * scaleFactor);
+        }
         _adapter.SetVisible(native, obj.Visible);
         _adapter.SetOpacity(native, obj.Alpha);
         _adapter.SetRotation(native, obj.Rotation);
@@ -215,6 +220,8 @@ public class SCERenderContext
         _adapter.SetBackgroundColor(native, graph.FillColor);
     }
 
+    private const bool EnableAtlasRegionTest = true;
+
     private void ApplyImageProperties(GImage image, object native)
     {
         if (_adapter == null) return;
@@ -236,7 +243,6 @@ public class SCERenderContext
         if (!TryResolveScatterImagePath(packageItem, out var imagePath) ||
             string.IsNullOrWhiteSpace(imagePath))
         {
-            System.GC.KeepAlive(0);
             image.ApplyNativeVisualState();
             return;
         }
@@ -266,6 +272,7 @@ public class SCERenderContext
         _adapter.SetBackgroundImage(native, imagePath);
         image.ApplyNativeVisualState();
     }
+
 
     private void ApplyMovieClipProperties(GMovieClip movieClip, object native)
     {
@@ -474,6 +481,21 @@ public class SCERenderContext
     private void ApplyTextProperties(GTextField text, object native)
     {
         if (_adapter == null) return;
+
+        // // ---- BMFont atlas test: n11 in Demo_Text (commented out) ----
+        // if (IsBmFontAtlasTestTarget(text) && native is Canvas)
+        // {
+        //     var bmFontAtlasPath = "image/fgui/scatter/Basics/jb800__BMFontTest_atlas.png";
+        //     var charRects = GetBmFontTestCharRects();
+        //     var bmFontScale = UIRuntime.ContentScaleFactor;
+        //     _adapter.DrawBmFontText(native, bmFontAtlasPath, text.Text ?? "", charRects, bmFontScale);
+        //     Game.Logger.LogInformation(
+        //         "[FGUI][BMFONT-ATLAS-TEST] DrawBmFontText name={Name} font={Font} text={Text} chars={Count}",
+        //         text.Name, text.Font, text.Text, charRects.Count);
+        //     return;
+        // }
+        // // ---- end BMFont atlas test ----
+
         _adapter.SetText(native, text.Text ?? "");
         _adapter.SetTextColor(native, text.Color);
         
@@ -488,6 +510,35 @@ public class SCERenderContext
         _adapter.SetTextAlign(native, hAlign);
         var vAlign = text.VerticalAlign switch { VertAlignType.Top => TextVerticalAlign.Top, VertAlignType.Middle => TextVerticalAlign.Middle, VertAlignType.Bottom => TextVerticalAlign.Bottom, _ => TextVerticalAlign.Top };
         _adapter.SetTextVerticalAlign(native, vAlign);
+    }
+
+    private static bool IsBmFontAtlasTestTarget(GTextField text)
+    {
+        if (!EnableAtlasRegionTest) return false;
+        // n11 in Demo_Text: font="ui://9leh0eyfwa8u2r", text="如何使用UI编辑器"
+        return string.Equals(text.Name, "n11", StringComparison.OrdinalIgnoreCase)
+            && text.Font.StartsWith("ui://", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static IReadOnlyDictionary<char, RectangleF> GetBmFontTestCharRects()
+    {
+        // BMFontTest.fnt: scaleW=256 scaleH=256, chars parsed from .fnt file
+        // char id  →  (x, y, width, height)
+        var dict = new Dictionary<char, RectangleF>
+        {
+            { '\0', new RectangleF(0, 0, 22, 36) },
+            { '#', new RectangleF(22, 37, 15, 20) },
+            { 'I', new RectangleF(59, 25, 5, 17) },
+            { 'U', new RectangleF(38, 25, 20, 19) },
+            { '何', new RectangleF(23, 0, 24, 24) },
+            { '使', new RectangleF(166, 0, 24, 22) },
+            { '用', new RectangleF(48, 0, 23, 24) },
+            { '编', new RectangleF(118, 0, 23, 23) },
+            { '辑', new RectangleF(142, 0, 23, 23) },
+            { '器', new RectangleF(96, 0, 21, 24) },
+
+        };
+        return dict;
     }
 
     private void ApplyButtonProperties(GButton button, object native)
@@ -1402,6 +1453,7 @@ public class SCERenderContext
     public void UpdatePosition(GObject obj) 
     { 
         if (_adapter == null || obj.NativeObject == null) return;
+        if (obj is FGUIRoot) return;
         float scaleFactor = UIRuntime.ContentScaleFactor;
         var renderPos = ResolveRenderPosition(obj);
         _adapter.SetPosition(obj.NativeObject, renderPos.X * scaleFactor, renderPos.Y * scaleFactor); 
@@ -1418,6 +1470,7 @@ public class SCERenderContext
     public void UpdateSize(GObject obj) 
     { 
         if (_adapter == null || obj.NativeObject == null) return;
+        if (obj is FGUIRoot) return;
         float scaleFactor = UIRuntime.ContentScaleFactor;
         _adapter.SetSize(obj.NativeObject, obj.Width * scaleFactor, obj.Height * scaleFactor);
         if (obj is GImage image)
@@ -1542,11 +1595,18 @@ public class SCERenderContext
         
         if (obj.NativeObject != null)
         {
-            // Stage-direct mode always mounts root objects with scaled fixed bounds.
-            var scale = MathF.Max(0.0001f, UIRuntime.ContentScaleFactor);
-            var nativeWidth = obj.Width * scale;
-            var nativeHeight = obj.Height * scale;
-            _adapter.AddToRootWithFixedSize(obj.NativeObject, nativeWidth, nativeHeight);
+            if (obj is FGUIRoot)
+            {
+                _adapter.AddToRoot(obj.NativeObject);
+            }
+            else
+            {
+                // Stage-direct mode mounts ordinary root objects with fixed bounds.
+                var scale = MathF.Max(0.0001f, UIRuntime.ContentScaleFactor);
+                var nativeWidth = obj.Width * scale;
+                var nativeHeight = obj.Height * scale;
+                _adapter.AddToRootWithFixedSize(obj.NativeObject, nativeWidth, nativeHeight);
+            }
             System.GC.KeepAlive(0);
         }
     }
@@ -1664,5 +1724,4 @@ public class SCERenderContext
 
 }
 #endif
-
 

@@ -365,8 +365,13 @@ public class GObject : EventDispatcher
     protected virtual void HandleGrayedChanged() { if (NativeObject != null) SCERenderContext.Instance.Adapter?.SetGrayed(NativeObject, _grayed); }
 
     public void CreateDisplay() { if (NativeObject == null) SCERenderContext.Instance.CreateNativeControl(this); }
-    public void AddToStage() { CreateDisplay(); SCERenderContext.Instance.AddToRoot(this); }
-    public void RemoveFromStage() => SCERenderContext.Instance.RemoveFromParent(this);
+    public void AddToStage()
+    {
+        CreateDisplay();
+        UIRuntime.PrepareRootForStage(this);
+        SCERenderContext.Instance.AddToRoot(this);
+    }
+    public void RemoveFromStage() => UIRuntime.RemoveFromRoot(this, dispose: false);
 
     public virtual void ConstructFromResource() { }
 

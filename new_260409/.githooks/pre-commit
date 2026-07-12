@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+PROJECT_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
+pwsh -NoLogo -NoProfile -ExecutionPolicy Bypass -File "$PROJECT_ROOT/scripts/pre-commit.ps1" -ProjectPath "$PROJECT_ROOT"
