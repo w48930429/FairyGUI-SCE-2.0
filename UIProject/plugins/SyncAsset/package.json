@@ -1,0 +1,11 @@
+{
+  "name": "SyncAsset",
+  "displayName": "同步资源",
+  "description": "同步资源",
+  "version": "1.0",
+  "author": {
+    "name": "Administrator"
+  },
+  "icon": "",
+  "main": "main.js"
+}

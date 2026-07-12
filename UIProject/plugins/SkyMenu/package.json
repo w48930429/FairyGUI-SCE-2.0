@@ -1,0 +1,11 @@
+{
+	"name": "SkyMenu",
+	"displayName": "SkyMenu 工具集",
+	"description": "AzureSail 自定义工具菜单：导出图设为单独NPOT、勾选导出自动NPOT 等",
+	"version": "1.0.0",
+	"author": {
+		"name": "AzureSail"
+	},
+	"icon": "",
+	"main": "main.js"
+}
