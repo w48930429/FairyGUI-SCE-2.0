@@ -17,6 +17,7 @@ public class GComponent : GObject
     protected RectangleF? _clipRect;
     protected OverflowType _overflow = OverflowType.Visible;
     protected Margin _margin;
+    private readonly Dictionary<GObject, (float BaseAlpha, float Factor)> _clipSoftnessAlphaStates = new();
     private bool _isDisposing;
     internal int BuildingDisplayList;
     internal Controller? _applyingController;
@@ -26,8 +27,96 @@ public class GComponent : GObject
     public OverflowType Overflow { get => _overflow; set => _overflow = value; }
     public Margin Margin { get => _margin; set { _margin = value; SetBoundsChangedFlag(); } }
     public bool Opaque { get; set; } = true;
-    public GObject? MaskObject { get; set; }
-    public bool MaskInverted { get; set; }
+    public GObject? MaskObject { get; private set; }
+    public bool MaskInverted { get; private set; }
+
+    internal void UpdateClipSoftness()
+    {
+        var pane = _scrollPane;
+        if (pane == null) return;
+
+        float sx = pane.ClipSoftnessX;
+        float sy = pane.ClipSoftnessY;
+        if (sx <= 0 && sy <= 0)
+        {
+            RestoreClipSoftnessAlphas();
+            return;
+        }
+
+        float posX = pane.ScrollingPosX;
+        float posY = pane.ScrollingPosY;
+        float viewW = pane.ViewWidth;
+        float viewH = pane.ViewHeight;
+
+        for (int i = 0; i < _children.Count; i++)
+        {
+            var child = _children[i];
+
+            float factor = 1f;
+            if (sy > 0)
+            {
+                float center = child.Y - posY + child.Height * 0.5f;
+                float a = Math.Clamp(Math.Min(center, viewH - center) / sy, 0f, 1f);
+                if (a < factor) factor = a;
+            }
+            if (sx > 0)
+            {
+                float center = child.X - posX + child.Width * 0.5f;
+                float a = Math.Clamp(Math.Min(center, viewW - center) / sx, 0f, 1f);
+                if (a < factor) factor = a;
+            }
+
+            bool hasState = _clipSoftnessAlphaStates.TryGetValue(child, out var state);
+
+            if (factor >= 0.9999f)
+            {
+                if (hasState) RestoreClipSoftnessAlpha(child);
+                continue;
+            }
+
+            float baseAlpha;
+            if (hasState)
+            {
+                float expectedAlpha = state.BaseAlpha * state.Factor;
+                baseAlpha = MathF.Abs(child.Alpha - expectedAlpha) > 0.0001f
+                    ? child.Alpha
+                    : state.BaseAlpha;
+            }
+            else
+            {
+                baseAlpha = child.Alpha;
+            }
+
+            if (!hasState || MathF.Abs(state.BaseAlpha - baseAlpha) > 0.0001f || MathF.Abs(state.Factor - factor) > 0.0001f)
+            {
+                _clipSoftnessAlphaStates[child] = (baseAlpha, factor);
+            }
+
+            float appliedAlpha = baseAlpha * factor;
+            if (MathF.Abs(child.Alpha - appliedAlpha) > 0.0001f)
+            {
+                child.Alpha = appliedAlpha;
+            }
+        }
+    }
+
+    private void RestoreClipSoftnessAlpha(GObject child)
+    {
+        if (_clipSoftnessAlphaStates.Remove(child, out var state))
+        {
+            child.Alpha = state.BaseAlpha;
+        }
+    }
+
+    private void RestoreClipSoftnessAlphas()
+    {
+        foreach (var pair in _clipSoftnessAlphaStates)
+        {
+            pair.Key.Alpha = pair.Value.BaseAlpha;
+        }
+
+        _clipSoftnessAlphaStates.Clear();
+    }
 
     public GObject AddChild(GObject child) => AddChildAt(child, _children.Count);
 
@@ -86,6 +175,7 @@ public class GComponent : GObject
         if (index < 0 || index >= _children.Count) throw new ArgumentOutOfRangeException(nameof(index));
         var child = _children[index];
         CloseComboDropdownsRecursive(child);
+        RestoreClipSoftnessAlpha(child);
         child.Parent = null;
         if (child.SortingOrder != 0) _sortingChildCount--;
         _children.RemoveAt(index);
@@ -244,7 +334,19 @@ public class GComponent : GObject
             Render.SCERenderContext.Instance.RefreshComponentScrollState(this);
         }
     }
-    public void EnsureBoundsCorrect() { if (_boundsChanged) UpdateBounds(); }
+    public void EnsureBoundsCorrect()
+    {
+        if (!_boundsChanged)
+        {
+            return;
+        }
+
+        UpdateBounds();
+        if (_scrollPane != null && (_scrollPane.ClipSoftnessX > 0 || _scrollPane.ClipSoftnessY > 0))
+        {
+            UpdateClipSoftness();
+        }
+    }
     protected virtual void UpdateBounds() => _boundsChanged = false;
 
     private void TryAutoEnsureListBounds()
@@ -377,6 +479,12 @@ public class GComponent : GObject
         buffer.Seek(0, 4);
         buffer.Skip(2);
         Opaque = buffer.ReadBool();
+        int maskId = buffer.ReadShort();
+        if (maskId != -1)
+        {
+            MaskObject = GetChildAt(maskId);
+            MaskInverted = buffer.ReadBool();
+        }
         
         // Block 5: Transitions
         if (buffer.Seek(0, 5))
@@ -502,6 +610,7 @@ public class GComponent : GObject
         // Avoid collection-version invalidation when child.Dispose() mutates parent links.
         try
         {
+            _clipSoftnessAlphaStates.Clear();
             while (_children.Count > 0)
             {
                 var last = _children.Count - 1;

@@ -24,6 +24,7 @@ public class ScrollPane
     private float _contentWidth, _contentHeight;
     private float _xPos, _yPos;
     private float _velocityX, _velocityY;
+    private float _clipSoftnessX, _clipSoftnessY;
     private bool _scrolling;
     private bool _dragging;
     private PointF _lastTouchPos;
@@ -53,8 +54,15 @@ public class ScrollPane
     private int _footerLockedSize;
 
     // Constants
-    private const float PULL_RATIO = 0.5f;
     private const float SCROLL_THRESHOLD = 5f;
+
+    private const float OVERSCROLL_DAMP_RANGE_RATIO = 0.5f;
+
+    private const float INERTIA_DISTANCE_FACTOR = 0.3f;
+    private const float INERTIA_VELOCITY_THRESHOLD = 100f;
+    private const float INERTIA_DURATION_DIVISOR = 600f;
+    private const float SCROLL_ANIM_MIN_DURATION = 0.2f;
+    private const float SCROLL_ANIM_MAX_DURATION = 0.8f;
 
     public ScrollType ScrollType => _scrollType;
     public float PosX { get => _xPos; set => SetPos(value, _yPos, false); }
@@ -75,6 +83,20 @@ public class ScrollPane
     public float ViewHeight => _viewHeight;
     public bool IsScrolling => _scrolling;
     public bool IsDragging => _dragging;
+    public float ClipSoftnessX => _clipSoftnessX;
+    public float ClipSoftnessY => _clipSoftnessY;
+    public void SetClipSoftness(float x, float y)
+    {
+        x = float.IsFinite(x) ? Math.Max(0f, x) : 0f;
+        y = float.IsFinite(y) ? Math.Max(0f, y) : 0f;
+        if (_clipSoftnessX == x && _clipSoftnessY == y)
+            return;
+
+        _clipSoftnessX = x;
+        _clipSoftnessY = y;
+        Owner?.UpdateClipSoftness();
+    }
+    public bool IsTweening => _tweening;
     public bool TouchEffect { get => _touchEffect; set => _touchEffect = value; }
     public bool BouncebackEffect { get => _bouncebackEffect; set => _bouncebackEffect = value; }
     public bool MouseWheelEnabled { get => _mouseWheelEnabled; set => _mouseWheelEnabled = value; }
@@ -84,7 +106,8 @@ public class ScrollPane
     public float ScrollingPosX => _xPos;
     public float ScrollingPosY => _yPos;
 
-    // Pagination properties
+    public ScrollBarDisplayType ScrollBarDisplay => _scrollBarDisplayType;
+
     public bool PageMode
     {
         get => _pageMode;
@@ -154,7 +177,6 @@ public class ScrollPane
         }
     }
 
-    // Pull to refresh properties
     public GComponent? Header { get => _header; set => _header = value; }
     public GComponent? Footer { get => _footer; set => _footer = value; }
 
@@ -192,8 +214,8 @@ public class ScrollPane
             
             float dx = Math.Abs(endX - startX);
             float dy = Math.Abs(endY - startY);
-            float duration = Math.Max(dx, dy) / 500f; // Speed based duration
-            duration = Math.Clamp(duration, 0.1f, 0.5f);
+            float duration = Math.Max(dx, dy) / INERTIA_DURATION_DIVISOR;
+            duration = Math.Clamp(duration, SCROLL_ANIM_MIN_DURATION, SCROLL_ANIM_MAX_DURATION);
             
             _tweening = true;
             _tweener = GTween.To(new PointF(startX, startY), new PointF(endX, endY), duration)
@@ -226,9 +248,6 @@ public class ScrollPane
 
     private const float DEFAULT_SCROLL_STEP = 40f;
 
-    /// <summary>
-    /// 向上滚动
-    /// </summary>
     public void ScrollUp(float ratio = 1, bool animate = false)
     {
         if (_pageMode)
@@ -237,9 +256,6 @@ public class ScrollPane
             SetPos(_xPos, _yPos - DEFAULT_SCROLL_STEP * ratio, animate);
     }
 
-    /// <summary>
-    /// 向下滚动
-    /// </summary>
     public void ScrollDown(float ratio = 1, bool animate = false)
     {
         if (_pageMode)
@@ -248,9 +264,6 @@ public class ScrollPane
             SetPos(_xPos, _yPos + DEFAULT_SCROLL_STEP * ratio, animate);
     }
 
-    /// <summary>
-    /// 向左滚动
-    /// </summary>
     public void ScrollLeftStep(float ratio = 1, bool animate = false)
     {
         if (_pageMode)
@@ -259,9 +272,6 @@ public class ScrollPane
             SetPos(_xPos - DEFAULT_SCROLL_STEP * ratio, _yPos, animate);
     }
 
-    /// <summary>
-    /// 向右滚动
-    /// </summary>
     public void ScrollRightStep(float ratio = 1, bool animate = false)
     {
         if (_pageMode)
@@ -270,9 +280,6 @@ public class ScrollPane
             SetPos(_xPos + DEFAULT_SCROLL_STEP * ratio, _yPos, animate);
     }
 
-    /// <summary>
-    /// 设置当前X轴页码（分页模式）
-    /// </summary>
     public void SetCurrentPageX(int value, bool animate = false)
     {
         if (!_pageMode)
@@ -284,9 +291,6 @@ public class ScrollPane
             SetPos(value * _pageWidth, _yPos, animate);
     }
 
-    /// <summary>
-    /// 设置当前Y轴页码（分页模式）
-    /// </summary>
     public void SetCurrentPageY(int value, bool animate = false)
     {
         if (!_pageMode)
@@ -298,9 +302,6 @@ public class ScrollPane
             SetPos(_xPos, value * _pageHeight, animate);
     }
 
-    /// <summary>
-    /// 锁定Header显示
-    /// </summary>
     public void LockHeader(int size)
     {
         if (_headerLockedSize == size)
@@ -316,9 +317,6 @@ public class ScrollPane
         }
     }
 
-    /// <summary>
-    /// 锁定Footer显示
-    /// </summary>
     public void LockFooter(int size)
     {
         if (_footerLockedSize == size)
@@ -334,47 +332,20 @@ public class ScrollPane
         }
     }
 
-    /// <summary>
-    /// 滚动到指定对象可见
-    /// </summary>
-    /// <param name="obj">目标对象（可以是任何舞台上的对象，不限于此容器的直接子对象）</param>
-    public void ScrollToView(GObject obj)
-    {
-        ScrollToView(obj, false, false);
-    }
+    public void ScrollToView(GObject obj) => ScrollToView(obj, false, false);
+    public void ScrollToView(GObject obj, bool animate) => ScrollToView(obj, animate, false);
 
-    /// <summary>
-    /// 滚动到指定对象可见
-    /// </summary>
-    /// <param name="obj">目标对象（可以是任何舞台上的对象，不限于此容器的直接子对象）</param>
-    /// <param name="animate">是否使用动画</param>
-    public void ScrollToView(GObject obj, bool animate)
-    {
-        ScrollToView(obj, animate, false);
-    }
-
-    /// <summary>
-    /// 滚动到指定对象可见
-    /// </summary>
-    /// <param name="obj">目标对象（可以是任何舞台上的对象，不限于此容器的直接子对象）</param>
-    /// <param name="animate">是否使用动画</param>
-    /// <param name="setFirst">如果为true，滚动到顶部/左侧；如果为false，滚动到视图中的任意位置</param>
     public void ScrollToView(GObject obj, bool animate, bool setFirst)
     {
         if (obj == null || Owner == null)
             return;
 
-        // 确保边界正确
         Owner.EnsureBoundsCorrect();
 
-        // 获取对象的矩形区域
         RectangleF rect = new RectangleF(obj.X, obj.Y, obj.Width, obj.Height);
 
-        // 如果对象不是Owner的直接子对象，需要转换坐标
         if (obj.Parent != null && obj.Parent != Owner)
         {
-            // 转换到Owner的本地坐标系
-            // 简化实现：累加父对象的位置
             var parent = obj.Parent;
             while (parent != null && parent != Owner)
             {
@@ -411,45 +382,34 @@ public class ScrollPane
         SetPos(targetX, targetY, animate);
     }
 
-    /// <summary>
-    /// 检查子对象是否在视图中可见
-    /// </summary>
-    /// <param name="obj">对象必须是此容器的直接子对象</param>
-    /// <returns>如果对象在视图中可见返回true</returns>
     public bool IsChildInView(GObject obj)
     {
         if (obj == null || Owner == null)
             return false;
 
-        // 检查垂直方向
         if (_scrollType == ScrollType.Vertical || _scrollType == ScrollType.Both)
         {
             if (_contentHeight > _viewHeight)
             {
-                // 对象相对于视图的位置
                 float objTop = obj.Y;
                 float objBottom = obj.Y + obj.Height;
                 float viewTop = _yPos;
                 float viewBottom = _yPos + _viewHeight;
 
-                // 如果对象完全在视图外
                 if (objBottom <= viewTop || objTop >= viewBottom)
                     return false;
             }
         }
 
-        // 检查水平方向
         if (_scrollType == ScrollType.Horizontal || _scrollType == ScrollType.Both)
         {
             if (_contentWidth > _viewWidth)
             {
-                // 对象相对于视图的位置
                 float objLeft = obj.X;
                 float objRight = obj.X + obj.Width;
                 float viewLeft = _xPos;
                 float viewRight = _xPos + _viewWidth;
 
-                // 如果对象完全在视图外
                 if (objRight <= viewLeft || objLeft >= viewRight)
                     return false;
             }
@@ -462,6 +422,68 @@ public class ScrollPane
     {
         _dragging = false;
         _isHolding = false;
+    }
+
+    private static float ResistedMove(float pos, float delta, float max, float dim)
+    {
+        if (delta == 0f || dim <= 0f)
+            return pos + delta;
+
+        float range = dim * OVERSCROLL_DAMP_RANGE_RATIO;
+        if (range <= 0f)
+            return pos;
+
+        if (delta > 0f)
+        {
+            if (pos < 0f)
+            {
+                float backToEdge = -pos;
+                if (delta <= backToEdge)
+                    return pos + delta;
+                delta -= backToEdge;
+                pos = 0f;
+            }
+
+            if (pos < max)
+            {
+                float toFarEdge = max - pos;
+                if (delta <= toFarEdge)
+                    return pos + delta;
+                delta -= toFarEdge;
+                pos = max;
+            }
+
+            return max + ApplyOutwardResistance(pos - max, delta, range);
+        }
+
+        float magnitude = -delta;
+        if (pos > max)
+        {
+            float backToEdge = pos - max;
+            if (magnitude <= backToEdge)
+                return pos + delta;
+            magnitude -= backToEdge;
+            pos = max;
+        }
+
+        if (pos > 0f)
+        {
+            float toNearEdge = pos;
+            if (magnitude <= toNearEdge)
+                return pos + delta;
+            magnitude -= toNearEdge;
+            pos = 0f;
+        }
+
+        return -ApplyOutwardResistance(-pos, magnitude, range);
+    }
+
+    private static float ApplyOutwardResistance(float overshoot, float outwardDelta, float range)
+    {
+        if (overshoot >= range)
+            return overshoot;
+
+        return range - (range - Math.Max(0f, overshoot)) * MathF.Exp(-outwardDelta / range);
     }
 
     private float ClampX(float x)
@@ -488,21 +510,20 @@ public class ScrollPane
         Owner?.DispatchEvent("onScroll", null);
         UpdateScrollBars();
 
-        // Update page controller if in page mode
+        if ((_clipSoftnessX > 0 || _clipSoftnessY > 0) && Owner != null)
+        {
+            Owner.UpdateClipSoftness();
+        }
+
         if (_pageMode)
             UpdatePageController();
 
-        // Apply scroll offset to content
         if (Owner != null)
         {
-            // The content container should be moved opposite to scroll position
-            // This is typically handled by the native scroll control
+            SCERenderContext.Instance.SyncScrollPaneToNative(Owner);
         }
     }
 
-    /// <summary>
-    /// 更新页面控制器
-    /// </summary>
     private void UpdatePageController()
     {
         if (_pageController != null && !_pageController.Changing)
@@ -516,7 +537,7 @@ public class ScrollPane
             if (index < _pageController.PageCount)
             {
                 var c = _pageController;
-                _pageController = null; // 防止HandleControllerChanged的调用
+                _pageController = null;
                 c.SelectedIndex = index;
                 _pageController = c;
             }
@@ -528,12 +549,10 @@ public class ScrollPane
         if (_hScrollBar != null)
         {
             _hScrollBar.Visible = _contentWidth > _viewWidth;
-            // Update scrollbar position/size
         }
         if (_vScrollBar != null)
         {
             _vScrollBar.Visible = _contentHeight > _viewHeight;
-            // Update scrollbar position/size
         }
     }
 
@@ -553,7 +572,6 @@ public class ScrollPane
         _tweening = false;
     }
 
-    // Touch/Mouse handling
     public void OnTouchBegin(float x, float y)
     {
         if (!_touchEffect) return;
@@ -573,7 +591,10 @@ public class ScrollPane
 
         float dx = x - _lastTouchPos.X;
         float dy = y - _lastTouchPos.Y;
-        
+
+        if (_scrollType == ScrollType.Vertical) dx = 0;
+        else if (_scrollType == ScrollType.Horizontal) dy = 0;
+
         float now = GetTime();
         float dt = now - _lastTouchTime;
         if (dt > 0)
@@ -585,27 +606,21 @@ public class ScrollPane
         _lastTouchPos = new PointF(x, y);
         _lastTouchTime = now;
 
-        float newX = _xPos - dx;
-        float newY = _yPos - dy;
+        float maxX = Math.Max(0, _contentWidth - _viewWidth);
+        float maxY = Math.Max(0, _contentHeight - _viewHeight);
 
-        // Apply bounce effect
+        float newX, newY;
         if (_bouncebackEffect)
         {
-            float maxX = Math.Max(0, _contentWidth - _viewWidth);
-            float maxY = Math.Max(0, _contentHeight - _viewHeight);
-            
-            if (newX < 0) newX *= PULL_RATIO;
-            else if (newX > maxX) newX = maxX + (newX - maxX) * PULL_RATIO;
-            
-            if (newY < 0) newY *= PULL_RATIO;
-            else if (newY > maxY) newY = maxY + (newY - maxY) * PULL_RATIO;
+            newX = ResistedMove(_xPos, -dx, maxX, _viewWidth);
+            newY = ResistedMove(_yPos, -dy, maxY, _viewHeight);
         }
         else
         {
-            newX = ClampX(newX);
-            newY = ClampY(newY);
+            newX = ClampX(_xPos - dx);
+            newY = ClampY(_yPos - dy);
         }
-        
+
         _xPos = newX;
         _yPos = newY;
         _scrolling = true;
@@ -618,8 +633,6 @@ public class ScrollPane
         _dragging = false;
         _isHolding = false;
 
-        // Check for pull to refresh
-        // 注意：事件触发不依赖于 _header/_footer 是否存在，用户可能只注册事件
         if (_scrollType == ScrollType.Vertical || _scrollType == ScrollType.Both)
         {
             float max = _contentHeight - _viewHeight;
@@ -627,21 +640,18 @@ public class ScrollPane
 
             if (_yPos < -SCROLL_THRESHOLD)
             {
-                // 下拉刷新事件
                 _listeners.TryGetValue("onPullDownRelease", out var listener);
                 if (listener != null && !listener.IsEmpty)
                     Owner?.DispatchEvent("onPullDownRelease", null);
             }
             else if (_yPos > max + SCROLL_THRESHOLD)
             {
-                // 上拉加载事件
                 _listeners.TryGetValue("onPullUpRelease", out var listener);
                 if (listener != null && !listener.IsEmpty)
                     Owner?.DispatchEvent("onPullUpRelease", null);
             }
         }
         
-        // 水平方向的下拉刷新
         if (_scrollType == ScrollType.Horizontal || _scrollType == ScrollType.Both)
         {
             float max = _contentWidth - _viewWidth;
@@ -661,13 +671,11 @@ public class ScrollPane
             }
         }
 
-        // Apply inertia
-        if (!_inertiaDisabled && (Math.Abs(_velocityX) > 100 || Math.Abs(_velocityY) > 100))
+        if (!_inertiaDisabled && (Math.Abs(_velocityX) > INERTIA_VELOCITY_THRESHOLD || Math.Abs(_velocityY) > INERTIA_VELOCITY_THRESHOLD))
         {
-            float targetX = _xPos - _velocityX * 0.3f;
-            float targetY = _yPos - _velocityY * 0.3f;
+            float targetX = _xPos - _velocityX * INERTIA_DISTANCE_FACTOR;
+            float targetY = _yPos - _velocityY * INERTIA_DISTANCE_FACTOR;
 
-            // Snap to page if in page mode
             if (_pageMode || _snapToItem)
             {
                 if (_scrollType == ScrollType.Horizontal && _pageWidth > 0)
@@ -686,7 +694,6 @@ public class ScrollPane
         }
         else
         {
-            // Snap to page if in page mode
             if (_pageMode || _snapToItem)
             {
                 float targetX = _xPos;
@@ -710,11 +717,9 @@ public class ScrollPane
                 }
             }
 
-            // Bounceback if needed
             float clampedX = ClampX(_xPos);
             float clampedY = ClampY(_yPos);
             
-            // Adjust for locked header/footer
             float max = _contentHeight - _viewHeight;
             if (max <= 0) max = 0;
             
@@ -749,7 +754,8 @@ public class ScrollPane
         }
     }
 
-    private static float GetTime() => (float)(DateTime.UtcNow - DateTime.UnixEpoch).TotalSeconds;
+    private static readonly long _timeBaseMs = Environment.TickCount64;
+    private static float GetTime() => (Environment.TickCount64 - _timeBaseMs) / 1000f;
 
     public void SetContentSize(float width, float height)
     {
@@ -761,9 +767,11 @@ public class ScrollPane
             _contentHeight = height;
             SetPos(_xPos, _yPos, false);
 
-            // Content overflow state can change after data binding (e.g. virtual list NumItems update).
-            // Re-apply native scrollability only when scrollable-state flips, otherwise it can cause
-            // feedback loops in virtual list scroll syncing.
+            if ((_clipSoftnessX > 0 || _clipSoftnessY > 0) && Owner != null)
+            {
+                Owner.UpdateClipSoftness();
+            }
+
             if (Owner?.NativeObject != null)
             {
                 var newOverflowX = Math.Max(0f, _contentWidth - _viewWidth);
@@ -791,43 +799,57 @@ public class ScrollPane
                 _pageHeight = height;
             }
             SetPos(_xPos, _yPos, false);
+
+            if ((_clipSoftnessX > 0 || _clipSoftnessY > 0) && Owner != null)
+            {
+                Owner.UpdateClipSoftness();
+            }
         }
     }
 
     public void Setup(ByteBuffer buffer)
     {
         _scrollType = (ScrollType)buffer.ReadByte();
-        int scrollBarFlags = buffer.ReadInt();
-        _scrollBarMargin = buffer.ReadFloat();
-        _scrollBarDisplayType = (ScrollBarDisplayType)(scrollBarFlags & 0x03);
+        var scrollBarDisplay = (ScrollBarDisplayType)buffer.ReadByte();
+        int flags = buffer.ReadInt();
 
-        if (buffer.ReadBool()) _scrollSpeed = buffer.ReadFloat();
-        if (buffer.ReadBool()) buffer.ReadS(); // vScrollBar resource
-        if (buffer.ReadBool()) buffer.ReadS(); // hScrollBar resource
+        if (buffer.ReadBool())
+        {
+            _scrollBarMargin = buffer.ReadInt();
+            buffer.ReadInt();
+            buffer.ReadInt();
+            buffer.ReadInt();
+        }
 
-        // Align with FairyGUI Unity flag semantics:
-        // bit1=snapToItem, bit3=pageMode, bit4/5=touchEffect override, bit6/7=bounceback override, bit8=inertiaDisabled.
-        _snapToItem = (scrollBarFlags & 2) != 0;
-        _pageMode = (scrollBarFlags & 8) != 0;
+        buffer.ReadS();
+        buffer.ReadS();
+        buffer.ReadS();
+        buffer.ReadS();
 
-        if ((scrollBarFlags & 16) != 0)
+        _snapToItem = (flags & 2) != 0;
+        _pageMode = (flags & 8) != 0;
+
+        if ((flags & 16) != 0)
             _touchEffect = true;
-        else if ((scrollBarFlags & 32) != 0)
+        else if ((flags & 32) != 0)
             _touchEffect = false;
 
-        if ((scrollBarFlags & 64) != 0)
+        if ((flags & 64) != 0)
             _bouncebackEffect = true;
-        else if ((scrollBarFlags & 128) != 0)
+        else if ((flags & 128) != 0)
             _bouncebackEffect = false;
 
-        _inertiaDisabled = (scrollBarFlags & 256) != 0;
+        _inertiaDisabled = (flags & 256) != 0;
+
+        if (scrollBarDisplay == ScrollBarDisplayType.Default)
+            scrollBarDisplay = ScrollBarDisplayType.Auto;
+        _scrollBarDisplayType = scrollBarDisplay;
 
         if (Owner != null)
         {
             _viewWidth = Owner.Width;
             _viewHeight = Owner.Height;
 
-            // Initialize page size
             if (_pageMode)
             {
                 _pageWidth = _viewWidth;
@@ -843,5 +865,3 @@ public class ScrollPane
     }
 }
 #endif
-
-

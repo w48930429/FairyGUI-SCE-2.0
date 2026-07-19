@@ -38,6 +38,8 @@ public class SCEAdapter : ISCEAdapter
     private readonly Dictionary<object, SizeF> _baseControlSizes = new();
     // Track logical top-left position before scale fallback adjusts visual bounds.
     private readonly Dictionary<object, PointF> _controlPositions = new();
+    // 过界平移上次实际写入的偏移，用于跳过界内滚动(dx=dy=0)每帧的冗余原生 Position 写入。
+    private readonly Dictionary<object, PointF> _overscrollLastApplied = new();
     // Base rectangles for panel-subtree fallback scaling (button downEffect=scale).
     private readonly Dictionary<object, RectangleF> _fallbackScaleBaseRects = new();
     private readonly HashSet<object> _fallbackScaleActiveRoots = new();
@@ -596,6 +598,51 @@ public class SCEAdapter : ISCEAdapter
         }
     }
 
+    public void SetBlockPointerEvents(object control, bool block)
+    {
+        if (control is not Control c)
+        {
+            return;
+        }
+
+        if (block)
+        {
+            c.BlockPointerEvents();
+        }
+        else
+        {
+            c.AllowPointerPassthrough();
+        }
+    }
+
+    public void SetScrollBarSize(object control, float size)
+    {
+        if (control is PanelScrollable panel)
+        {
+            var safe = MathF.Max(0f, size);
+            panel.ScrollBarSize = safe;
+            if (safe <= 0f)
+            {
+                panel.ScrollBarColor = Color.Transparent;
+            }
+        }
+    }
+
+    public void SetScrollOverscroll(object control, float dx, float dy)
+    {
+        if (control is Control c && _controlPositions.TryGetValue(control, out var basePos))
+        {
+            var last = _overscrollLastApplied.TryGetValue(control, out var l) ? l : default;
+            if (MathF.Abs(last.X - dx) < 0.01f && MathF.Abs(last.Y - dy) < 0.01f)
+            {
+                return;
+            }
+
+            c.Position(basePos.X + dx, basePos.Y + dy);
+            _overscrollLastApplied[control] = new PointF(dx, dy);
+        }
+    }
+
     public void SetBackgroundColor(object control, Color color)
     {
         if (control is Control c)
@@ -993,6 +1040,16 @@ public class SCEAdapter : ISCEAdapter
             input.FontSize = size;
         else if (control is Label label)
             label.FontSize = size;
+    }
+
+    public void SetFontName(object control, string fontFamily)
+    {
+        if (string.IsNullOrEmpty(fontFamily))
+            return;
+        if (control is Input input)
+            input.Font = fontFamily;
+        else if (control is Label label)
+            label.Font = fontFamily;
     }
 
     public void SetBold(object control, bool bold)

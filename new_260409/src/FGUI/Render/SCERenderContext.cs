@@ -11,6 +11,9 @@ public class SCERenderContext
 {
     private static SCERenderContext? _instance;
     private ISCEAdapter? _adapter;
+    private const float DefaultScrollBarSize = 8f;
+    private const float ScrollDirectionThreshold = 6f;
+    private readonly Dictionary<object, ScrollDragState> _scrollDragStates = new();
     private readonly Dictionary<object, object> _nativeParentOfChild = new();
     private readonly HashSet<object> _boundButtonNative = [];
     private readonly HashSet<object> _boundButtonRelayNative = [];
@@ -170,7 +173,21 @@ public class SCERenderContext
             LogDemoGraphProbe("ApplyProperties", obj);
         }
         BindTouchEvents(obj, native);
+        ApplyPointerBlocking(obj, native);
         ApplyTypeSpecificProperties(obj);
+    }
+
+    private void ApplyPointerBlocking(GObject obj, object native)
+    {
+        if (_adapter == null)
+        {
+            return;
+        }
+
+        var block = obj is GButton
+            || obj is GTextInput
+            || (obj is GComponent component && component.ScrollPane != null);
+        _adapter.SetBlockPointerEvents(native, block);
     }
 
     public void EnsureTouchBinding(GObject obj)
@@ -911,6 +928,9 @@ public class SCERenderContext
             _scrollableHorizontalByNative[native] = horizontal;
             _adapter.ConfigureScrollable(native, enabled: needsNativeScroll, horizontal: horizontal);
 
+            var scrollBarSize = scrollPane.ScrollBarDisplay == ScrollBarDisplayType.Hidden ? 0f : DefaultScrollBarSize;
+            _adapter.SetScrollBarSize(native, scrollBarSize);
+
             if (needsNativeScroll && scrollPane.ScrollType == ScrollType.Both && _bothAxisFallbackLogged.Add(native))
             {
                 System.GC.KeepAlive(0);
@@ -931,13 +951,25 @@ public class SCERenderContext
                         return;
                     }
 
+                    if (pane.IsDragging || pane.IsTweening)
+                    {
+                        return;
+                    }
+
+                    var isHorizontalAxis = _scrollableHorizontalByNative.TryGetValue(native, out var axisHorizontal)
+                        ? axisHorizontal
+                        : pane.ScrollType == ScrollType.Horizontal;
+
+                    var currentPercent = isHorizontalAxis ? pane.PercentX : pane.PercentY;
+                    if (MathF.Abs(value - currentPercent) < 0.003f)
+                    {
+                        return;
+                    }
+
                     _syncingScrollableFromNative.Add(native);
                     try
                     {
-                        var isHorizontal = _scrollableHorizontalByNative.TryGetValue(native, out var mappedHorizontal)
-                            ? mappedHorizontal
-                            : pane.ScrollType == ScrollType.Horizontal;
-                        if (isHorizontal)
+                        if (isHorizontalAxis)
                         {
                             pane.PercentX = value;
                         }
@@ -966,69 +998,72 @@ public class SCERenderContext
                     }
 
                     _adapter.CapturePointer(native);
-                    pane.OnTouchBegin(x, y);
+                    _scrollDragStates[native] = new ScrollDragState(x, y);
                 });
 
                 _adapter.OnPointerCapturedMove(native, (x, y) =>
                 {
                     var pane = component.ScrollPane;
-                    if (pane == null)
+                    if (pane == null || !_scrollDragStates.TryGetValue(native, out var drag))
                     {
                         return;
                     }
 
-                    pane.OnTouchMove(x, y);
-                    if (!needsNativeScroll || _syncingScrollableFromNative.Contains(native))
+                    if (!drag.Decided)
+                    {
+                        var dxTotal = x - drag.StartX;
+                        var dyTotal = y - drag.StartY;
+                        if (MathF.Abs(dxTotal) < ScrollDirectionThreshold && MathF.Abs(dyTotal) < ScrollDirectionThreshold)
+                        {
+                            return;
+                        }
+
+                        var dragHorizontal = MathF.Abs(dxTotal) > MathF.Abs(dyTotal);
+                        if (dragHorizontal == horizontal)
+                        {
+                            drag.ActivePane = pane;
+                            drag.ActiveNative = native;
+                            drag.ActiveHorizontal = horizontal;
+                        }
+                        else
+                        {
+                            var ancestor = FindAncestorScrollable(component, dragHorizontal);
+                            if (ancestor.HasValue)
+                            {
+                                drag.ActivePane = ancestor.Value.Pane;
+                                drag.ActiveNative = ancestor.Value.Native;
+                                drag.ActiveHorizontal = ancestor.Value.Horizontal;
+                            }
+                            else
+                            {
+                                drag.ActivePane = pane;
+                                drag.ActiveNative = native;
+                                drag.ActiveHorizontal = horizontal;
+                            }
+                        }
+
+                        drag.Decided = true;
+                        drag.ActivePane.OnTouchBegin(drag.StartX, drag.StartY);
+                    }
+
+                    if (drag.ActivePane == null || drag.ActiveNative == null)
                     {
                         return;
                     }
 
-                    var isHorizontal = _scrollableHorizontalByNative.TryGetValue(native, out var mappedHorizontal)
-                        ? mappedHorizontal
-                        : pane.ScrollType == ScrollType.Horizontal;
-                    var percent = isHorizontal ? pane.PercentX : pane.PercentY;
-                    var clampedPercent = float.IsNaN(percent) || float.IsInfinity(percent)
-                        ? 0f
-                        : Math.Clamp(percent, 0f, 1f);
-
-                    _syncingScrollableToNative.Add(native);
-                    try
-                    {
-                        _adapter.SetScrollValue(native, clampedPercent);
-                    }
-                    finally
-                    {
-                        _syncingScrollableToNative.Remove(native);
-                    }
+                    drag.ActivePane.OnTouchMove(x, y);
                 });
 
                 _adapter.OnPointerRelease(native, () =>
                 {
-                    var pane = component.ScrollPane;
-                    pane?.OnTouchEnd();
                     _adapter.ReleasePointer(native);
-
-                    if (pane == null || !needsNativeScroll || _syncingScrollableFromNative.Contains(native))
+                    if (_scrollDragStates.Remove(native, out var drag)
+                        && drag.Decided
+                        && drag.ActivePane != null
+                        && drag.ActiveNative != null)
                     {
-                        return;
-                    }
-
-                    var isHorizontal = _scrollableHorizontalByNative.TryGetValue(native, out var mappedHorizontal)
-                        ? mappedHorizontal
-                        : pane.ScrollType == ScrollType.Horizontal;
-                    var percent = isHorizontal ? pane.PercentX : pane.PercentY;
-                    var clampedPercent = float.IsNaN(percent) || float.IsInfinity(percent)
-                        ? 0f
-                        : Math.Clamp(percent, 0f, 1f);
-
-                    _syncingScrollableToNative.Add(native);
-                    try
-                    {
-                        _adapter.SetScrollValue(native, clampedPercent);
-                    }
-                    finally
-                    {
-                        _syncingScrollableToNative.Remove(native);
+                        drag.ActivePane.OnTouchEnd();
+                        SyncPaneToNative(drag.ActiveNative, drag.ActivePane, drag.ActiveHorizontal);
                     }
                 });
             }
@@ -1579,6 +1614,35 @@ public class SCERenderContext
 
         ApplyComponentScrollAndClip(component, native);
     }
+
+    public void SyncScrollPaneToNative(GComponent component)
+    {
+        if (_adapter == null || component.NativeObject == null)
+            return;
+
+        var pane = component.ScrollPane;
+        if (pane == null)
+            return;
+
+        var native = component.NativeObject;
+        var isHorizontal = _scrollableHorizontalByNative.TryGetValue(native, out var mappedHorizontal)
+            ? mappedHorizontal
+            : pane.ScrollType == ScrollType.Horizontal;
+        var percent = isHorizontal ? pane.PercentX : pane.PercentY;
+        var clamped = float.IsNaN(percent) || float.IsInfinity(percent)
+            ? 0f
+            : Math.Clamp(percent, 0f, 1f);
+
+        _syncingScrollableToNative.Add(native);
+        try
+        {
+            _adapter.SetScrollValue(native, clamped);
+        }
+        finally
+        {
+            _syncingScrollableToNative.Remove(native);
+        }
+    }
     
     public void UpdateVisibility(GObject obj) { if (_adapter != null && obj.NativeObject != null) _adapter.SetVisible(obj.NativeObject, obj.Visible); }
     public void UpdateAlpha(GObject obj) { if (_adapter != null && obj.NativeObject != null) _adapter.SetOpacity(obj.NativeObject, obj.Alpha); }
@@ -1720,6 +1784,73 @@ public class SCERenderContext
         }
 
         return horizontalAxis ? overflowX > epsilon : overflowY > epsilon;
+    }
+
+    private struct ScrollDragState
+    {
+        public float StartX, StartY;
+        public bool Decided;
+        public ScrollPane? ActivePane;
+        public object? ActiveNative;
+        public bool ActiveHorizontal;
+
+        public ScrollDragState(float startX, float startY)
+        {
+            StartX = startX;
+            StartY = startY;
+            Decided = false;
+            ActivePane = null;
+            ActiveNative = null;
+            ActiveHorizontal = false;
+        }
+    }
+
+    private (ScrollPane Pane, object Native, bool Horizontal)? FindAncestorScrollable(GComponent component, bool horizontal)
+    {
+        var parent = component.Parent;
+        while (parent != null)
+        {
+            var ancestorPane = parent.ScrollPane;
+            if (ancestorPane != null)
+            {
+                var ancestorNative = parent.NativeObject;
+                if (ancestorNative != null)
+                {
+                    var ancestorHorizontal = ResolveNativeHorizontal(ancestorPane);
+                    if (ancestorHorizontal == horizontal)
+                    {
+                        return (ancestorPane, ancestorNative, ancestorHorizontal);
+                    }
+                }
+            }
+
+            parent = parent.Parent;
+        }
+
+        return null;
+    }
+
+    private void SyncPaneToNative(object native, ScrollPane pane, bool horizontal)
+    {
+        if (_syncingScrollableFromNative.Contains(native))
+        {
+            return;
+        }
+
+        var percent = horizontal ? pane.PercentX : pane.PercentY;
+        var clamped = float.IsNaN(percent) || float.IsInfinity(percent)
+            ? 0f
+            : Math.Clamp(percent, 0f, 1f);
+
+        _syncingScrollableToNative.Add(native);
+        try
+        {
+            _adapter!.SetScrollValue(native, clamped);
+        }
+        finally
+        {
+            _syncingScrollableToNative.Remove(native);
+        }
     }
 
 }

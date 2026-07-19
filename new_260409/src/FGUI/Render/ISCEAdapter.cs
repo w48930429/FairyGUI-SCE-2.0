@@ -26,6 +26,23 @@ public interface ISCEAdapter
     void SetScale(object control, float scaleX, float scaleY);
     void SetTouchable(object control, bool touchable);
     void SetGrayed(object control, bool grayed);
+
+    /// <summary>
+    /// 设置控件是否拦截指针事件（消费掉，不再冒泡到父级/场景）。
+    /// Control 框架默认 RoutedEvents=All（穿透到父级），交互控件需显式拦截，
+    /// 否则点击会一路漏到游戏场景。
+    /// </summary>
+    void SetBlockPointerEvents(object control, bool block);
+
+    /// <summary>设置可滚动面板的滚动条拖杆尺寸（0 表示隐藏）。</summary>
+    void SetScrollBarSize(object control, float size);
+
+    /// <summary>
+    /// 在布局位置基础上叠加一个临时平移，用于滚动到边缘继续拖时的橡皮筋过界效果。
+    /// 传 (0,0) 归位。不会污染控件的布局基准位置。
+    /// </summary>
+    void SetScrollOverscroll(object control, float dx, float dy);
+
     void SetBackgroundColor(object control, Color color);
     void SetBackgroundImage(object control, string imagePath);
     bool TrySetImageFill(object control, FillMethod fillMethod, int fillOrigin, bool fillClockwise, float fillAmount);
@@ -39,6 +56,7 @@ public interface ISCEAdapter
     void SetText(object control, string text);
     void SetTextColor(object control, Color color);
     void SetFontSize(object control, int size);
+    void SetFontName(object control, string fontFamily);
     void SetBold(object control, bool bold);
     void SetItalic(object control, bool italic);
     void SetTextAlign(object control, TextAlign align);

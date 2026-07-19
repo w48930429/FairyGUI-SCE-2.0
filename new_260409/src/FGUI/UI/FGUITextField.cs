@@ -238,6 +238,11 @@ public class GTextField : GObject
         // 设置字体大小
         adapter.SetFontSize(NativeObject, _fontSize);
 
+        // 设置字体（通过 FGUIFontMap 解析 FGUI 字体名→引擎 family）
+        var resolvedFont = Utils.FGUIFontMap.Resolve(_font);
+        if (resolvedFont != null)
+            adapter.SetFontName(NativeObject, resolvedFont);
+
         // 设置粗体和斜体
         adapter.SetBold(NativeObject, _bold);
         adapter.SetItalic(NativeObject, _italic);
