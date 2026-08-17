@@ -1,12 +1,13 @@
 ﻿#requires -Version 5.1
 <#
 .SYNOPSIS
-  SCE MCP 的统一入口：探测 HTTP 端口；未监听则按工程 docs\.editor-root 启动 TriggerMcpHost.exe；轮询 /health 至可调用后，执行**一次** JSON-RPC tools/call。
+  Trigger/Data MCP 的兼容入口：探测 HTTP 端口；未监听则按工程 docs\.editor-root 启动 TriggerMcpHost.exe；轮询 /health 至可调用后，执行**一次** JSON-RPC tools/call。
 
 .DESCRIPTION
   - 端口上已有 MCP 且地图就绪 → 不启第二个 Host，直接执行 tools/call。
   - 连接失败（无服务）→ 若已解析到工程根（见 -ProjectRoot）则启动宿主 exe（读 docs\.editor-root、--map 工程根、--mcp-port / --mcp-mode），再轮询直至就绪。**启动前**若检测到已有 **TriggerMcpHost.exe** 且命令行 **--map** / **--mcp-port** 与本次一致，则**拒绝再启**并抛错。
   - 请求 JSON 仅支持单次 { "tool", "arguments" }，可选 **baseUrl**；**不支持** `calls` 批量（每次脚本运行只对应一个工具调用）。
+  - 完整编辑器工具（如 `editor_get_context`、`debug_*`、`runtime_*`、`resource_catalog_*`、`uiauthoring_*`、`ui_*`）请使用 `Invoke-SceEditorMcp.ps1`。本脚本保留 TriggerMcpHost fallback，但不会把它伪装成完整编辑器。
   - -HealthOnly：仅保证端点就绪（或起 Host 后就绪），不调用工具。
   - 由本脚本**新启动**的 TriggerMcpHost 默认带 **--exit-when-parent-pid**：从当前 Shell 沿 **Win32_Process** 父链解析「要监视的进程」：**优先**取父进程为 **explorer.exe** 的**本链上那一环**（即资源管理器之下的顶层 GUI 进程，多为 IDE 主进程）；若无法判定（未见 explorer 父链），则取链上**第一个非 PowerShell**（非 powershell.exe / pwsh.exe）的进程。该进程退出后宿主退出；**-KeepHostAfterLauncher** 可关闭。
 
@@ -152,6 +153,19 @@ function Test-HealthReady {
         return ($true -eq $mapReady) -or ($phase -eq "ready")
     }
     return ($true -eq $Health.ok)
+}
+
+function Test-IsFullEditorOnlyMcpToolName {
+    param([string] $Name)
+    if ([string]::IsNullOrWhiteSpace($Name)) { return $false }
+    return (
+        $Name -eq "editor_get_context" -or
+        $Name.StartsWith("debug_", [StringComparison]::OrdinalIgnoreCase) -or
+        $Name.StartsWith("runtime_", [StringComparison]::OrdinalIgnoreCase) -or
+        $Name.StartsWith("resource_catalog_", [StringComparison]::OrdinalIgnoreCase) -or
+        $Name.StartsWith("uiauthoring_", [StringComparison]::OrdinalIgnoreCase) -or
+        $Name.StartsWith("ui_", [StringComparison]::OrdinalIgnoreCase)
+    )
 }
 
 function Assert-RpcOk {
@@ -454,6 +468,10 @@ if ($RequestJsonPath) {
 
 if (-not $HealthOnly -and [string]::IsNullOrWhiteSpace($invokeTool)) {
     throw "No tool to invoke. Use -HealthOnly for probe-only, or add 'tool' in JSON / use -Tool."
+}
+
+if (-not $HealthOnly -and (Test-IsFullEditorOnlyMcpToolName -Name $invokeTool)) {
+    throw "Tool '$invokeTool' requires the full SCE Editor MCP. Use ai/tools/Invoke-SceEditorMcp.ps1 against an editor started with --mcp-port; this Trigger/Data helper refuses to start or use TriggerMcpHost for full-editor-only tools."
 }
 
 [string] $mapRootForHost = $ProjectRoot

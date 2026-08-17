@@ -1,25 +1,21 @@
 #requires -Version 5.1
 <#
 .SYNOPSIS
-  Calls the SCE client Runtime MCP TCP bridge once.
+  Calls the shared SCE Runtime MCP fallback client.
 
 .DESCRIPTION
-  This is the fallback path when the AI tool environment cannot see the
-  editor MCP bridge tool `runtime_call_tool`. The client Runtime MCP bridge is
-  not a standard MCP tools/list endpoint. It accepts one JSON request followed
-  by the SCE delimiter "|*|`n".
+  Use this only when the AI environment cannot see the editor MCP tool
+  `runtime_call_tool`. This project-side file is a thin shim; the versioned
+  protocol implementation remains in WasiCoreSDK/tools/runtime-mcp.
 
 .EXAMPLE
-  .\Invoke-SceRuntimeMcp.ps1 -Ping
+  .\Invoke-SceRuntimeMcp.ps1 -Ping -Wait
 
 .EXAMPLE
-  .\Invoke-SceRuntimeMcp.ps1 -ListTools
+  .\Invoke-SceRuntimeMcp.ps1 -Tool debug.capture_screenshot -ArgumentsJson '{"path":"RuntimeMcpScreenshots/ui.png","overwrite":true}' -Wait
 
 .EXAMPLE
-  .\Invoke-SceRuntimeMcp.ps1 -Tool debug.capture_screenshot -ArgumentsJson '{"path":"RuntimeMcpScreenshots/ui.png","overwrite":true,"maxWidth":1280,"maxHeight":720}'
-
-.EXAMPLE
-  .\Invoke-SceRuntimeMcp.ps1 -Tool card_ui.snapshot -ArgumentsJson '{}' -Wait
+  .\Invoke-SceRuntimeMcp.ps1 -ClientVersion
 #>
 [CmdletBinding(DefaultParameterSetName = "Tool")]
 param(
@@ -45,6 +41,9 @@ param(
     [Parameter(Mandatory = $true, ParameterSetName = "ListTools")]
     [switch] $ListTools,
 
+    [Parameter(Mandatory = $true, ParameterSetName = "ClientVersion")]
+    [switch] $ClientVersion,
+
     [Parameter(Mandatory = $false)]
     [ValidateRange(500, 30000)]
     [int] $TimeoutMs = 5000,
@@ -67,229 +66,68 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-$Delimiter = "|*|`n"
-
-function ConvertFrom-JsonObject {
-    param(
-        [Parameter(Mandatory = $true)]
-        [string] $Json,
-
-        [Parameter(Mandatory = $true)]
-        [string] $Name
-    )
-
-    try {
-        $value = $Json | ConvertFrom-Json
-    } catch {
-        throw "$Name must be valid JSON. $($_.Exception.Message)"
+function Find-SceRuntimeMcpClient {
+    $sdkLocalCandidate = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\..\..\tools\runtime-mcp\Invoke-SceRuntimeMcpClient.ps1"))
+    if (Test-Path -LiteralPath $sdkLocalCandidate -PathType Leaf) {
+        return $sdkLocalCandidate
     }
 
-    if ($null -eq $value) {
-        return [pscustomobject]@{}
-    }
-
-    return $value
-}
-
-function ConvertTo-Hashtable {
-    param([object] $Value)
-
-    if ($null -eq $Value) {
-        return @{}
-    }
-
-    if ($Value -is [hashtable]) {
-        return $Value
-    }
-
-    if ($Value -is [System.Collections.IDictionary]) {
-        $table = @{}
-        foreach ($key in $Value.Keys) {
-            $table[$key] = ConvertTo-Hashtable -Value $Value[$key]
-        }
-        return $table
-    }
-
-    if ($Value -is [System.Collections.IEnumerable] -and -not ($Value -is [string])) {
-        $items = New-Object System.Collections.Generic.List[object]
-        foreach ($item in $Value) {
-            $items.Add((ConvertTo-Hashtable -Value $item))
-        }
-        return $items.ToArray()
-    }
-
-    $properties = $Value.PSObject.Properties
-    if ($properties.Count -gt 0 -and $Value.GetType().Namespace -ne "System") {
-        $table = @{}
-        foreach ($property in $properties) {
-            $table[$property.Name] = ConvertTo-Hashtable -Value $property.Value
-        }
-        return $table
-    }
-
-    return $Value
-}
-
-function Test-RuntimeMcpPort {
-    param(
-        [string] $HostName,
-        [int] $Port,
-        [int] $ConnectTimeoutMs
-    )
-
-    $client = New-Object System.Net.Sockets.TcpClient
-    try {
-        $task = $client.ConnectAsync($HostName, $Port)
-        return $task.Wait($ConnectTimeoutMs) -and $client.Connected
-    } catch {
-        return $false
-    } finally {
-        $client.Dispose()
-    }
-}
-
-function Wait-RuntimeMcpPort {
-    param(
-        [string] $HostName,
-        [int] $Port,
-        [int] $TimeoutSec,
-        [int] $PollIntervalMs
-    )
-
-    $deadline = [DateTime]::UtcNow.AddSeconds($TimeoutSec)
-    while ([DateTime]::UtcNow -lt $deadline) {
-        if (Test-RuntimeMcpPort -HostName $HostName -Port $Port -ConnectTimeoutMs ([Math]::Min($PollIntervalMs, 1000))) {
-            return
-        }
-        Start-Sleep -Milliseconds $PollIntervalMs
-    }
-
-    throw "Client Runtime MCP is not reachable on ${HostName}:${Port} after ${TimeoutSec}s."
-}
-
-function New-RuntimeRequest {
-    param(
-        [string] $ToolName,
-        [object] $Arguments
-    )
-
-    return [ordered]@{
-        id     = [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()
-        method = "runtime.call_tool"
-        params = [ordered]@{
-            name      = $ToolName
-            arguments = $Arguments
+    if (-not [string]::IsNullOrWhiteSpace($env:WASI_CORE_SDK_PATH)) {
+        $environmentCandidate = Join-Path $env:WASI_CORE_SDK_PATH "tools\runtime-mcp\Invoke-SceRuntimeMcpClient.ps1"
+        if (Test-Path -LiteralPath $environmentCandidate -PathType Leaf) {
+            return [System.IO.Path]::GetFullPath($environmentCandidate)
         }
     }
-}
 
-function Resolve-RequestPayload {
-    if ($PSCmdlet.ParameterSetName -eq "Ping") {
-        return New-RuntimeRequest -ToolName "debug.ping" -Arguments @{}
-    }
-
-    if ($PSCmdlet.ParameterSetName -eq "ListTools") {
-        return New-RuntimeRequest -ToolName "debug.list_tools" -Arguments @{}
-    }
-
-    if ($PSCmdlet.ParameterSetName -eq "Tool") {
-        $arguments = ConvertFrom-JsonObject -Json $ArgumentsJson -Name "ArgumentsJson"
-        return New-RuntimeRequest -ToolName $Tool -Arguments (ConvertTo-Hashtable -Value $arguments)
-    }
-
-    $resolvedPath = [System.IO.Path]::GetFullPath($RequestJsonPath)
-    if (-not (Test-Path -LiteralPath $resolvedPath -PathType Leaf)) {
-        throw "RequestJsonPath does not exist: $resolvedPath"
-    }
-
-    $requestObject = ConvertFrom-JsonObject -Json (Get-Content -LiteralPath $resolvedPath -Raw -Encoding UTF8) -Name "RequestJsonPath"
-    $request = ConvertTo-Hashtable -Value $requestObject
-
-    if ($request.ContainsKey("method")) {
-        return $request
-    }
-
-    if (-not $request.ContainsKey("name")) {
-        throw "RequestJsonPath must contain either a full runtime request with 'method', or a compact object with 'name' and optional 'arguments'."
-    }
-
-    $arguments = @{}
-    if ($request.ContainsKey("arguments")) {
-        $arguments = $request["arguments"]
-    }
-
-    return New-RuntimeRequest -ToolName ([string]$request["name"]) -Arguments $arguments
-}
-
-function Invoke-RuntimeMcpTcp {
-    param(
-        [string] $HostName,
-        [int] $Port,
-        [object] $Payload,
-        [int] $TimeoutMs
-    )
-
-    $json = $Payload | ConvertTo-Json -Depth 50 -Compress
-    $client = New-Object System.Net.Sockets.TcpClient
-    try {
-        $connectTask = $client.ConnectAsync($HostName, $Port)
-        if (-not $connectTask.Wait($TimeoutMs)) {
-            throw "Timed out connecting to ${HostName}:${Port} after ${TimeoutMs}ms."
-        }
-
-        $stream = $client.GetStream()
-        $stream.ReadTimeout = $TimeoutMs
-        $stream.WriteTimeout = $TimeoutMs
-
-        $requestBytes = [System.Text.Encoding]::UTF8.GetBytes($json + $Delimiter)
-        $stream.Write($requestBytes, 0, $requestBytes.Length)
-        $stream.Flush()
-
-        $responseBytes = New-Object System.Collections.Generic.List[byte]
-        $buffer = New-Object byte[] 4096
-        while ($true) {
-            $read = $stream.Read($buffer, 0, $buffer.Length)
-            if ($read -le 0) {
-                throw "Client Runtime MCP connection closed before a response was received."
+    $toolsParent = Split-Path -Parent $PSScriptRoot
+    $projectRoot = Split-Path -Parent $toolsParent
+    $propsPath = Join-Path $projectRoot "src\WasiCoreSDK.props"
+    if (Test-Path -LiteralPath $propsPath -PathType Leaf) {
+        try {
+            [xml]$props = Get-Content -LiteralPath $propsPath -Raw -Encoding UTF8
+            $sdkPathNode = @($props.Project.PropertyGroup.WasiCoreSDKPath)[0]
+            if ($null -ne $sdkPathNode -and -not [string]::IsNullOrWhiteSpace([string]$sdkPathNode.InnerText)) {
+                $sharedCandidate = Join-Path ([string]$sdkPathNode.InnerText) "tools\runtime-mcp\Invoke-SceRuntimeMcpClient.ps1"
+                if (Test-Path -LiteralPath $sharedCandidate -PathType Leaf) {
+                    return [System.IO.Path]::GetFullPath($sharedCandidate)
+                }
             }
-
-            for ($i = 0; $i -lt $read; $i++) {
-                $responseBytes.Add($buffer[$i])
-            }
-
-            $text = [System.Text.Encoding]::UTF8.GetString($responseBytes.ToArray())
-            $index = $text.IndexOf($Delimiter, [StringComparison]::Ordinal)
-            if ($index -ge 0) {
-                return $text.Substring(0, $index)
-            }
+        } catch {
+            throw "Failed to resolve the shared Runtime MCP client from '$propsPath'. $($_.Exception.Message)"
         }
-    } finally {
-        $client.Dispose()
     }
-}
 
-if ($Wait) {
-    Wait-RuntimeMcpPort -HostName $HostName -Port $Port -TimeoutSec $WaitTimeoutSec -PollIntervalMs $WaitPollIntervalMs
-}
-
-$payload = Resolve-RequestPayload
-$responseText = Invoke-RuntimeMcpTcp -HostName $HostName -Port $Port -Payload $payload -TimeoutMs $TimeoutMs
-
-if ($Pretty) {
-    try {
-        $responseText | ConvertFrom-Json | ConvertTo-Json -Depth 50
-    } catch {
-        $responseText
-    }
-} else {
-    $responseText
+    throw "Shared Runtime MCP client not found. Refresh AI context with the current WasiCoreSDK, or verify src/WasiCoreSDK.props."
 }
 
 try {
-    $response = $responseText | ConvertFrom-Json
-    if ($null -ne $response -and $response.PSObject.Properties["success"] -and $response.success -eq $false) {
-        exit 2
-    }
+    $clientPath = Find-SceRuntimeMcpClient
 } catch {
-    # Keep raw output usable even if the response is not JSON.
+    [ordered]@{
+        success = $false
+        error_code = "runtime_mcp_client_not_found"
+        stage = "client_resolution"
+        message = $_.Exception.Message
+    } | ConvertTo-Json -Compress
+    exit 1
+}
+
+try {
+    & $clientPath @PSBoundParameters
+    if (Test-Path -LiteralPath variable:LASTEXITCODE) {
+        exit ([int]$LASTEXITCODE)
+    }
+    exit 0
+} catch {
+    $stage = [string]$_.Exception.Data["SceRuntimeMcpStage"]
+    if ([string]::IsNullOrWhiteSpace($stage)) {
+        $stage = "client_invocation"
+    }
+    [ordered]@{
+        success = $false
+        error_code = "runtime_mcp_client_invocation_failed"
+        stage = $stage
+        message = $_.Exception.Message
+    } | ConvertTo-Json -Compress
+    exit 1
 }
