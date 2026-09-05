@@ -442,14 +442,15 @@ public class RelationItem
     void OnTargetXYChanged(EventContext context)
     {
         if (_target == null) return;
-        if (_owner.Parent?.Relations?.Handling != null) 
+        // 递归守卫用 owner 自己的 Handling：链式关联（bar→n0→父）靠它逐级传递；
+        // 若查父组件的 Handling，一级关联处理期间二级关联会被误吞（原版 FairyGUI 语义）。
+        if (_owner.Relations?.Handling != null)
         {
             _targetData = (_target.X, _target.Y, _targetData.w, _targetData.h);
             return;
         }
 
-        if (_owner.Parent != null)
-            _owner.Parent.Relations!.Handling = _target;
+        _owner.Relations!.Handling = _target;
 
         float ox = _owner.X;
         float oy = _owner.Y;
@@ -472,21 +473,20 @@ public class RelationItem
             }
         }
 
-        if (_owner.Parent != null)
-            _owner.Parent.Relations!.Handling = null;
+        _owner.Relations!.Handling = null;
     }
 
     void OnTargetSizeChanged(EventContext context)
     {
         if (_target == null) return;
-        if (_owner.Parent?.Relations?.Handling != null)
+        // 与 OnTargetXYChanged 一致：递归守卫查 owner 自己的 Handling，避免链式关联被误吞。
+        if (_owner.Relations?.Handling != null)
         {
             _targetData = (_targetData.x, _targetData.y, _target.Width, _target.Height);
             return;
         }
 
-        if (_owner.Parent != null)
-            _owner.Parent.Relations!.Handling = _target;
+        _owner.Relations!.Handling = _target;
 
         float ox = _owner.X;
         float oy = _owner.Y;
@@ -516,8 +516,7 @@ public class RelationItem
             _owner.UpdateGearFromRelations(2, ownerDw, ownerDh);
         }
 
-        if (_owner.Parent != null)
-            _owner.Parent.Relations!.Handling = null;
+        _owner.Relations!.Handling = null;
     }
 }
 #endif

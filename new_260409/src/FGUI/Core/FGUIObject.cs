@@ -146,6 +146,8 @@ public class GObject : EventDispatcher
             {
                 Group?.SetBoundsChangedFlag();
             }
+
+            // 当当前容器自身尺寸发生变化时，分发尺寸变化给监听此容器的所有子组件
             DispatchEvent("onSizeChanged", null);
 
         }
@@ -194,7 +196,21 @@ public class GObject : EventDispatcher
     public bool Visible
     {
         get => _visible;
-        set { if (_visible != value) { _visible = value; HandleVisibleChanged(); Parent?.SetBoundsChangedFlag(); } }
+        set
+        {
+            if (_visible != value)
+            {
+                _visible = value;
+                HandleVisibleChanged();
+                Parent?.SetBoundsChangedFlag();
+                // 懒创建补建：初始隐藏（AddChild 时未建 native）的对象变为可见时，
+                // 若 native 仍未创建则补建并挂载到父级，否则该对象永远不会渲染。
+                if (Parent is GComponent parentComponent)
+                {
+                    parentComponent.ChildStateChanged(this);
+                }
+            }
+        }
     }
     /// <summary>
     /// Returns the final visibility considering Visible, internal visibility (GearDisplay), and Group visibility

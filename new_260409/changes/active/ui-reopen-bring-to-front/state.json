@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "feature": "ui-reopen-bring-to-front",
+  "mode": "full",
+  "workflow_profile_id": "change",
+ "status": "blocked",
+ "current_step": "verification",
+ "affects": [
+  "src/FGUI/FGUIManager.cs",
+  "tests/FairyGUI.Tests/UIRuntimeRootOrderingTests.cs",
+  "changes/active/ui-reopen-bring-to-front/proposal.md",
+  "changes/active/ui-reopen-bring-to-front/tasks.md",
+  "changes/active/ui-reopen-bring-to-front/verification.md",
+  "changes/active/ui-reopen-bring-to-front/review.md",
+  "changes/active/ui-reopen-bring-to-front/state.json"
+ ],
+ "completed": ["proposal_complete", "tasks_complete", "implementation_complete", "tests_passed"],
+ "pending": ["verification_passed", "archived"],
+ "blocked_by": ["change.workspace_scope: nested Git root path mismatch and unrelated parent-worktree changes"],
+ "last_updated": "2026-08-17T16:26:00.000Z"
+}

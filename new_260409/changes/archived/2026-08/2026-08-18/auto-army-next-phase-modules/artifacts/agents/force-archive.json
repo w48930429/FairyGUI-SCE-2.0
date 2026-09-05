@@ -1,0 +1,24 @@
+{
+  "version": "1.0",
+  "feature": "auto-army-next-phase-modules",
+  "disposition": "forced",
+  "completionStatus": "incomplete",
+  "acceptedRisk": true,
+  "reason": "Nested Git worktree root prefixes dirty paths with new_260409/, causing OSpec workspace scope false positives; historical generated knowledge files are unrelated to this docs change.",
+  "confirmation": {
+    "mode": "explicit-cli-double-confirmation",
+    "confirmedChange": "auto-army-next-phase-modules"
+  },
+  "requestedAt": "2026-08-17T16:07:03.361Z",
+  "archivedAt": "2026-08-17T16:07:03.361Z",
+  "sourcePath": "changes/active/auto-army-next-phase-modules",
+  "failingChecks": [
+    {
+      "name": "change.workspace_scope",
+      "status": "fail",
+      "message": "Workspace has 13 uncommitted file change(s) outside this change's declared scope: new_260409/SKILL.index.json, new_260409/changes/active/auto-army-next-phase-modules/proposal.md, new_260409/changes/active/auto-army-next-phase-modules/review.md, new_260409/changes/active/auto-army-next-phase-modules/state.json, new_260409/changes/active/auto-army-next-phase-modules/verification.md, new_260409/docs/project/changes/2026-04/2026-04-10/auto-army-campaign.md, ... +7 more. Commit, stash, or isolate unrelated work (or extend proposal.md affects) before closeout."
+    }
+  ],
+  "progressIssues": [],
+  "recordPath": "artifacts/agents/force-archive.json"
+}

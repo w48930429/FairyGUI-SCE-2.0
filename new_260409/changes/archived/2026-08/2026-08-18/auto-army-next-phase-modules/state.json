@@ -1,0 +1,35 @@
+{
+  "version": "1.0",
+  "feature": "auto-army-next-phase-modules",
+  "mode": "full",
+  "status": "archived",
+  "current_step": "archived",
+  "affects": [
+    "changes/active/auto-army-next-phase-modules/proposal.md",
+    "changes/active/auto-army-next-phase-modules/tasks.md",
+    "changes/active/auto-army-next-phase-modules/verification.md",
+    "changes/active/auto-army-next-phase-modules/review.md",
+    "changes/active/auto-army-next-phase-modules/state.json",
+    "docs/project/next-phase-modules.md",
+    "docs/SKILL.md",
+    "SKILL.index.json"
+  ],
+  "completed": [
+    "archived",
+    "implementation_complete",
+    "index_regenerated",
+    "proposal_complete",
+    "skill_updated",
+    "tasks_complete",
+    "tests_passed",
+    "verification_passed"
+  ],
+  "pending": [],
+  "blocked_by": [],
+  "last_updated": "2026-08-17T23:25:00.000Z",
+  "archive_disposition": "forced",
+  "completion_status": "incomplete",
+  "accepted_risk": true,
+  "force_archive_record": "artifacts/agents/force-archive.json",
+  "archived_at": "2026-08-17T16:07:03.361Z"
+}

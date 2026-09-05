@@ -271,6 +271,7 @@ public static class UIRuntime
 
         if (_fullScreenRootByContent.TryGetValue(content, out var existingRoot) && !existingRoot.Disposed)
         {
+            existingRoot.AddToStage();
             return existingRoot;
         }
 
